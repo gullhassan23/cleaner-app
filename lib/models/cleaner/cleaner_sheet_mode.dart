@@ -1,0 +1,4 @@
+enum CleanerSheetMode {
+  duplicates,
+  similar,
+}
