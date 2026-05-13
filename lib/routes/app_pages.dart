@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../bindings/main_shell_binding.dart';
 import '../bindings/compress_binding.dart';
 import '../features/compress/compress_review_page.dart';
-import '../features/shell/main_shell_page.dart';
+import '../widgets/bottomNavbar.dart';
 import 'app_routes.dart';
 
 abstract final class AppPages {

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 import '../models/compress/compress_entities.dart';
-import '../features/shell/main_shell_controller.dart';
+import 'main_shell_controller.dart';
 import '../routes/app_routes.dart';
 import 'compress_session_controller.dart';
 

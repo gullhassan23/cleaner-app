@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../features/shell/main_shell_controller.dart';
+import '../controllers/main_shell_controller.dart';
 import 'cleaner_binding.dart';
 import 'compress_binding.dart';
 

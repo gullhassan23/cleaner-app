@@ -10,7 +10,9 @@ import 'package:cleaner_app/utils/bytes_formatter.dart';
 import 'package:disk_usage/disk_usage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
 
+import '../../../repositories/photo_library_repository.dart';
 import '../widgets/cleaner_thumbnail.dart';
 
 /// Reference-style palette (see design screenshot).
@@ -315,6 +317,7 @@ class _ResultsScrollBody extends StatelessWidget {
                         sizeLabel: _sizeLabel(videoBytes),
                         preview: videoPreview,
                         solidBlack: videoPreview == null,
+                        inlineVideo: videoPreview != null,
                         placeholderIcon: false,
                         onTap:
                             videoCount == 0 ? null : controller.openVideosSheet,
@@ -492,6 +495,109 @@ class _StorageStripState extends State<_StorageStrip> {
   }
 }
 
+/// Muted looping preview for the dashboard Videos tile.
+class _InlineLoopingVideoFill extends StatefulWidget {
+  const _InlineLoopingVideoFill({
+    required this.asset,
+    required this.maxWidth,
+    required this.maxHeight,
+  });
+
+  final PhotoAssetEntity asset;
+  final double maxWidth;
+  final double maxHeight;
+
+  @override
+  State<_InlineLoopingVideoFill> createState() => _InlineLoopingVideoFillState();
+}
+
+class _InlineLoopingVideoFillState extends State<_InlineLoopingVideoFill> {
+  VideoPlayerController? _controller;
+
+  PhotoLibraryRepository get _repo => Get.find<PhotoLibraryRepository>();
+
+  @override
+  void initState() {
+    super.initState();
+    unawaited(_bootstrap());
+  }
+
+  Future<void> _bootstrap() async {
+    final id = widget.asset.id;
+    final file = await _repo.loadOriginalFile(id);
+    if (!mounted || widget.asset.id != id) {
+      return;
+    }
+    if (file == null) {
+      return;
+    }
+    final c = VideoPlayerController.file(
+      file,
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
+    try {
+      await c.initialize();
+      if (!mounted || widget.asset.id != id) {
+        await c.dispose();
+        return;
+      }
+      await c.setLooping(true);
+      await c.setVolume(0);
+      await c.play();
+      if (!mounted || widget.asset.id != id) {
+        await c.dispose();
+        return;
+      }
+      setState(() => _controller = c);
+    } catch (_) {
+      await c.dispose();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant _InlineLoopingVideoFill oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.asset.id != widget.asset.id) {
+      unawaited(_controller?.dispose() ?? Future<void>.value());
+      _controller = null;
+      setState(() {});
+      unawaited(_bootstrap());
+    }
+  }
+
+  @override
+  void dispose() {
+    unawaited(_controller?.dispose() ?? Future<void>.value());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = _controller;
+    final d =
+        math.max(widget.maxWidth, widget.maxHeight).ceil().clamp(64, 640).toDouble();
+
+    if (c != null && c.value.isInitialized) {
+      final sz = c.value.size;
+      final w = sz.width;
+      final h = sz.height;
+      if (w > 0 && h > 0) {
+        return FittedBox(
+          fit: BoxFit.cover,
+          clipBehavior: Clip.hardEdge,
+          child: SizedBox(width: w, height: h, child: VideoPlayer(c)),
+        );
+      }
+    }
+
+    return CleanerThumbnail(
+      asset: widget.asset,
+      size: d,
+      borderRadius: 0,
+    );
+  }
+}
+
 class _CategoryGridCard extends StatelessWidget {
   const _CategoryGridCard({
     required this.height,
@@ -500,6 +606,7 @@ class _CategoryGridCard extends StatelessWidget {
     required this.placeholderIcon,
     this.preview,
     this.solidBlack = false,
+    this.inlineVideo = false,
     this.subtitleAboveTitle,
     this.topInset,
     this.onTap,
@@ -511,6 +618,7 @@ class _CategoryGridCard extends StatelessWidget {
   final PhotoAssetEntity? preview;
   final bool placeholderIcon;
   final bool solidBlack;
+  final bool inlineVideo;
   final String? subtitleAboveTitle;
   final Widget? topInset;
   final VoidCallback? onTap;
@@ -537,6 +645,13 @@ class _CategoryGridCard extends StatelessWidget {
                 else if (preview != null)
                   LayoutBuilder(
                     builder: (context, c) {
+                      if (inlineVideo) {
+                        return _InlineLoopingVideoFill(
+                          asset: preview!,
+                          maxWidth: c.maxWidth,
+                          maxHeight: c.maxHeight,
+                        );
+                      }
                       final d = math
                           .max(c.maxWidth, c.maxHeight)
                           .ceil()

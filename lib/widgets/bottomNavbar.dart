@@ -1,7 +1,7 @@
 import 'package:cleaner_app/features/cleaner/pages/cleaner_dashboard_page.dart';
 import 'package:cleaner_app/features/compress/compress_picker_page.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
-import 'package:cleaner_app/features/shell/main_shell_controller.dart';
+import 'package:cleaner_app/controllers/main_shell_controller.dart';
 import 'package:cleaner_app/features/vault/vault_root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,17 +34,15 @@ class MainShellPage extends GetView<MainShellController> {
                       : const SizedBox.shrink(),
             ),
             const CompressPickerPage(),
-            Obx(
-              () {
-                if (!controller.vaultTabReady.value) {
-                  if (controller.currentIndex.value == 3) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  return const SizedBox.shrink();
+            Obx(() {
+              if (!controller.vaultTabReady.value) {
+                if (controller.currentIndex.value == 3) {
+                  return const Center(child: CircularProgressIndicator());
                 }
-                return const VaultRootPage();
-              },
-            ),
+                return const SizedBox.shrink();
+              }
+              return const VaultRootPage();
+            }),
             const _ShellPlaceholderPage(
               title: 'More',
               icon: Icons.grid_view_rounded,
@@ -142,8 +140,7 @@ class _FloatingBottomBar extends StatelessWidget {
   }
 }
 
-typedef _IconBuilder =
-    Widget Function(Color color, double size);
+typedef _IconBuilder = Widget Function(Color color, double size);
 
 class _NavCell extends StatelessWidget {
   const _NavCell({
@@ -215,10 +212,7 @@ class _NavCell extends StatelessWidget {
 }
 
 class _ShellPlaceholderPage extends StatelessWidget {
-  const _ShellPlaceholderPage({
-    required this.title,
-    required this.icon,
-  });
+  const _ShellPlaceholderPage({required this.title, required this.icon});
 
   final String title;
   final IconData icon;
