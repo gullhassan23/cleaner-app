@@ -142,9 +142,9 @@ class _DashboardChrome extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: InkWell(
                   onTap:
-                      () => ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('PRO')),
-                      ),
+                      () => ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(const SnackBar(content: Text('PRO'))),
                   borderRadius: BorderRadius.circular(20),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -230,7 +230,9 @@ class _ResultsScrollBody extends StatelessWidget {
       final dupPreview = controller.previewForKind(
         CleanerDashboardKind.duplicatePhotos,
       );
-      final videoPreview = controller.previewForKind(CleanerDashboardKind.videos);
+      final videoPreview = controller.previewForKind(
+        CleanerDashboardKind.videos,
+      );
       final shotPreview = controller.previewForKind(
         CleanerDashboardKind.screenshots,
       );
@@ -252,7 +254,7 @@ class _ResultsScrollBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const _StorageStrip(),
-            SizedBox(height: gap + 6),
+            SizedBox(height: gap + 56),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -278,7 +280,9 @@ class _ResultsScrollBody extends StatelessWidget {
                         preview: dupPreview,
                         placeholderIcon: dupPreview == null,
                         onTap:
-                            dupCount == 0 ? null : controller.openDuplicateSheet,
+                            dupCount == 0
+                                ? null
+                                : controller.openDuplicateSheet,
                       ),
                       SizedBox(height: gap),
                       _CategoryGridCard(
@@ -345,49 +349,6 @@ class _ResultsScrollBody extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            const SizedBox(height: 14),
-            Material(
-              color: _kDashBlue,
-              borderRadius: BorderRadius.circular(20),
-              child: InkWell(
-                onTap:
-                    () => ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('AI Photo Editor')),
-                    ),
-                borderRadius: BorderRadius.circular(20),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.auto_fix_high_rounded,
-                          color: Colors.white,
-                          size: 26,
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-                      const Text(
-                        'AI Photo Editor',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ),
           ],
         ),
@@ -503,18 +464,14 @@ class _StorageStripState extends State<_StorageStrip> {
             children: [
               const TextSpan(text: 'Used: '),
               TextSpan(
-                text:
-                    used != null
-                        ? _gb(used)
-                        : '—',
+                text: used != null ? _gb(used) : '—',
                 style: const TextStyle(
                   color: _kDashBlue,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               TextSpan(
-                text:
-                    total != null ? ' / ${_gb(total)}' : '',
+                text: total != null ? ' / ${_gb(total)}' : '',
                 style: const TextStyle(color: _kDashGrey),
               ),
             ],
@@ -580,8 +537,10 @@ class _CategoryGridCard extends StatelessWidget {
                 else if (preview != null)
                   LayoutBuilder(
                     builder: (context, c) {
-                      final d =
-                          math.max(c.maxWidth, c.maxHeight).ceil().clamp(64, 640);
+                      final d = math
+                          .max(c.maxWidth, c.maxHeight)
+                          .ceil()
+                          .clamp(64, 640);
                       return CleanerThumbnail(
                         asset: preview!,
                         size: d.toDouble(),
@@ -620,12 +579,7 @@ class _CategoryGridCard extends StatelessWidget {
                   ),
                 ),
                 if (topInset != null)
-                  Positioned(
-                    top: 10,
-                    left: 10,
-                    right: 10,
-                    child: topInset!,
-                  ),
+                  Positioned(top: 10, left: 10, right: 10, child: topInset!),
                 Positioned(
                   left: 12,
                   right: 10,

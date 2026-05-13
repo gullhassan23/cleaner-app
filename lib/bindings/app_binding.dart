@@ -1,5 +1,8 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 
+import '../services/vault/vault_lifecycle_coordinator.dart';
 import '../services/photo_library/photo_library_data_source.dart';
 import '../services/photo_library/photo_library_repository_impl.dart';
 import '../repositories/photo_library_repository.dart';
@@ -11,6 +14,15 @@ import '../services/permissions/photo_permission_service.dart';
 class AppBinding extends Bindings {
   @override
   void dependencies() {
+    Get.put(
+      const FlutterSecureStorage(
+        aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      ),
+      permanent: true,
+    );
+    Get.put(LocalAuthentication(), permanent: true);
+    Get.put(VaultLifecycleCoordinator(), permanent: true);
+
     Get.put(PhotoPermissionService(), permanent: true);
     Get.put(GalleryMediaService(), permanent: true);
     Get.put(ThumbnailCacheService(), permanent: true);

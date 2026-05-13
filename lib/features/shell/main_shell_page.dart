@@ -2,6 +2,7 @@ import 'package:cleaner_app/features/cleaner/pages/cleaner_dashboard_page.dart';
 import 'package:cleaner_app/features/compress/compress_picker_page.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
 import 'package:cleaner_app/features/shell/main_shell_controller.dart';
+import 'package:cleaner_app/features/vault/vault_root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,9 +34,16 @@ class MainShellPage extends GetView<MainShellController> {
                       : const SizedBox.shrink(),
             ),
             const CompressPickerPage(),
-            const _ShellPlaceholderPage(
-              title: 'Private',
-              icon: Icons.lock_outline_rounded,
+            Obx(
+              () {
+                if (!controller.vaultTabReady.value) {
+                  if (controller.currentIndex.value == 3) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return const SizedBox.shrink();
+                }
+                return const VaultRootPage();
+              },
             ),
             const _ShellPlaceholderPage(
               title: 'More',
@@ -46,20 +54,27 @@ class MainShellPage extends GetView<MainShellController> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.fromLTRB(14, 0, 14, 10 + bottomInset),
-        child: Obx(() => _FloatingBottomBar(controller: controller)),
+        child: Obx(() {
+          final idx = controller.currentIndex.value;
+          return _FloatingBottomBar(controller: controller, selectedIndex: idx);
+        }),
       ),
     );
   }
 }
 
 class _FloatingBottomBar extends StatelessWidget {
-  const _FloatingBottomBar({required this.controller});
+  const _FloatingBottomBar({
+    required this.controller,
+    required this.selectedIndex,
+  });
 
   final MainShellController controller;
+  final int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
-    final idx = controller.currentIndex.value;
+    final idx = selectedIndex;
 
     return Material(
       color: Colors.transparent,
@@ -104,22 +119,9 @@ class _FloatingBottomBar extends StatelessWidget {
                 onTap: () => controller.selectTab(2),
               ),
               _NavCell(
-                label: 'Private',
+                label: 'Vault',
                 selected: idx == 3,
-                iconBuilder: (c, s) {
-                  return Stack(
-                    clipBehavior: Clip.none,
-                    alignment: Alignment.center,
-                    children: [
-                      Icon(Icons.photo_library_rounded, size: s, color: c),
-                      Positioned(
-                        right: -2,
-                        bottom: -2,
-                        child: Icon(Icons.lock_rounded, size: s * 0.42, color: c),
-                      ),
-                    ],
-                  );
-                },
+                icon: Icons.lock_rounded,
                 selectedColor: _kNavBlue,
                 idleColor: _kNavBlue,
                 onTap: () => controller.selectTab(3),
