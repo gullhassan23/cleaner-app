@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
+import '../models/cleaner/cleaner_dashboard_sort.dart';
+import '../models/photo_library/photo_asset_entity.dart';
 import '../models/photo_library/scan_state_entity.dart';
+import '../utils/photo_asset_sort.dart';
 import '../routes/app_routes.dart';
 import 'compress_session_controller.dart';
 
@@ -10,6 +13,15 @@ class CompressPickerController extends GetxController {
   CompressPickerController(this.session);
 
   final CompressSessionController session;
+
+  final Rx<CleanerDashboardSort> pickerSort =
+      CleanerDashboardSort.largestFirst.obs;
+
+  /// Visible grid order; reads [pickerSort] for [Obx] reactivity.
+  List<PhotoAssetEntity> get sortedDisplayMedia {
+    pickerSort.value;
+    return sortedPhotoAssetsCopy(session.mediaItems, pickerSort.value);
+  }
 
   @override
   void onReady() {

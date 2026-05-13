@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/cleaner/cleaner_dashboard_sort.dart';
 import '../../utils/bytes_formatter.dart';
 import '../../widgets/state_message_card.dart';
 import '../../models/photo_library/scan_state_entity.dart';
@@ -16,11 +17,29 @@ class CompressPickerPage extends GetView<CompressPickerController> {
       appBar: AppBar(
         title: const Text('Compress'),
         actions: [
-          IconButton(
-            onPressed: controller.refreshMedia,
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Refresh gallery',
-          ),
+          Obx(() {
+            final session = controller.session.state.value;
+            final perm = session.permissionState;
+            final canSort =
+                perm.canAccess &&
+                !session.isLoadingInitial &&
+                session.mediaItems.isNotEmpty;
+            if (canSort) {
+              return IconButton(
+                onPressed: () => _openSortSheet(context),
+                icon: const Icon(Icons.sort_rounded),
+                tooltip: 'Sort',
+              );
+            }
+            if (perm.canAccess) {
+              return IconButton(
+                onPressed: controller.refreshMedia,
+                icon: const Icon(Icons.refresh_rounded),
+                tooltip: 'Refresh gallery',
+              );
+            }
+            return const SizedBox.shrink();
+          }),
         ],
       ),
       bottomNavigationBar: Obx(() {
@@ -94,6 +113,8 @@ class CompressPickerPage extends GetView<CompressPickerController> {
             );
           }
 
+          final displayItems = controller.sortedDisplayMedia;
+
           return NotificationListener<ScrollNotification>(
             onNotification: (notification) {
               if (notification.metrics.pixels >=
@@ -102,70 +123,143 @@ class CompressPickerPage extends GetView<CompressPickerController> {
               }
               return false;
             },
-            child: CustomScrollView(
-              slivers: [
-                SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
-                  sliver: SliverMainAxisGroup(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: _PickerSummaryCard(
-                            totalCount: session.totalCount,
-                            selectedCount: session.selectedAssetIds.length,
-                            selectedBytes: controller.session.selectedOriginalBytes,
-                            isLimited: permission.isLimited,
-                            onManageAccess:
-                                permission.isLimited
-                                    ? controller.manageLimitedLibrary
-                                    : null,
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await controller.refreshMedia();
+              },
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 120),
+                    sliver: SliverMainAxisGroup(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: _PickerSummaryCard(
+                              totalCount: session.totalCount,
+                              selectedCount: session.selectedAssetIds.length,
+                              selectedBytes:
+                                  controller.session.selectedOriginalBytes,
+                              isLimited: permission.isLimited,
+                              onManageAccess:
+                                  permission.isLimited
+                                      ? controller.manageLimitedLibrary
+                                      : null,
+                            ),
                           ),
                         ),
-                      ),
-                      SliverGrid(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          final asset = session.mediaItems[index];
-                          return AssetThumbnail(
-                            asset: asset,
-                            width: 420,
-                            height: 420,
-                            isSelected: controller.session.isSelected(asset.id),
-                            onTap: () => controller.toggleSelection(asset.id),
-                            onLongPress: () => controller.toggleSelection(asset.id),
-                          );
-                        }, childCount: session.mediaItems.length),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10,
-                              childAspectRatio: 1,
-                            ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 16),
-                          child:
-                              session.isLoadingMore
-                                  ? const Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(12),
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                  : const SizedBox.shrink(),
+                        SliverGrid(
+                          delegate: SliverChildBuilderDelegate((
+                            context,
+                            index,
+                          ) {
+                            final asset = displayItems[index];
+                            return AssetThumbnail(
+                              asset: asset,
+                              width: 420,
+                              height: 420,
+                              isSelected: controller.session.isSelected(asset.id),
+                              onTap: () => controller.toggleSelection(asset.id),
+                              onLongPress:
+                                  () => controller.toggleSelection(asset.id),
+                            );
+                          }, childCount: displayItems.length),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 1,
+                              ),
                         ),
-                      ),
-                    ],
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child:
+                                session.isLoadingMore
+                                    ? const Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(12),
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    )
+                                    : const SizedBox.shrink(),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }),
       ),
     );
+  }
+
+  Future<void> _openSortSheet(BuildContext context) async {
+    final theme = Theme.of(context);
+    final primary = theme.colorScheme.primary;
+    final selected = await showModalBottomSheet<CleanerDashboardSort>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) {
+        final current = controller.pickerSort.value;
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ListTile(
+                title: const Text('Largest first'),
+                trailing:
+                    current == CleanerDashboardSort.largestFirst
+                        ? Icon(Icons.check_rounded, color: primary)
+                        : null,
+                onTap:
+                    () => Navigator.pop(ctx, CleanerDashboardSort.largestFirst),
+              ),
+              ListTile(
+                title: const Text('Smallest first'),
+                trailing:
+                    current == CleanerDashboardSort.smallestFirst
+                        ? Icon(Icons.check_rounded, color: primary)
+                        : null,
+                onTap:
+                    () =>
+                        Navigator.pop(ctx, CleanerDashboardSort.smallestFirst),
+              ),
+              ListTile(
+                title: const Text('Newest date first'),
+                trailing:
+                    current == CleanerDashboardSort.newestDateFirst
+                        ? Icon(Icons.check_rounded, color: primary)
+                        : null,
+                onTap:
+                    () =>
+                        Navigator.pop(ctx, CleanerDashboardSort.newestDateFirst),
+              ),
+              ListTile(
+                title: const Text('Oldest date first'),
+                trailing:
+                    current == CleanerDashboardSort.oldestDateFirst
+                        ? Icon(Icons.check_rounded, color: primary)
+                        : null,
+                onTap:
+                    () =>
+                        Navigator.pop(ctx, CleanerDashboardSort.oldestDateFirst),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    if (selected != null) {
+      controller.pickerSort.value = selected;
+    }
   }
 }
 

@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:cleaner_app/controllers/cleaner_controller.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_dashboard_kind.dart';
+import 'package:cleaner_app/models/cleaner/cleaner_dashboard_sort.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_scan_phase.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
 import 'package:cleaner_app/models/photo_library/scan_state_entity.dart';
@@ -67,6 +68,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
 
           return _DashboardChrome(
             onSettings: () => _openSettingsMenu(context, perm),
+            onSort: () => _openSortSheet(context),
             child: _ResultsScrollBody(controller: controller),
           );
         }),
@@ -112,13 +114,78 @@ class CleanerDashboardPage extends GetView<CleanerController> {
       await controller.openAppSettings();
     }
   }
+
+  Future<void> _openSortSheet(BuildContext context) async {
+    final selected = await showModalBottomSheet<CleanerDashboardSort>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) {
+        final current = controller.dashboardSort.value;
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ListTile(
+                title: const Text('Largest first'),
+                trailing:
+                    current == CleanerDashboardSort.largestFirst
+                        ? const Icon(Icons.check_rounded, color: _kDashBlue)
+                        : null,
+                onTap:
+                    () => Navigator.pop(ctx, CleanerDashboardSort.largestFirst),
+              ),
+              ListTile(
+                title: const Text('Smallest first'),
+                trailing:
+                    current == CleanerDashboardSort.smallestFirst
+                        ? const Icon(Icons.check_rounded, color: _kDashBlue)
+                        : null,
+                onTap:
+                    () =>
+                        Navigator.pop(ctx, CleanerDashboardSort.smallestFirst),
+              ),
+              ListTile(
+                title: const Text('Newest date first'),
+                trailing:
+                    current == CleanerDashboardSort.newestDateFirst
+                        ? const Icon(Icons.check_rounded, color: _kDashBlue)
+                        : null,
+                onTap:
+                    () =>
+                        Navigator.pop(ctx, CleanerDashboardSort.newestDateFirst),
+              ),
+              ListTile(
+                title: const Text('Oldest date first'),
+                trailing:
+                    current == CleanerDashboardSort.oldestDateFirst
+                        ? const Icon(Icons.check_rounded, color: _kDashBlue)
+                        : null,
+                onTap:
+                    () =>
+                        Navigator.pop(ctx, CleanerDashboardSort.oldestDateFirst),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    if (selected != null) {
+      controller.dashboardSort.value = selected;
+    }
+  }
 }
 
 class _DashboardChrome extends StatelessWidget {
-  const _DashboardChrome({required this.child, required this.onSettings});
+  const _DashboardChrome({
+    required this.child,
+    required this.onSettings,
+    this.onSort,
+  });
 
   final Widget child;
   final VoidCallback onSettings;
+  final VoidCallback? onSort;
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +239,15 @@ class _DashboardChrome extends StatelessWidget {
                   ),
                 ),
               ),
+              if (onSort != null)
+                IconButton(
+                  onPressed: onSort,
+                  icon: const Icon(
+                    Icons.sort_rounded,
+                    color: _kDashGrey,
+                    size: 26,
+                  ),
+                ),
               IconButton(
                 onPressed: onSettings,
                 icon: const Icon(

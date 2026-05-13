@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../models/cleaner/cleaner_dashboard_kind.dart';
+import '../models/cleaner/cleaner_dashboard_sort.dart';
 import '../models/cleaner/cleaner_gallery_scan_result.dart';
 import '../models/cleaner/cleaner_media_cluster.dart';
 import '../models/cleaner/cleaner_scan_phase.dart';
@@ -14,6 +15,7 @@ import '../models/photo_library/photo_asset_entity.dart';
 import '../models/photo_library/scan_state_entity.dart';
 import '../repositories/photo_library_repository.dart';
 import '../routes/app_routes.dart';
+import '../utils/photo_asset_sort.dart';
 import '../services/cleaner/duplicate_detector_service.dart';
 import '../services/cleaner/gallery_scan_coordinator.dart';
 import '../services/cleaner/similar_detector_service.dart';
@@ -50,6 +52,9 @@ class CleanerController extends GetxController {
   final RxList<CleanerMediaCluster> duplicateClusters = <CleanerMediaCluster>[].obs;
   final RxList<CleanerMediaCluster> similarClusters = <CleanerMediaCluster>[].obs;
 
+  final Rx<CleanerDashboardSort> dashboardSort =
+      CleanerDashboardSort.largestFirst.obs;
+
   bool _cancelScan = false;
   bool _scanRunning = false;
 
@@ -59,6 +64,31 @@ class CleanerController extends GetxController {
       phase.value == CleanerScanPhase.detectingSimilar;
 
   bool get hasResults => phase.value == CleanerScanPhase.completed;
+
+  List<CleanerMediaCluster> _sortedClusters(List<CleanerMediaCluster> source) {
+    dashboardSort.value;
+    final list = List<CleanerMediaCluster>.from(source);
+    int compare(CleanerMediaCluster a, CleanerMediaCluster b) {
+      switch (dashboardSort.value) {
+        case CleanerDashboardSort.largestFirst:
+          return b.totalBytes.compareTo(a.totalBytes);
+        case CleanerDashboardSort.smallestFirst:
+          return a.totalBytes.compareTo(b.totalBytes);
+        case CleanerDashboardSort.newestDateFirst:
+          return b.keeper.createdAt.compareTo(a.keeper.createdAt);
+        case CleanerDashboardSort.oldestDateFirst:
+          return a.keeper.createdAt.compareTo(b.keeper.createdAt);
+      }
+    }
+
+    list.sort(compare);
+    return list;
+  }
+
+  List<PhotoAssetEntity> _sortedAssets(List<PhotoAssetEntity> source) {
+    dashboardSort.value;
+    return sortedPhotoAssetsCopy(source, dashboardSort.value);
+  }
 
   int countForKind(CleanerDashboardKind kind) {
     switch (kind) {
@@ -100,22 +130,22 @@ class CleanerController extends GetxController {
         if (similarClusters.isEmpty) {
           return null;
         }
-        return similarClusters.first.keeper;
+        return _sortedClusters(similarClusters).first.keeper;
       case CleanerDashboardKind.duplicatePhotos:
         if (duplicateClusters.isEmpty) {
           return null;
         }
-        return duplicateClusters.first.keeper;
+        return _sortedClusters(duplicateClusters).first.keeper;
       case CleanerDashboardKind.videos:
         if (g == null || g.videoAssets.isEmpty) {
           return null;
         }
-        return g.videoAssets.first;
+        return _sortedAssets(g.videoAssets).first;
       case CleanerDashboardKind.screenshots:
         if (g == null || g.screenshotAssets.isEmpty) {
           return null;
         }
-        return g.screenshotAssets.first;
+        return _sortedAssets(g.screenshotAssets).first;
     }
   }
 
@@ -295,7 +325,7 @@ class CleanerController extends GetxController {
     Get.put(
       CleanerGroupSheetController(
         mode: CleanerSheetMode.duplicates,
-        clusters: duplicateClusters.toList(growable: false),
+        clusters: _sortedClusters(duplicateClusters),
         onDeleted: removeDeletedAssets,
       ),
       tag: tag,
@@ -319,7 +349,7 @@ class CleanerController extends GetxController {
     Get.put(
       CleanerGroupSheetController(
         mode: CleanerSheetMode.similar,
-        clusters: similarClusters.toList(growable: false),
+        clusters: _sortedClusters(similarClusters),
         onDeleted: removeDeletedAssets,
       ),
       tag: tag,
@@ -342,7 +372,7 @@ class CleanerController extends GetxController {
     }
     CleanerFlatMediaBottomSheet.show(
       title: 'Videos',
-      assets: items,
+      assets: _sortedAssets(items),
       onDeleted: removeDeletedAssets,
     );
   }
@@ -354,7 +384,7 @@ class CleanerController extends GetxController {
     }
     CleanerFlatMediaBottomSheet.show(
       title: 'Screenshots',
-      assets: items,
+      assets: _sortedAssets(items),
       onDeleted: removeDeletedAssets,
     );
   }
