@@ -19,6 +19,7 @@ class AssetThumbnail extends StatefulWidget {
     this.onTap,
     this.onLongPress,
     this.showMeta = true,
+    this.showSelectionBadge = true,
   });
 
   final PhotoAssetEntity asset;
@@ -30,6 +31,8 @@ class AssetThumbnail extends StatefulWidget {
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
   final bool showMeta;
+  /// When false, the top-right selection chip is omitted (caller may draw its own).
+  final bool showSelectionBadge;
 
   @override
   State<AssetThumbnail> createState() => _AssetThumbnailState();
@@ -192,36 +195,37 @@ class _AssetThumbnailState extends State<AssetThumbnail> {
                   ),
                 ),
               ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 180),
-                width: 28,
-                height: 28,
-                decoration: BoxDecoration(
-                  color:
-                      widget.isSelected
-                          ? theme.colorScheme.primary
-                          : Colors.white.withValues(alpha: 0.92),
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(
+            if (widget.showSelectionBadge)
+              Positioned(
+                top: 10,
+                right: 10,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
                     color:
                         widget.isSelected
                             ? theme.colorScheme.primary
-                            : theme.colorScheme.outlineVariant,
+                            : Colors.white.withValues(alpha: 0.92),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(
+                      color:
+                          widget.isSelected
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.outlineVariant,
+                    ),
+                  ),
+                  child: Icon(
+                    widget.isSelected ? Icons.check : Icons.circle_outlined,
+                    size: 16,
+                    color:
+                        widget.isSelected
+                            ? Colors.white
+                            : theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
-                child: Icon(
-                  widget.isSelected ? Icons.check : Icons.circle_outlined,
-                  size: 16,
-                  color:
-                      widget.isSelected
-                          ? Colors.white
-                          : theme.colorScheme.onSurfaceVariant,
-                ),
               ),
-            ),
           ],
         ),
       ),
