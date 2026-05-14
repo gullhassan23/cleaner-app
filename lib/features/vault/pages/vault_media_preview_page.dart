@@ -6,7 +6,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../../routes/app_routes.dart';
 import '../../../repositories/vault_repository.dart';
-import '../models/vault_media_model.dart';
+import '../../../models/vault/vault_media_model.dart';
 
 /// Passed via [Get.toNamed] `arguments` for [AppRoutes.vaultMediaPreview].
 class VaultMediaPreviewArgs {
@@ -98,11 +98,11 @@ class _VaultMediaPreviewPageState extends State<VaultMediaPreviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
         title: Text(
           widget.model.isVideo ? 'Video' : 'Photo',
           style: const TextStyle(fontWeight: FontWeight.w600),
@@ -111,8 +111,10 @@ class _VaultMediaPreviewPageState extends State<VaultMediaPreviewPage> {
       body: Column(
         children: [
           Expanded(
-            child: Center(
-              child: widget.model.isVideo
+            child: ColoredBox(
+              color: Colors.black,
+              child: Center(
+                child: widget.model.isVideo
                   ? _videoReady && _video != null
                       ? Builder(
                           builder: (context) {
@@ -125,45 +127,48 @@ class _VaultMediaPreviewPageState extends State<VaultMediaPreviewPage> {
                             );
                           },
                         )
-                      : const CircularProgressIndicator(color: Color(0xFF5B8DEF))
+                      : CircularProgressIndicator(color: cs.primary)
                   : InteractiveViewer(
                       minScale: 0.6,
                       maxScale: 4,
                       child: Image.file(widget.file, fit: BoxFit.contain),
                     ),
+              ),
             ),
           ),
           SafeArea(
             top: false,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: _restore,
-                      icon: const Icon(Icons.restore_rounded),
-                      label: const Text('Save to Photos'),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        side: const BorderSide(color: Colors.white38),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+            child: Material(
+              color: theme.scaffoldBackgroundColor,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _restore,
+                        icon: const Icon(Icons.restore_rounded),
+                        label: const Text('Save to Photos'),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: FilledButton.icon(
-                      onPressed: _delete,
-                      icon: const Icon(Icons.delete_outline_rounded),
-                      label: const Text('Delete'),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Colors.redAccent.shade200,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: FilledButton.icon(
+                        onPressed: _delete,
+                        icon: const Icon(Icons.delete_outline_rounded),
+                        label: const Text('Delete'),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: cs.error,
+                          foregroundColor: cs.onError,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

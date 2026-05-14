@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 
 import '../../../repositories/vault_repository.dart';
 import '../../../routes/app_routes.dart';
-import '../controllers/vault_controller.dart';
-import '../models/vault_media_model.dart';
+import '../../../controllers/vault_controller.dart';
+import '../../../models/vault/vault_media_model.dart';
 import 'vault_media_preview_page.dart';
 
 class VaultHomePage extends GetView<VaultController> {
@@ -14,6 +14,7 @@ class VaultHomePage extends GetView<VaultController> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Stack(
       children: [
         Column(
@@ -25,7 +26,7 @@ class VaultHomePage extends GetView<VaultController> {
                   IconButton(
                     tooltip: 'Lock',
                     onPressed: controller.lockVault,
-                    icon: const Icon(Icons.lock_rounded, color: Colors.white),
+                    icon: Icon(Icons.lock_rounded, color: cs.onSurface),
                   ),
                   const Spacer(),
                   Obx(
@@ -38,9 +39,9 @@ class VaultHomePage extends GetView<VaultController> {
                             : IconButton(
                               tooltip: 'Select',
                               onPressed: controller.toggleSelectionMode,
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.checklist_rounded,
-                                color: Colors.white,
+                                color: cs.onSurface,
                               ),
                             ),
                   ),
@@ -54,26 +55,31 @@ class VaultHomePage extends GetView<VaultController> {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                 child: Material(
-                  color: const Color(0xFF2A3142),
+                  color: cs.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(12),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Limited library access',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: cs.outlineVariant.withValues(alpha: 0.5)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Limited library access',
+                            style: TextStyle(
+                              color: cs.onSurface,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 6),
-                        const Text(
-                          'iOS may only show photos you selected. Use Manage to add more, '
-                          'or open Settings for full access.',
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'iOS may only show photos you selected. Use Manage to add more, '
+                            'or open Settings for full access.',
+                            style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12),
+                          ),
                         const SizedBox(height: 8),
                         Wrap(
                           spacing: 8,
@@ -93,7 +99,8 @@ class VaultHomePage extends GetView<VaultController> {
                     ),
                   ),
                 ),
-              );
+              ),
+            );
             }),
             Expanded(
               child: Obx(() {
@@ -108,24 +115,24 @@ class VaultHomePage extends GetView<VaultController> {
                           Icon(
                             Icons.photo_library_outlined,
                             size: 64,
-                            color: Colors.white.withValues(alpha: 0.35),
+                            color: cs.onSurfaceVariant.withValues(alpha: 0.45),
                           ),
                           const SizedBox(height: 16),
                           Text(
                             'No media in your vault yet',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.85),
+                              color: cs.onSurface,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
+                          Text(
                             'Import photos and videos from your library. '
                             'They are stored only on this device in private app storage.',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white54, fontSize: 13),
+                            style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13),
                           ),
                           const SizedBox(height: 24),
                           FilledButton.icon(
@@ -133,7 +140,6 @@ class VaultHomePage extends GetView<VaultController> {
                             icon: const Icon(Icons.add_rounded),
                             label: const Text('Add media'),
                             style: FilledButton.styleFrom(
-                              backgroundColor: const Color(0xFF5B8DEF),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 24,
                                 vertical: 14,
@@ -194,7 +200,8 @@ class VaultHomePage extends GetView<VaultController> {
                   }
                 },
                 style: FilledButton.styleFrom(
-                  backgroundColor: Colors.redAccent.shade200,
+                  backgroundColor: cs.error,
+                  foregroundColor: cs.onError,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: Obx(
@@ -211,7 +218,6 @@ class VaultHomePage extends GetView<VaultController> {
                 icon: const Icon(Icons.add_photo_alternate_rounded),
                 label: const Text('Add media'),
                 style: FilledButton.styleFrom(
-                  backgroundColor: const Color(0xFF5B8DEF),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
               );
@@ -225,18 +231,17 @@ class VaultHomePage extends GetView<VaultController> {
             color: Colors.black54,
             child: Center(
               child: Card(
-                color: const Color(0xFF1A2235),
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const CircularProgressIndicator(color: Color(0xFF5B8DEF)),
+                      CircularProgressIndicator(color: cs.primary),
                       const SizedBox(height: 16),
                       Obx(
                         () => Text(
                           'Importing ${controller.importDone.value}/${controller.importTotal.value}',
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: cs.onSurface),
                         ),
                       ),
                     ],
@@ -273,6 +278,7 @@ class _VaultThumbTileState extends State<_VaultThumbTile> {
   Widget build(BuildContext context) {
     final vault = Get.find<VaultController>();
     final repo = Get.find<VaultRepository>();
+    final cs = Theme.of(context).colorScheme;
     return Obx(() {
       final selMode = vault.selectionMode.value;
       final selected = vault.selectedIds.contains(widget.model.id);
@@ -306,11 +312,11 @@ class _VaultThumbTileState extends State<_VaultThumbTile> {
             fit: StackFit.expand,
             children: [
               if (widget.model.isVideo)
-                const ColoredBox(
-                  color: Color(0xFF1A2235),
+                ColoredBox(
+                  color: cs.surfaceContainerHighest,
                   child: Icon(
                     Icons.videocam_rounded,
-                    color: Colors.white54,
+                    color: cs.onSurfaceVariant,
                     size: 40,
                   ),
                 )
@@ -326,23 +332,26 @@ class _VaultThumbTileState extends State<_VaultThumbTile> {
                         gaplessPlayback: true,
                       );
                     }
-                    return const ColoredBox(
-                      color: Color(0xFF1A2235),
+                    return ColoredBox(
+                      color: cs.surfaceContainerHighest,
                       child: Center(
                         child: SizedBox(
                           width: 22,
                           height: 22,
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: cs.primary,
+                          ),
                         ),
                       ),
                     );
                   },
                 ),
               if (widget.model.isVideo)
-                const Align(
+                Align(
                   child: Icon(
                     Icons.play_circle_fill_rounded,
-                    color: Colors.white,
+                    color: cs.onSurface,
                     size: 36,
                   ),
                 ),
@@ -353,7 +362,7 @@ class _VaultThumbTileState extends State<_VaultThumbTile> {
                     padding: const EdgeInsets.all(6),
                     child: Icon(
                       selected ? Icons.check_circle : Icons.circle_outlined,
-                      color: selected ? const Color(0xFF5B8DEF) : Colors.white,
+                      color: selected ? cs.primary : cs.onSurfaceVariant,
                     ),
                   ),
                 ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../repositories/vault_repository.dart';
-import '../controllers/vault_controller.dart';
-import '../widgets/vault_numeric_pad.dart';
+import '../../../controllers/vault_controller.dart';
+import '../../../widgets/vault/vault_numeric_pad.dart';
 
 class VaultUnlockPage extends StatefulWidget {
   const VaultUnlockPage({super.key});
@@ -24,27 +24,28 @@ class _VaultUnlockPageState extends State<VaultUnlockPage> {
   @override
   Widget build(BuildContext context) {
     final c = Get.find<VaultController>();
+    final cs = Theme.of(context).colorScheme;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
             const SizedBox(height: 20),
-            const Icon(Icons.lock_rounded, size: 52, color: Color(0xFF5B8DEF)),
+            Icon(Icons.lock_rounded, size: 52, color: cs.primary),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Private vault',
               style: TextStyle(
-                color: Colors.white,
+                color: cs.onSurface,
                 fontSize: 24,
                 fontWeight: FontWeight.w800,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Enter your PIN or use biometrics.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white60, fontSize: 14),
+              style: TextStyle(color: cs.onSurfaceVariant, fontSize: 14),
             ),
             const SizedBox(height: 28),
             Obx(
@@ -58,7 +59,7 @@ class _VaultUnlockPageState extends State<VaultUnlockPage> {
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: filled ? const Color(0xFF5B8DEF) : Colors.white24,
+                      color: filled ? cs.primary : cs.outline.withValues(alpha: 0.45),
                     ),
                   );
                 }),
@@ -75,15 +76,15 @@ class _VaultUnlockPageState extends State<VaultUnlockPage> {
                   bottomLeft:
                       showBio
                           ? Material(
-                            color: const Color(0xFF1A2235),
+                            color: cs.surfaceContainerHighest,
                             borderRadius: BorderRadius.circular(14),
                             child: InkWell(
                               borderRadius: BorderRadius.circular(14),
                               onTap: c.submitBiometricUnlock,
-                              child: const Center(
+                              child: Center(
                                 child: Icon(
                                   Icons.fingerprint_rounded,
-                                  color: Color(0xFF5B8DEF),
+                                  color: cs.primary,
                                   size: 36,
                                 ),
                               ),

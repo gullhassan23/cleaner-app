@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-import '../../features/vault/models/vault_media_model.dart';
+import '../../models/vault/vault_media_model.dart';
 import 'vault_crypto.dart';
 
 /// File IO and encrypted vault index under app support directory.

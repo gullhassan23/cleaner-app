@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-import '../../../models/photo_library/scan_state_entity.dart';
-import '../../../repositories/vault_repository.dart';
-import '../../../routes/app_routes.dart';
-import '../../../services/permissions/photo_permission_service.dart';
-import '../models/vault_media_model.dart';
-import '../models/vault_result.dart';
+import '../models/photo_library/scan_state_entity.dart';
+import '../repositories/vault_repository.dart';
+import '../routes/app_routes.dart';
+import '../services/permissions/photo_permission_service.dart';
+import '../models/vault/vault_media_model.dart';
+import '../models/vault/vault_result.dart';
 
 enum VaultShellState { setup, unlock, home }
 

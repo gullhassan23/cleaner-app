@@ -14,6 +14,12 @@ class VaultNumericPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final digitStyle = TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.w600,
+      color: cs.onSurface,
+    );
     return LayoutBuilder(
       builder: (context, c) {
         final spacing = 10.0;
@@ -27,14 +33,7 @@ class VaultNumericPad extends StatelessWidget {
               _Key(
                 size: cell,
                 onTap: () => onDigit(d),
-                child: Text(
-                  d,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
+                child: Text(d, style: digitStyle),
               ),
             SizedBox(
               width: cell,
@@ -44,19 +43,12 @@ class VaultNumericPad extends StatelessWidget {
             _Key(
               size: cell,
               onTap: () => onDigit('0'),
-              child: const Text(
-                '0',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
+              child: Text('0', style: digitStyle),
             ),
             _Key(
               size: cell,
               onTap: onDelete,
-              child: const Icon(Icons.backspace_outlined, color: Colors.white70),
+              child: Icon(Icons.backspace_outlined, color: cs.onSurfaceVariant),
             ),
           ],
         );
@@ -79,7 +71,7 @@ class _Key extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFF1A2235),
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
       borderRadius: BorderRadius.circular(14),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),

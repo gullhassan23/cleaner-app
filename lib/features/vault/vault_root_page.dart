@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:cleaner_app/features/vault/controllers/vault_controller.dart';
+import 'package:cleaner_app/controllers/vault_controller.dart';
 import 'package:cleaner_app/features/vault/pages/vault_home_page.dart';
 import 'package:cleaner_app/features/vault/pages/vault_setup_pin_page.dart';
 import 'package:cleaner_app/features/vault/pages/vault_unlock_page.dart';
@@ -12,7 +12,7 @@ class VaultRootPage extends GetView<VaultController> {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: const Color(0xFF0B0F1A),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: Obx(
           () => switch (controller.shell.value) {

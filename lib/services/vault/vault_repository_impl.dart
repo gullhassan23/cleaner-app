@@ -10,8 +10,8 @@ import 'package:local_auth/local_auth.dart';
 import 'package:path/path.dart' as p;
 import 'package:photo_manager/photo_manager.dart';
 
-import '../../features/vault/models/vault_media_model.dart';
-import '../../features/vault/models/vault_result.dart';
+import '../../models/vault/vault_media_model.dart';
+import '../../models/vault/vault_result.dart';
 import '../../repositories/vault_repository.dart';
 import '../permissions/photo_permission_service.dart';
 import 'vault_crypto.dart';

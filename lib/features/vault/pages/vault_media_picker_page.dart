@@ -87,19 +87,19 @@ class _VaultMediaPickerPageState extends State<VaultMediaPickerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0F1A),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0B0F1A),
-        foregroundColor: Colors.white,
         title: const Text('Import to vault'),
         actions: [
           TextButton(
             onPressed: _selected.isEmpty ? null : _confirm,
             child: Text(
               'Import (${_selected.length})',
-              style: const TextStyle(
-                color: Color(0xFF5B8DEF),
+              style: TextStyle(
+                color: cs.primary,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -108,11 +108,11 @@ class _VaultMediaPickerPageState extends State<VaultMediaPickerPage> {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: Text(
               'Tap items to select. Only selected items are imported.',
-              style: TextStyle(color: Colors.white70, fontSize: 13),
+              style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13),
             ),
           ),
           Expanded(
@@ -127,11 +127,14 @@ class _VaultMediaPickerPageState extends State<VaultMediaPickerPage> {
               itemCount: _assets.length + (_loading && !_end ? 1 : 0),
               itemBuilder: (context, i) {
                 if (i >= _assets.length) {
-                  return const Center(
+                  return Center(
                     child: SizedBox(
                       width: 28,
                       height: 28,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: cs.primary,
+                      ),
                     ),
                   );
                 }
@@ -159,7 +162,7 @@ class _VaultMediaPickerPageState extends State<VaultMediaPickerPage> {
                           decoration: BoxDecoration(
                             color:
                                 sel
-                                    ? const Color(0xFF5B8DEF)
+                                    ? cs.primary
                                     : Colors.black54,
                             shape: BoxShape.circle,
                           ),
@@ -200,7 +203,7 @@ class _VaultPickerThumb extends StatelessWidget {
         if (snap.hasData && snap.data != null) {
           return Image.memory(snap.data!, fit: BoxFit.cover, gaplessPlayback: true);
         }
-        return Container(color: const Color(0xFF1A2235));
+        return Container(color: Theme.of(context).colorScheme.surfaceContainerHighest);
       },
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../features/vault/controllers/vault_controller.dart';
+import '../controllers/vault_controller.dart';
 import '../repositories/vault_repository.dart';
 import '../services/permissions/photo_permission_service.dart';
 import '../services/vault/vault_repository_impl.dart';

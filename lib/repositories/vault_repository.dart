@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-import '../features/vault/models/vault_media_model.dart';
-import '../features/vault/models/vault_result.dart';
+import '../models/vault/vault_media_model.dart';
+import '../models/vault/vault_result.dart';
 
 /// High-level vault API (PIN, biometrics, media, encrypted index).
 abstract class VaultRepository {

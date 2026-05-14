@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../controllers/vault_controller.dart';
-import '../widgets/vault_numeric_pad.dart';
+import '../../../controllers/vault_controller.dart';
+import '../../../widgets/vault/vault_numeric_pad.dart';
 
 class VaultSetupPinPage extends StatefulWidget {
   const VaultSetupPinPage({super.key});
@@ -87,6 +87,7 @@ class _VaultSetupPinPageState extends State<VaultSetupPinPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -97,8 +98,8 @@ class _VaultSetupPinPageState extends State<VaultSetupPinPage> {
             Text(
               _step == 0 ? 'Create a 4-digit PIN' : 'Confirm your PIN',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: cs.onSurface,
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
               ),
@@ -109,7 +110,7 @@ class _VaultSetupPinPageState extends State<VaultSetupPinPage> {
                   ? 'You will use this PIN to unlock the vault.'
                   : 'Enter the same PIN again.',
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white60, fontSize: 14),
+              style: TextStyle(color: cs.onSurfaceVariant, fontSize: 14),
             ),
             const SizedBox(height: 28),
             Row(
@@ -122,7 +123,7 @@ class _VaultSetupPinPageState extends State<VaultSetupPinPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: filled ? const Color(0xFF5B8DEF) : Colors.white24,
+                    color: filled ? cs.primary : cs.outline.withValues(alpha: 0.45),
                   ),
                 );
               }),
@@ -131,13 +132,13 @@ class _VaultSetupPinPageState extends State<VaultSetupPinPage> {
             if (_step == 1) ...[
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text(
+                title: Text(
                   'Enable Face ID / fingerprint',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w600),
                 ),
-                subtitle: const Text(
+                subtitle: Text(
                   'Unlock the vault without typing your PIN.',
-                  style: TextStyle(color: Colors.white54, fontSize: 12),
+                  style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12),
                 ),
                 value: _bio,
                 onChanged: (v) => setState(() => _bio = v),
@@ -162,7 +163,6 @@ class _VaultSetupPinPageState extends State<VaultSetupPinPage> {
                         }
                       },
               style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFF5B8DEF),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
