@@ -32,7 +32,6 @@ class VaultMediaPreviewPage extends StatefulWidget {
 
 class _VaultMediaPreviewPageState extends State<VaultMediaPreviewPage> {
   VideoPlayerController? _video;
-  bool _videoReady = false;
 
   @override
   void initState() {
@@ -43,7 +42,6 @@ class _VaultMediaPreviewPageState extends State<VaultMediaPreviewPage> {
           .initialize()
           .then((_) {
             if (!mounted) return;
-            setState(() => _videoReady = true);
             _video!.play();
           })
           .catchError((Object e) {
@@ -115,19 +113,21 @@ class _VaultMediaPreviewPageState extends State<VaultMediaPreviewPage> {
               color: Colors.black,
               child: Center(
                 child: widget.model.isVideo
-                  ? _videoReady && _video != null
-                      ? Builder(
-                          builder: (context) {
-                            final ar = _video!.value.aspectRatio;
-                            final ratio =
-                                (!ar.isFinite || ar <= 0) ? 16 / 9 : ar;
-                            return AspectRatio(
-                              aspectRatio: ratio,
-                              child: VideoPlayer(_video!),
-                            );
-                          },
-                        )
-                      : CircularProgressIndicator(color: cs.primary)
+                  ? AnimatedBuilder(
+                      animation: _video!,
+                      builder: (context, _) {
+                        if (!_video!.value.isInitialized) {
+                          return CircularProgressIndicator(color: cs.primary);
+                        }
+                        final ar = _video!.value.aspectRatio;
+                        final ratio =
+                            (!ar.isFinite || ar <= 0) ? 16 / 9 : ar;
+                        return AspectRatio(
+                          aspectRatio: ratio,
+                          child: VideoPlayer(_video!),
+                        );
+                      },
+                    )
                   : InteractiveViewer(
                       minScale: 0.6,
                       maxScale: 4,

@@ -12,25 +12,12 @@ class StorageStrip extends StatefulWidget {
 }
 
 class _StorageStripState extends State<StorageStrip> {
-  int? _total;
-  int? _free;
+  late final Future<({int? total, int? free})> _future = _loadSpace();
 
-  @override
-  void initState() {
-    super.initState();
-    unawaited(_load());
-  }
-
-  Future<void> _load() async {
+  static Future<({int? total, int? free})> _loadSpace() async {
     final total = await DiskUsage.totalSpace();
     final free = await DiskUsage.freeSpace();
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _total = total;
-      _free = free;
-    });
+    return (total: total, free: free);
   }
 
   String _gb(int bytes) {
@@ -43,59 +30,65 @@ class _StorageStripState extends State<StorageStrip> {
 
   @override
   Widget build(BuildContext context) {
-    final total = _total;
-    final free = _free;
-    int? used;
-    double? progressValue;
-    if (total != null && free != null && total > 0) {
-      used = (total - free).clamp(0, total);
-      final r = used / total;
-      if (r <= 0) {
-        progressValue = 0;
-      } else if (r < 0.02) {
-        progressValue = 0.02;
-      } else {
-        progressValue = r;
-      }
-    }
+    return FutureBuilder<({int? total, int? free})>(
+      future: _future,
+      builder: (context, snap) {
+        final data = snap.data;
+        int? used;
+        double? progressValue;
+        final total = data?.total;
+        final free = data?.free;
+        if (total != null && free != null && total > 0) {
+          used = (total - free).clamp(0, total);
+          final r = used / total;
+          if (r <= 0) {
+            progressValue = 0;
+          } else if (r < 0.02) {
+            progressValue = 0.02;
+          } else {
+            progressValue = r;
+          }
+        }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text.rich(
-          TextSpan(
-            style: const TextStyle(
-              fontSize: 15,
-              color: kDashGrey,
-              fontWeight: FontWeight.w500,
-            ),
-            children: [
-              const TextSpan(text: 'Used: '),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text.rich(
               TextSpan(
-                text: used != null ? _gb(used) : '—',
                 style: const TextStyle(
-                  color: kDashBlue,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                  color: kDashGrey,
+                  fontWeight: FontWeight.w500,
                 ),
+                children: [
+                  const TextSpan(text: 'Used: '),
+                  TextSpan(
+                    text: used != null ? _gb(used) : '—',
+                    style: const TextStyle(
+                      color: kDashBlue,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  TextSpan(
+                    text: total != null ? ' / ${_gb(total)}' : '',
+                    style: const TextStyle(color: kDashGrey),
+                  ),
+                ],
               ),
-              TextSpan(
-                text: total != null ? ' / ${_gb(total)}' : '',
-                style: const TextStyle(color: kDashGrey),
+            ),
+            const SizedBox(height: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: LinearProgressIndicator(
+                value: progressValue,
+                minHeight: 10,
+                backgroundColor: const Color(0xFFE9E9EE),
+                color: kDashBlue,
               ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(999),
-          child: LinearProgressIndicator(
-            value: progressValue,
-            minHeight: 10,
-            backgroundColor: const Color(0xFFE9E9EE),
-            color: kDashBlue,
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

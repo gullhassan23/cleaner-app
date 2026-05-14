@@ -72,15 +72,23 @@ class _FloatingBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final idx = selectedIndex;
 
+    final scheme = Theme.of(context).colorScheme;
+    final barFill =
+        scheme.brightness == Brightness.dark
+            ? scheme.surfaceContainerHigh.withValues(alpha: 0.94)
+            : _kNavBarFill;
+
     return Material(
       color: Colors.transparent,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: _kNavBarFill,
+          color: barFill,
           borderRadius: BorderRadius.circular(28),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: Colors.black.withValues(
+                alpha: scheme.brightness == Brightness.dark ? 0.35 : 0.06,
+              ),
               blurRadius: 18,
               offset: const Offset(0, 6),
             ),

@@ -1,30 +1,31 @@
+import 'package:cleaner_app/controllers/theme_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-/// Grouped list background (iOS Settings-style).
-const Color _kGroupedBackground = Color(0xFFF2F2F7);
-const Color _kIOSBlue = Color(0xFF007AFF);
-
-/// “More Tools” screen: light grouped background, centered title, white rounded rows.
+/// “More Tools” screen: grouped list, centered title, rounded rows.
 class MoreToolsPage extends StatelessWidget {
   const MoreToolsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final groupedBg = scheme.surfaceContainerLow;
+
     return Scaffold(
-      backgroundColor: _kGroupedBackground,
+      backgroundColor: groupedBg,
       appBar: AppBar(
-        backgroundColor: _kGroupedBackground,
+        backgroundColor: groupedBg,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
         leading: const _MoreToolsLeading(),
-        title: const Text(
+        title: Text(
           'More Tools',
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: scheme.onSurface,
             letterSpacing: -0.3,
           ),
         ),
@@ -32,8 +33,10 @@ class MoreToolsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
+          const _AppearanceCard(),
+          const SizedBox(height: 12),
           _ToolCard(
-            iconBackdrop: _kIOSBlue,
+            iconBackdrop: scheme.primary,
             title: 'Charging Animation',
             subtitle: 'Customize charging screen',
             icon: const _ChargingAnimationIcon(),
@@ -53,19 +56,91 @@ class MoreToolsPage extends StatelessWidget {
   }
 }
 
+class _AppearanceCard extends StatelessWidget {
+  const _AppearanceCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final c = Get.find<ThemeController>();
+
+    return Material(
+      color: scheme.surface,
+      borderRadius: BorderRadius.circular(12),
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Appearance',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: scheme.onSurfaceVariant,
+                letterSpacing: -0.2,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Obx(
+              () => SegmentedButton<ThemeMode>(
+                style: SegmentedButton.styleFrom(
+                  visualDensity: VisualDensity.compact,
+                  textStyle: theme.textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                showSelectedIcon: false,
+                segments: const [
+                  ButtonSegment<ThemeMode>(
+                    value: ThemeMode.light,
+                    label: Text('Light'),
+                    icon: Icon(Icons.light_mode_outlined, size: 18),
+                  ),
+                  ButtonSegment<ThemeMode>(
+                    value: ThemeMode.dark,
+                    label: Text('Dark'),
+                    icon: Icon(Icons.dark_mode_outlined, size: 18),
+                  ),
+                  ButtonSegment<ThemeMode>(
+                    value: ThemeMode.system,
+                    label: Text('System'),
+                    icon: Icon(Icons.brightness_auto_outlined, size: 18),
+                  ),
+                ],
+                selected: {c.themeMode.value},
+                multiSelectionEnabled: false,
+                emptySelectionAllowed: false,
+                onSelectionChanged: (next) {
+                  if (next.isNotEmpty) {
+                    c.setThemeMode(next.first);
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _MoreToolsLeading extends StatelessWidget {
   const _MoreToolsLeading();
 
   @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
+    final scheme = Theme.of(context).colorScheme;
     if (!navigator.canPop()) {
       return const SizedBox(width: 56);
     }
     return IconButton(
       padding: EdgeInsets.zero,
       alignment: Alignment.centerRight,
-      icon: const Icon(Icons.chevron_left, color: _kIOSBlue, size: 32),
+      icon: Icon(Icons.chevron_left, color: scheme.primary, size: 32),
       onPressed: () => navigator.maybePop(),
     );
   }
@@ -128,8 +203,10 @@ class _ToolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Material(
-      color: Colors.white,
+      color: scheme.surface,
       borderRadius: BorderRadius.circular(12),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -155,10 +232,10 @@ class _ToolCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        color: scheme.onSurface,
                         letterSpacing: -0.3,
                       ),
                     ),
@@ -168,7 +245,7 @@ class _ToolCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        color: Colors.grey.shade600,
+                        color: scheme.onSurfaceVariant,
                         height: 1.2,
                       ),
                     ),

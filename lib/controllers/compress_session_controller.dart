@@ -80,7 +80,7 @@ class CompressSessionController extends GetxController {
   }
 
   Future<void> loadPermissionState() async {
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         permissionState: const PermissionStateEntity(
           status: MediaPermissionStatus.loading,
@@ -91,12 +91,12 @@ class CompressSessionController extends GetxController {
 
     try {
       final permission = await _getMediaPermissionStateUseCase();
-      _setState((current) => current.copyWith(permissionState: permission));
+      _applySession((current) => current.copyWith(permissionState: permission));
       if (permission.canAccess && mediaItems.isEmpty) {
         await loadInitialMedia(force: true);
       }
     } catch (_) {
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           permissionState: const PermissionStateEntity(
             status: MediaPermissionStatus.denied,
@@ -108,7 +108,7 @@ class CompressSessionController extends GetxController {
   }
 
   Future<PermissionStateEntity> requestPermission() async {
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         permissionState: const PermissionStateEntity(
           status: MediaPermissionStatus.loading,
@@ -119,7 +119,7 @@ class CompressSessionController extends GetxController {
 
     try {
       final permission = await _requestMediaPermissionUseCase();
-      _setState((current) => current.copyWith(permissionState: permission));
+      _applySession((current) => current.copyWith(permissionState: permission));
       if (permission.canAccess) {
         await loadInitialMedia(force: true);
       }
@@ -128,7 +128,7 @@ class CompressSessionController extends GetxController {
       const denied = PermissionStateEntity(
         status: MediaPermissionStatus.denied,
       );
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           permissionState: denied,
           errorMessage: 'Unable to request media permission.',
@@ -158,7 +158,7 @@ class CompressSessionController extends GetxController {
       return;
     }
 
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         isLoadingInitial: true,
         isLoadingMore: false,
@@ -177,7 +177,7 @@ class CompressSessionController extends GetxController {
         page: 0,
         pageSize: state.value.pageSize,
       );
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           mediaItems: galleryPage.items,
           page: galleryPage.page,
@@ -187,7 +187,7 @@ class CompressSessionController extends GetxController {
         ),
       );
     } catch (_) {
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           isLoadingInitial: false,
           errorMessage: 'Unable to load gallery media.',
@@ -201,7 +201,7 @@ class CompressSessionController extends GetxController {
       return;
     }
 
-    _setState((current) => current.copyWith(isLoadingMore: true));
+    _applySession((current) => current.copyWith(isLoadingMore: true));
 
     try {
       final nextPage = state.value.page + 1;
@@ -213,7 +213,7 @@ class CompressSessionController extends GetxController {
         ...mediaItems,
         ...galleryPage.items,
       ];
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           mediaItems: mergedItems,
           page: galleryPage.page,
@@ -223,7 +223,7 @@ class CompressSessionController extends GetxController {
         ),
       );
     } catch (_) {
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           isLoadingMore: false,
           errorMessage: 'Unable to load more media.',
@@ -240,7 +240,7 @@ class CompressSessionController extends GetxController {
       nextSelection.remove(assetId);
     }
 
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         selectedAssetIds: nextSelection,
         clearSuccessMessage: true,
@@ -249,7 +249,7 @@ class CompressSessionController extends GetxController {
   }
 
   void clearSelection() {
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         selectedAssetIds: <String>{},
         clearSuccessMessage: true,
@@ -261,11 +261,11 @@ class CompressSessionController extends GetxController {
     if (preset == quality) {
       return;
     }
-    _setState((current) => current.copyWith(quality: preset));
+    _applySession((current) => current.copyWith(quality: preset));
   }
 
   void clearMessages() {
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         clearErrorMessage: true,
         clearSuccessMessage: true,
@@ -279,7 +279,7 @@ class CompressSessionController extends GetxController {
       return results;
     }
 
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         isCompressing: true,
         results: const <CompressedMediaResultEntity>[],
@@ -298,7 +298,7 @@ class CompressSessionController extends GetxController {
     final output = <CompressedMediaResultEntity>[];
     for (var index = 0; index < assets.length; index++) {
       final asset = assets[index];
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           progress: CompressionProgressEntity(
             phase: CompressionPhase.running,
@@ -315,7 +315,7 @@ class CompressSessionController extends GetxController {
         asset,
         quality: quality,
         onProgress: (progress) {
-          _setState(
+          _applySession(
             (current) => current.copyWith(
               progress: CompressionProgressEntity(
                 phase: CompressionPhase.running,
@@ -332,7 +332,7 @@ class CompressSessionController extends GetxController {
       );
       output.add(result);
 
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           results: List<CompressedMediaResultEntity>.from(output),
           progress: CompressionProgressEntity(
@@ -365,7 +365,7 @@ class CompressSessionController extends GetxController {
       await _refreshVisibleMediaAfterCompression(preserveAssets: assets);
     }
 
-    _setState(
+    _applySession(
       (current) => current.copyWith(
         isCompressing: false,
         results: List<CompressedMediaResultEntity>.unmodifiable(output),
@@ -412,7 +412,7 @@ class CompressSessionController extends GetxController {
         }
       }
 
-      _setState(
+      _applySession(
         (current) => current.copyWith(
           mediaItems: mergedItems,
           page: galleryPage.page,
@@ -425,7 +425,7 @@ class CompressSessionController extends GetxController {
     }
   }
 
-  void _setState(
+  void _applySession(
     CompressSessionState Function(CompressSessionState current) transform,
   ) {
     state.value = transform(state.value);

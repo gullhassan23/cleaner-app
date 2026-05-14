@@ -25,7 +25,8 @@ class InlineLoopingVideoFill extends StatefulWidget {
 }
 
 class _InlineLoopingVideoFillState extends State<InlineLoopingVideoFill> {
-  VideoPlayerController? _controller;
+  final ValueNotifier<VideoPlayerController?> _controllerNotifier =
+      ValueNotifier<VideoPlayerController?>(null);
 
   PhotoLibraryRepository get _repo => Get.find<PhotoLibraryRepository>();
 
@@ -61,7 +62,7 @@ class _InlineLoopingVideoFillState extends State<InlineLoopingVideoFill> {
         await c.dispose();
         return;
       }
-      setState(() => _controller = c);
+      _controllerNotifier.value = c;
     } catch (_) {
       await c.dispose();
     }
@@ -71,22 +72,22 @@ class _InlineLoopingVideoFillState extends State<InlineLoopingVideoFill> {
   void didUpdateWidget(covariant InlineLoopingVideoFill oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.asset.id != widget.asset.id) {
-      unawaited(_controller?.dispose() ?? Future<void>.value());
-      _controller = null;
-      setState(() {});
+      unawaited(_controllerNotifier.value?.dispose() ?? Future<void>.value());
+      _controllerNotifier.value = null;
       unawaited(_bootstrap());
     }
   }
 
   @override
   void dispose() {
-    unawaited(_controller?.dispose() ?? Future<void>.value());
+    final c = _controllerNotifier.value;
+    unawaited(c?.dispose() ?? Future<void>.value());
+    _controllerNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final c = _controller;
     final d =
         math
             .max(widget.maxWidth, widget.maxHeight)
@@ -94,19 +95,29 @@ class _InlineLoopingVideoFillState extends State<InlineLoopingVideoFill> {
             .clamp(64, 640)
             .toDouble();
 
-    if (c != null && c.value.isInitialized) {
-      final sz = c.value.size;
-      final w = sz.width;
-      final h = sz.height;
-      if (w > 0 && h > 0) {
-        return FittedBox(
-          fit: BoxFit.cover,
-          clipBehavior: Clip.hardEdge,
-          child: SizedBox(width: w, height: h, child: VideoPlayer(c)),
-        );
-      }
-    }
-
-    return CleanerThumbnail(asset: widget.asset, size: d, borderRadius: 0);
+    return ValueListenableBuilder<VideoPlayerController?>(
+      valueListenable: _controllerNotifier,
+      builder: (context, c, _) {
+        if (c != null && c.value.isInitialized) {
+          return AnimatedBuilder(
+            animation: c,
+            builder: (context, _) {
+              final sz = c.value.size;
+              final w = sz.width;
+              final h = sz.height;
+              if (w > 0 && h > 0) {
+                return FittedBox(
+                  fit: BoxFit.cover,
+                  clipBehavior: Clip.hardEdge,
+                  child: SizedBox(width: w, height: h, child: VideoPlayer(c)),
+                );
+              }
+              return CleanerThumbnail(asset: widget.asset, size: d, borderRadius: 0);
+            },
+          );
+        }
+        return CleanerThumbnail(asset: widget.asset, size: d, borderRadius: 0);
+      },
+    );
   }
 }

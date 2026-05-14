@@ -1,89 +1,51 @@
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-import '../../../services/gallery/gallery_media_service.dart';
+import '../../../controllers/vault_media_picker_controller.dart';
 
 /// Multi-select recent photos and videos (newest first).
-class VaultMediaPickerPage extends StatefulWidget {
+class VaultMediaPickerPage extends StatelessWidget {
   const VaultMediaPickerPage({super.key});
 
   @override
-  State<VaultMediaPickerPage> createState() => _VaultMediaPickerPageState();
+  Widget build(BuildContext context) {
+    return const _VaultMediaPickerHost();
+  }
 }
 
-class _VaultMediaPickerPageState extends State<VaultMediaPickerPage> {
-  final _gallery = Get.find<GalleryMediaService>();
-  final _assets = <AssetEntity>[];
-  final _selected = <String>{};
-  final _scroll = ScrollController();
-  int _page = 0;
-  static const _pageSize = 80;
-  bool _loading = false;
-  bool _end = false;
+class _VaultMediaPickerHost extends StatefulWidget {
+  const _VaultMediaPickerHost();
 
+  @override
+  State<_VaultMediaPickerHost> createState() => _VaultMediaPickerHostState();
+}
+
+class _VaultMediaPickerHostState extends State<_VaultMediaPickerHost> {
   @override
   void initState() {
     super.initState();
-    _scroll.addListener(_onScroll);
-    unawaited(_loadNext());
+    Get.put(VaultMediaPickerController());
   }
 
   @override
   void dispose() {
-    _scroll.removeListener(_onScroll);
-    _scroll.dispose();
+    if (Get.isRegistered<VaultMediaPickerController>()) {
+      Get.delete<VaultMediaPickerController>();
+    }
     super.dispose();
   }
 
-  void _onScroll() {
-    if (_end || _loading) return;
-    final pos = _scroll.position;
-    if (pos.pixels > pos.maxScrollExtent - 400) {
-      unawaited(_loadNext());
-    }
+  @override
+  Widget build(BuildContext context) {
+    return const _VaultMediaPickerView();
   }
+}
 
-  Future<void> _loadNext() async {
-    setState(() => _loading = true);
-    try {
-      final batch = await _gallery.getPagedMediaAssets(
-        page: _page,
-        pageSize: _pageSize,
-      );
-      if (!mounted) return;
-      if (batch.isEmpty) {
-        _end = true;
-      } else {
-        _assets.addAll(batch);
-        _page++;
-        if (batch.length < _pageSize) _end = true;
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
-
-  void _toggle(AssetEntity a) {
-    setState(() {
-      if (_selected.contains(a.id)) {
-        _selected.remove(a.id);
-      } else {
-        _selected.add(a.id);
-      }
-    });
-  }
-
-  void _confirm() {
-    final out = <AssetEntity>[];
-    for (final a in _assets) {
-      if (_selected.contains(a.id)) out.add(a);
-    }
-    Get.back(result: out);
-  }
+class _VaultMediaPickerView extends GetView<VaultMediaPickerController> {
+  const _VaultMediaPickerView();
 
   @override
   Widget build(BuildContext context) {
@@ -94,16 +56,19 @@ class _VaultMediaPickerPageState extends State<VaultMediaPickerPage> {
       appBar: AppBar(
         title: const Text('Import to vault'),
         actions: [
-          TextButton(
-            onPressed: _selected.isEmpty ? null : _confirm,
-            child: Text(
-              'Import (${_selected.length})',
-              style: TextStyle(
-                color: cs.primary,
-                fontWeight: FontWeight.w700,
+          Obx(() {
+            final n = controller.selectedIds.length;
+            return TextButton(
+              onPressed: n == 0 ? null : controller.confirm,
+              child: Text(
+                'Import ($n)',
+                style: TextStyle(
+                  color: cs.primary,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ],
       ),
       body: Column(
@@ -116,71 +81,74 @@ class _VaultMediaPickerPageState extends State<VaultMediaPickerPage> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              controller: _scroll,
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
-              ),
-              itemCount: _assets.length + (_loading && !_end ? 1 : 0),
-              itemBuilder: (context, i) {
-                if (i >= _assets.length) {
-                  return Center(
-                    child: SizedBox(
-                      width: 28,
-                      height: 28,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: cs.primary,
-                      ),
-                    ),
-                  );
-                }
-                final a = _assets[i];
-                final sel = _selected.contains(a.id);
-                return GestureDetector(
-                  onTap: () => _toggle(a),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      _VaultPickerThumb(asset: a),
-                      if (a.type == AssetType.video)
-                        const Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.play_circle_fill_rounded,
-                            color: Colors.white,
-                            size: 36,
-                          ),
+            child: Obx(() {
+              final list = controller.assets;
+              final loading = controller.loading.value;
+              final ended = controller.end.value;
+              final selected = controller.selectedIds;
+              return GridView.builder(
+                controller: controller.scroll,
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 24),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 4,
+                  mainAxisSpacing: 4,
+                ),
+                itemCount: list.length + (loading && !ended ? 1 : 0),
+                itemBuilder: (context, i) {
+                  if (i >= list.length) {
+                    return Center(
+                      child: SizedBox(
+                        width: 28,
+                        height: 28,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: cs.primary,
                         ),
-                      Positioned(
-                        top: 6,
-                        right: 6,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color:
-                                sel
-                                    ? cs.primary
-                                    : Colors.black54,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2),
+                      ),
+                    );
+                  }
+                  final a = list[i];
+                  final sel = selected.contains(a.id);
+                  return GestureDetector(
+                    onTap: () => controller.toggle(a),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        _VaultPickerThumb(asset: a),
+                        if (a.type == AssetType.video)
+                          const Align(
+                            alignment: Alignment.center,
                             child: Icon(
-                              sel ? Icons.check_rounded : Icons.circle_outlined,
+                              Icons.play_circle_fill_rounded,
                               color: Colors.white,
-                              size: 18,
+                              size: 36,
+                            ),
+                          ),
+                        Positioned(
+                          top: 6,
+                          right: 6,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: sel ? cs.primary : Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2),
+                              child: Icon(
+                                sel ? Icons.check_rounded : Icons.circle_outlined,
+                                color: Colors.white,
+                                size: 18,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),

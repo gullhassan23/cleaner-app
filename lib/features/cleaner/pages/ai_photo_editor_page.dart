@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:cleaner_app/controllers/ai_gallery_sheet_controller.dart';
 import 'package:cleaner_app/models/photo_library/scan_state_entity.dart';
 import 'package:cleaner_app/services/gallery/gallery_media_service.dart';
 import 'package:cleaner_app/services/permissions/photo_permission_service.dart';
@@ -40,7 +41,10 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => _AiGalleryBottomSheet(
-        feature: feature,
+        sheetTitle: switch (feature) {
+          AiPhotoEditorFeature.photoEnhance => 'Pick a photo to enhance',
+          AiPhotoEditorFeature.fixOldPhoto => 'Pick an old photo to restore',
+        },
         onPick: (asset) => _cropPickedAsset(ctx, asset),
       ),
     );
@@ -321,11 +325,11 @@ class _SplitDemoThumb extends StatelessWidget {
 
 class _AiGalleryBottomSheet extends StatefulWidget {
   const _AiGalleryBottomSheet({
-    required this.feature,
+    required this.sheetTitle,
     required this.onPick,
   });
 
-  final AiPhotoEditorFeature feature;
+  final String sheetTitle;
   final Future<void> Function(AssetEntity asset) onPick;
 
   @override
@@ -333,62 +337,30 @@ class _AiGalleryBottomSheet extends StatefulWidget {
 }
 
 class _AiGalleryBottomSheetState extends State<_AiGalleryBottomSheet> {
-  final _gallery = Get.find<GalleryMediaService>();
-  final _assets = <AssetEntity>[];
-  final _scroll = ScrollController();
-  int _page = 0;
-  static const _pageSize = 60;
-  bool _loading = false;
-  bool _end = false;
-
   @override
   void initState() {
     super.initState();
-    _scroll.addListener(_onScroll);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _loadNext());
+    Get.put(AiGallerySheetController(sheetTitle: widget.sheetTitle));
   }
 
   @override
   void dispose() {
-    _scroll.removeListener(_onScroll);
-    _scroll.dispose();
+    if (Get.isRegistered<AiGallerySheetController>()) {
+      Get.delete<AiGallerySheetController>();
+    }
     super.dispose();
   }
 
-  void _onScroll() {
-    if (_end || _loading) return;
-    final pos = _scroll.position;
-    if (pos.pixels > pos.maxScrollExtent - 320) {
-      _loadNext();
-    }
+  @override
+  Widget build(BuildContext context) {
+    return _AiGallerySheetBody(onPick: widget.onPick);
   }
+}
 
-  Future<void> _loadNext() async {
-    if (_loading || _end) return;
-    setState(() => _loading = true);
-    try {
-      final batch = await _gallery.getPagedPhotoAssets(page: _page, pageSize: _pageSize);
-      if (!mounted) return;
-      if (batch.isEmpty) {
-        _end = true;
-      } else {
-        _assets.addAll(batch);
-        _page++;
-        if (batch.length < _pageSize) _end = true;
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
+class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
+  const _AiGallerySheetBody({required this.onPick});
 
-  String get _sheetTitle {
-    switch (widget.feature) {
-      case AiPhotoEditorFeature.photoEnhance:
-        return 'Pick a photo to enhance';
-      case AiPhotoEditorFeature.fixOldPhoto:
-        return 'Pick an old photo to restore';
-    }
-  }
+  final Future<void> Function(AssetEntity asset) onPick;
 
   @override
   Widget build(BuildContext context) {
@@ -421,7 +393,7 @@ class _AiGalleryBottomSheetState extends State<_AiGalleryBottomSheet> {
                 children: [
                   Expanded(
                     child: Text(
-                      _sheetTitle,
+                      controller.sheetTitle,
                       style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -433,49 +405,56 @@ class _AiGalleryBottomSheetState extends State<_AiGalleryBottomSheet> {
               ),
             ),
             Expanded(
-              child: _assets.isEmpty && _loading
-                  ? const Center(child: CircularProgressIndicator())
-                  : _assets.isEmpty
-                  ? Center(
-                      child: Text(
-                        'No photos found',
-                        style: TextStyle(color: Colors.grey.shade600),
-                      ),
-                    )
-                  : GridView.builder(
-                      controller: _scroll,
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 20),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 6,
-                        mainAxisSpacing: 6,
-                      ),
-                      itemCount: _assets.length + (_loading && !_end ? 1 : 0),
-                      itemBuilder: (context, i) {
-                        if (i >= _assets.length) {
-                          return const Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(12),
-                              child: SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(strokeWidth: 2),
-                              ),
-                            ),
-                          );
-                        }
-                        final a = _assets[i];
-                        return Material(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(8),
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            onTap: () => widget.onPick(a),
-                            child: _GalleryThumb(asset: a),
-                          ),
-                        );
-                      },
+              child: Obx(() {
+                final list = controller.assets;
+                final loading = controller.loading.value;
+                final ended = controller.end.value;
+                if (list.isEmpty && loading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (list.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'No photos found',
+                      style: TextStyle(color: Colors.grey.shade600),
                     ),
+                  );
+                }
+                return GridView.builder(
+                  controller: controller.scroll,
+                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 20),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 6,
+                    mainAxisSpacing: 6,
+                  ),
+                  itemCount: list.length + (loading && !ended ? 1 : 0),
+                  itemBuilder: (context, i) {
+                    if (i >= list.length) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(12),
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        ),
+                      );
+                    }
+                    final a = list[i];
+                    return Material(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(8),
+                      clipBehavior: Clip.antiAlias,
+                      child: InkWell(
+                        onTap: () => onPick(a),
+                        child: _GalleryThumb(asset: a),
+                      ),
+                    );
+                  },
+                );
+              }),
             ),
           ],
         ),

@@ -23,7 +23,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Colors.white,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         bottom: false,
         child: Obx(() {
