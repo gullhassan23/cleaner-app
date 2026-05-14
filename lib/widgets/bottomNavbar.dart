@@ -1,6 +1,7 @@
 import 'package:cleaner_app/features/cleaner/pages/cleaner_dashboard_page.dart';
-import 'package:cleaner_app/features/compress/compress_picker_page.dart';
+import 'package:cleaner_app/features/compress/compress_main_screen.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
+import 'package:cleaner_app/features/more/more_settting.dart';
 import 'package:cleaner_app/controllers/main_shell_controller.dart';
 import 'package:cleaner_app/features/vault/vault_root_page.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class MainShellPage extends GetView<MainShellController> {
                       ? const ContactsRootPage()
                       : const SizedBox.shrink(),
             ),
-            const CompressPickerPage(),
+            const CompressMainScreen(),
             Obx(() {
               if (!controller.vaultTabReady.value) {
                 if (controller.currentIndex.value == 3) {
@@ -43,10 +44,7 @@ class MainShellPage extends GetView<MainShellController> {
               }
               return const VaultRootPage();
             }),
-            const _ShellPlaceholderPage(
-              title: 'More',
-              icon: Icons.grid_view_rounded,
-            ),
+            const MoreToolsPage(),
           ],
         ),
       ),
@@ -201,39 +199,6 @@ class _NavCell extends StatelessWidget {
                   fontSize: 10,
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   color: labelColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ShellPlaceholderPage extends StatelessWidget {
-  const _ShellPlaceholderPage({required this.title, required this.icon});
-
-  final String title;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.white,
-      child: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 48, color: _kNavGrey),
-              const SizedBox(height: 12),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black87,
                 ),
               ),
             ],

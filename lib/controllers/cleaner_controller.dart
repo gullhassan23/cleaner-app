@@ -21,8 +21,8 @@ import '../services/cleaner/gallery_scan_coordinator.dart';
 import '../services/cleaner/similar_detector_service.dart';
 import 'main_shell_controller.dart';
 import 'cleaner_group_sheet_controller.dart';
-import '../features/cleaner/widgets/cleaner_flat_media_bottom_sheet.dart';
-import '../features/cleaner/widgets/cleaner_group_bottom_sheet.dart';
+import '../widgets/cleaner/cleaner_flat_media_bottom_sheet.dart';
+import '../widgets/cleaner/cleaner_group_bottom_sheet.dart';
 
 class CleanerController extends GetxController {
   CleanerController({

@@ -1,15 +1,15 @@
+import 'package:cleaner_app/widgets/compress/picker_summary_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../models/cleaner/cleaner_dashboard_sort.dart';
-import '../../utils/bytes_formatter.dart';
 import '../../widgets/state_message_card.dart';
 import '../../models/photo_library/scan_state_entity.dart';
-import 'widgets/asset_thumbnail.dart';
+import '../../widgets/compress/asset_thumbnail.dart';
 import '../../controllers/compress_picker_controller.dart';
 
-class CompressPickerPage extends GetView<CompressPickerController> {
-  const CompressPickerPage({super.key});
+class CompressMainScreen extends GetView<CompressPickerController> {
+  const CompressMainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +137,7 @@ class CompressPickerPage extends GetView<CompressPickerController> {
                         SliverToBoxAdapter(
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 16),
-                            child: _PickerSummaryCard(
+                            child: PickerSummaryCard(
                               totalCount: session.totalCount,
                               selectedCount: session.selectedAssetIds.length,
                               selectedBytes:
@@ -160,7 +160,9 @@ class CompressPickerPage extends GetView<CompressPickerController> {
                               asset: asset,
                               width: 420,
                               height: 420,
-                              isSelected: controller.session.isSelected(asset.id),
+                              isSelected: controller.session.isSelected(
+                                asset.id,
+                              ),
                               onTap: () => controller.toggleSelection(asset.id),
                               onLongPress:
                                   () => controller.toggleSelection(asset.id),
@@ -239,8 +241,10 @@ class CompressPickerPage extends GetView<CompressPickerController> {
                         ? Icon(Icons.check_rounded, color: primary)
                         : null,
                 onTap:
-                    () =>
-                        Navigator.pop(ctx, CleanerDashboardSort.newestDateFirst),
+                    () => Navigator.pop(
+                      ctx,
+                      CleanerDashboardSort.newestDateFirst,
+                    ),
               ),
               ListTile(
                 title: const Text('Oldest date first'),
@@ -249,8 +253,10 @@ class CompressPickerPage extends GetView<CompressPickerController> {
                         ? Icon(Icons.check_rounded, color: primary)
                         : null,
                 onTap:
-                    () =>
-                        Navigator.pop(ctx, CleanerDashboardSort.oldestDateFirst),
+                    () => Navigator.pop(
+                      ctx,
+                      CleanerDashboardSort.oldestDateFirst,
+                    ),
               ),
             ],
           ),
@@ -287,7 +293,10 @@ class _PermissionBody extends StatelessWidget {
                   ? 'Open system settings and enable gallery access to compress images and videos.'
                   : 'Cleaner needs access to your gallery before it can show photos and videos for compression.',
           primaryAction: FilledButton(
-            onPressed: needsSettings ? controller.openSettings : controller.requestAccess,
+            onPressed:
+                needsSettings
+                    ? controller.openSettings
+                    : controller.requestAccess,
             child: Text(needsSettings ? 'Open settings' : 'Allow access'),
           ),
           secondaryAction:
@@ -299,104 +308,6 @@ class _PermissionBody extends StatelessWidget {
                   : null,
         ),
       ],
-    );
-  }
-}
-
-class _PickerSummaryCard extends StatelessWidget {
-  const _PickerSummaryCard({
-    required this.totalCount,
-    required this.selectedCount,
-    required this.selectedBytes,
-    required this.isLimited,
-    this.onManageAccess,
-  });
-
-  final int totalCount;
-  final int selectedCount;
-  final int selectedBytes;
-  final bool isLimited;
-  final VoidCallback? onManageAccess;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text('Select media to compress', style: theme.textTheme.titleLarge),
-                ),
-                if (isLimited)
-                  TextButton.icon(
-                    onPressed: onManageAccess,
-                    icon: const Icon(Icons.photo_library_outlined),
-                    label: const Text('Manage access'),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Pick one or more images/videos, then continue to quality selection and compression.',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            const SizedBox(height: 18),
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: [
-                _MetricChip(label: 'Visible items', value: '$totalCount'),
-                _MetricChip(label: 'Selected', value: '$selectedCount'),
-                _MetricChip(
-                  label: 'Selected size',
-                  value: BytesFormatter.humanize(selectedBytes),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MetricChip extends StatelessWidget {
-  const _MetricChip({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(value, style: theme.textTheme.titleMedium),
-        ],
-      ),
     );
   }
 }
