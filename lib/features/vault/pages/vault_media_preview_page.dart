@@ -4,8 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../routes/app_routes.dart';
 import '../../../repositories/vault_repository.dart';
 import '../models/vault_media_model.dart';
+
+/// Passed via [Get.toNamed] `arguments` for [AppRoutes.vaultMediaPreview].
+class VaultMediaPreviewArgs {
+  const VaultMediaPreviewArgs({required this.model, required this.file});
+
+  final VaultMediaModel model;
+  final File file;
+}
 
 class VaultMediaPreviewPage extends StatefulWidget {
   const VaultMediaPreviewPage({

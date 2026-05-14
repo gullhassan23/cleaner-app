@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../repositories/vault_repository.dart';
+import '../../../routes/app_routes.dart';
 import '../controllers/vault_controller.dart';
 import '../models/vault_media_model.dart';
 import 'vault_media_preview_page.dart';
@@ -287,8 +288,9 @@ class _VaultThumbTileState extends State<_VaultThumbTile> {
             return;
           }
           if (!context.mounted) return;
-          await Get.to<void>(
-            () => VaultMediaPreviewPage(model: widget.model, file: file),
+          await Get.toNamed<void>(
+            AppRoutes.vaultMediaPreview,
+            arguments: VaultMediaPreviewArgs(model: widget.model, file: file),
           );
           await vault.refreshMedia();
         },

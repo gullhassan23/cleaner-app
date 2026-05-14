@@ -1,4 +1,5 @@
 import 'package:cleaner_app/controllers/contacts_list_controller.dart';
+import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/services/contacts/contacts_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -10,14 +11,15 @@ class ContactsListPage extends GetView<ContactsListController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final nav = Navigator.of(context);
     final repo = Get.find<ContactsRepository>();
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
-          onPressed: () => nav.pop(),
+          onPressed: () => Get.back<void>(
+            id: AppRoutes.contactsNestedNavigatorId,
+          ),
           child: const Text('< Back'),
         ),
         leadingWidth: 88,

@@ -6,10 +6,10 @@ import 'package:photo_manager/photo_manager.dart';
 
 import '../../../models/photo_library/scan_state_entity.dart';
 import '../../../repositories/vault_repository.dart';
+import '../../../routes/app_routes.dart';
 import '../../../services/permissions/photo_permission_service.dart';
 import '../models/vault_media_model.dart';
 import '../models/vault_result.dart';
-import '../pages/vault_media_picker_page.dart';
 
 enum VaultShellState { setup, unlock, home }
 
@@ -234,7 +234,7 @@ class VaultController extends GetxController {
       }
     }
 
-    final pickedRaw = await Get.to(() => const VaultMediaPickerPage());
+    final pickedRaw = await Get.toNamed<dynamic>(AppRoutes.vaultMediaPicker);
     if (pickedRaw is! List<AssetEntity> || pickedRaw.isEmpty) return;
     final picked = pickedRaw;
 

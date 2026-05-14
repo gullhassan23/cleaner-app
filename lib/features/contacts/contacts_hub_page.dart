@@ -1,5 +1,5 @@
 import 'package:cleaner_app/controllers/contacts_hub_controller.dart';
-import 'package:cleaner_app/features/contacts/contacts_nav_routes.dart';
+import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/widgets/state_message_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,6 @@ class ContactsHubPage extends GetView<ContactsHubController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final nav = Navigator.of(context);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surfaceContainerHighest.withValues(
@@ -54,26 +53,38 @@ class ContactsHubPage extends GetView<ContactsHubController> {
               icon: Icons.person,
               title: 'Contacts',
               trailingCount: repo.totalCount,
-              onTap: () => nav.pushNamed(ContactsNavRoutes.list),
+              onTap: () => Get.toNamed<void>(
+                AppRoutes.contactsList,
+                id: AppRoutes.contactsNestedNavigatorId,
+              ),
             ),
             _HubRow(
               icon: Icons.cloud_upload_outlined,
               title: 'Contacts Backup',
-              onTap: () => nav.pushNamed(ContactsNavRoutes.backup),
+              onTap: () => Get.toNamed<void>(
+                AppRoutes.contactsBackup,
+                id: AppRoutes.contactsNestedNavigatorId,
+              ),
             ),
             _HubRow(
               icon: Icons.people_outline,
               title: 'Duplicate Contacts',
               subtitle: 'Names. Numbers. Emails.',
               trailingCount: repo.duplicateInvolvedCount,
-              onTap: () => nav.pushNamed(ContactsNavRoutes.duplicates),
+              onTap: () => Get.toNamed<void>(
+                AppRoutes.contactsDuplicates,
+                id: AppRoutes.contactsNestedNavigatorId,
+              ),
             ),
             _HubRow(
               icon: Icons.person_off_outlined,
               title: 'Incomplete Contacts',
               subtitle: 'Names. Numbers. Emails.',
               trailingCount: repo.incompleteCount,
-              onTap: () => nav.pushNamed(ContactsNavRoutes.incomplete),
+              onTap: () => Get.toNamed<void>(
+                AppRoutes.contactsIncomplete,
+                id: AppRoutes.contactsNestedNavigatorId,
+              ),
             ),
           ],
         );

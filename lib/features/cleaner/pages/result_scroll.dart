@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/widgets/cleaner/category_grid.dart';
 import 'package:cleaner_app/widgets/storage_strip.dart';
 import 'package:cleaner_app/utils/colors.dart';
@@ -76,7 +77,7 @@ class ResultsScrollBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const StorageStrip(),
-            SizedBox(height: gap + 56),
+            SizedBox(height: gap),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -173,6 +174,33 @@ class ResultsScrollBody extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: gap),
+            Material(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(20),
+              clipBehavior: Clip.antiAlias,
+              child: ListTile(
+                onTap: () => Get.toNamed(AppRoutes.aiPhotoEditor),
+                leading: const Icon(Icons.image, color: Colors.white),
+                title: const Text(
+                  'AI Photo Editor',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                subtitle: const Text(
+                  'Improve photo quality',
+                  style: TextStyle(color: Colors.white70),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            SizedBox(height: gap),
           ],
         ),
       );
