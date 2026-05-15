@@ -29,6 +29,7 @@ abstract class PhotoLibraryRepository {
   Future<GalleryPageEntity> fetchMediaPage({
     required int page,
     required int pageSize,
+    bool videosOnly = false,
   });
 
   Future<List<PhotoAssetEntity>> fetchAllMedia();

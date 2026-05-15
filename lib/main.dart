@@ -7,5 +7,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final initialTheme = await ThemeController.loadSaved();
   Get.put(ThemeController(initialTheme), permanent: true);
+  Get.changeThemeMode(initialTheme);
   runApp(const MyApp());
 }

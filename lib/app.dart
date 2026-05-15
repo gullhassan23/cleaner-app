@@ -13,18 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
-    return Obx(
-      () => GetMaterialApp(
-        title: 'Cleaner App',
-        debugShowCheckedModeBanner: false,
-        initialBinding: AppBinding(),
-        initialRoute: AppRoutes.main,
-        getPages: AppPages.pages,
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: themeController.themeMode.value,
-        defaultTransition: Transition.cupertino,
-      ),
+    return GetMaterialApp(
+      title: 'Cleaner App',
+      debugShowCheckedModeBanner: false,
+      initialBinding: AppBinding(),
+      initialRoute: AppRoutes.main,
+      getPages: AppPages.pages,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: themeController.themeMode.value,
+      defaultTransition: Transition.cupertino,
     );
   }
 }

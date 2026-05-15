@@ -176,6 +176,7 @@ class CompressSessionController extends GetxController {
       final galleryPage = await _fetchMediaGalleryPageUseCase(
         page: 0,
         pageSize: state.value.pageSize,
+        videosOnly: true,
       );
       _applySession(
         (current) => current.copyWith(
@@ -208,6 +209,7 @@ class CompressSessionController extends GetxController {
       final galleryPage = await _fetchMediaGalleryPageUseCase(
         page: nextPage,
         pageSize: state.value.pageSize,
+        videosOnly: true,
       );
       final mergedItems = <PhotoAssetEntity>[
         ...mediaItems,
@@ -402,6 +404,7 @@ class CompressSessionController extends GetxController {
       final galleryPage = await _fetchMediaGalleryPageUseCase(
         page: 0,
         pageSize: state.value.pageSize,
+        videosOnly: true,
       );
       final mergedItems = <PhotoAssetEntity>[];
       final seenIds = <String>{};

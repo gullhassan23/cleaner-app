@@ -97,12 +97,22 @@ class PhotoLibraryDataSource {
   Future<GalleryPageEntity> fetchMediaPage({
     required int page,
     required int pageSize,
+    bool videosOnly = false,
   }) async {
-    final totalCount = await _galleryService.getMediaCount();
-    final assets = await _galleryService.getPagedMediaAssets(
-      page: page,
-      pageSize: pageSize,
-    );
+    final totalCount =
+        videosOnly
+            ? await _galleryService.getVideoCount()
+            : await _galleryService.getMediaCount();
+    final assets =
+        videosOnly
+            ? await _galleryService.getPagedVideoAssets(
+              page: page,
+              pageSize: pageSize,
+            )
+            : await _galleryService.getPagedMediaAssets(
+              page: page,
+              pageSize: pageSize,
+            );
     final models = await _hydrateAssets(assets);
 
     return GalleryPageModel(

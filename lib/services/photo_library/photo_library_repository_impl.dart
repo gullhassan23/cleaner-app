@@ -64,8 +64,13 @@ class PhotoLibraryRepositoryImpl implements PhotoLibraryRepository {
   Future<GalleryPageEntity> fetchMediaPage({
     required int page,
     required int pageSize,
+    bool videosOnly = false,
   }) {
-    return _dataSource.fetchMediaPage(page: page, pageSize: pageSize);
+    return _dataSource.fetchMediaPage(
+      page: page,
+      pageSize: pageSize,
+      videosOnly: videosOnly,
+    );
   }
 
   @override

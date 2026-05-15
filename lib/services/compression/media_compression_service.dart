@@ -234,11 +234,23 @@ class MediaCompressionService {
   }
 
   String _relativePathFor(PhotoAssetEntity asset) {
-    final relativePath = asset.relativePath?.trim();
-    if (relativePath != null && relativePath.isNotEmpty) {
-      return relativePath;
+    const fallbackVideo = 'Movies/Cleaner';
+    const fallbackImage = 'Pictures/Cleaner';
+    final raw = asset.relativePath?.trim();
+    if (raw == null || raw.isEmpty) {
+      return asset.isVideo ? fallbackVideo : fallbackImage;
     }
-    return asset.isVideo ? 'Movies/Cleaner' : 'Pictures/Cleaner';
+    final normalized =
+        raw.replaceAll('\\', '/').replaceFirst(RegExp(r'^/+'), '');
+    if (normalized.isEmpty) {
+      return asset.isVideo ? fallbackVideo : fallbackImage;
+    }
+    final primary = normalized.split('/').first.toLowerCase();
+    const allowedRoots = {'dcim', 'movies', 'pictures'};
+    if (!allowedRoots.contains(primary)) {
+      return asset.isVideo ? fallbackVideo : fallbackImage;
+    }
+    return normalized;
   }
 
   Future<File> _resolveSavedFile(AssetEntity savedAsset, File fallback) async {

@@ -48,9 +48,9 @@ class CompressMainScreen extends GetView<CompressPickerController> {
               children: [
                 StateMessageCard(
                   icon: Icons.perm_media_outlined,
-                  title: 'No media found',
+                  title: 'No videos found',
                   message:
-                      'Images and videos will appear here after gallery access is granted.',
+                      'Videos will appear here after gallery access is granted.',
                   primaryAction: FilledButton(
                     onPressed: controller.refreshMedia,
                     child: const Text('Reload'),
@@ -583,8 +583,8 @@ class _PermissionBody extends StatelessWidget {
           title: needsSettings ? 'Media access blocked' : 'Allow media access',
           message:
               needsSettings
-                  ? 'Open system settings and enable gallery access to compress images and videos.'
-                  : 'Cleaner needs access to your gallery before it can show photos and videos for compression.',
+                  ? 'Open system settings and enable gallery access to compress videos.'
+                  : 'Cleaner needs access to your gallery before it can show videos for compression.',
           primaryAction: FilledButton(
             onPressed:
                 needsSettings

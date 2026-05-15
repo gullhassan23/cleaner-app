@@ -33,6 +33,10 @@ class GalleryMediaService {
     return _getAssetCount(type: RequestType.common);
   }
 
+  Future<int> getVideoCount() {
+    return _getAssetCount(type: RequestType.video);
+  }
+
   Future<List<AssetEntity>> getPagedMediaAssets({
     required int page,
     required int pageSize,
@@ -41,6 +45,17 @@ class GalleryMediaService {
       page: page,
       pageSize: pageSize,
       type: RequestType.common,
+    );
+  }
+
+  Future<List<AssetEntity>> getPagedVideoAssets({
+    required int page,
+    required int pageSize,
+  }) {
+    return getPagedAssets(
+      page: page,
+      pageSize: pageSize,
+      type: RequestType.video,
     );
   }
 

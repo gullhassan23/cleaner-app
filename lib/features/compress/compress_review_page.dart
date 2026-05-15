@@ -74,7 +74,7 @@ class CompressReviewPage extends GetView<CompressReviewController> {
                 StateMessageCard(
                   icon: Icons.photo_library_outlined,
                   title: 'No media selected',
-                  message: 'Go back and select at least one image or video.',
+                  message: 'Go back and select at least one video.',
                 ),
               ],
             );

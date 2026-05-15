@@ -59,8 +59,16 @@ class FetchMediaGalleryPageUseCase {
 
   final PhotoLibraryRepository _repository;
 
-  Future<GalleryPageEntity> call({required int page, required int pageSize}) {
-    return _repository.fetchMediaPage(page: page, pageSize: pageSize);
+  Future<GalleryPageEntity> call({
+    required int page,
+    required int pageSize,
+    bool videosOnly = false,
+  }) {
+    return _repository.fetchMediaPage(
+      page: page,
+      pageSize: pageSize,
+      videosOnly: videosOnly,
+    );
   }
 }
 

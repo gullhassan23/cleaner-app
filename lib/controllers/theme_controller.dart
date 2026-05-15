@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,8 +30,15 @@ class ThemeController extends GetxController {
     }
   }
 
-  Future<void> setThemeMode(ThemeMode mode) async {
+  /// Updates reactive state, notifies [GetMaterialApp] via [Get.changeThemeMode]
+  /// (lighter than rebuilding the whole app), and persists in the background.
+  void setThemeMode(ThemeMode mode) {
     themeMode.value = mode;
+    Get.changeThemeMode(mode);
+    unawaited(_persist(mode));
+  }
+
+  static Future<void> _persist(ThemeMode mode) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_prefsKey, _serialize(mode));
   }
