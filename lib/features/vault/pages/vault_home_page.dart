@@ -26,7 +26,7 @@ class VaultHomePage extends GetView<VaultController> {
                   IconButton(
                     tooltip: 'Lock',
                     onPressed: controller.lockVault,
-                    icon: Icon(Icons.lock_rounded, color: cs.onSurface),
+                    icon: Icon(Icons.lock_open, color: cs.onSurface),
                   ),
                   const Spacer(),
                   Obx(
@@ -60,7 +60,9 @@ class VaultHomePage extends GetView<VaultController> {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: cs.outlineVariant.withValues(alpha: 0.5)),
+                      border: Border.all(
+                        color: cs.outlineVariant.withValues(alpha: 0.5),
+                      ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(12),
@@ -78,29 +80,33 @@ class VaultHomePage extends GetView<VaultController> {
                           Text(
                             'iOS may only show photos you selected. Use Manage to add more, '
                             'or open Settings for full access.',
-                            style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12),
+                            style: TextStyle(
+                              color: cs.onSurfaceVariant,
+                              fontSize: 12,
+                            ),
                           ),
-                        const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: [
-                            TextButton(
-                              onPressed: controller.presentManageLibraryAccess,
-                              child: const Text('Manage library'),
-                            ),
-                            TextButton(
-                              onPressed: controller.openSystemPhotoSettings,
-                              child: const Text('Open settings'),
-                            ),
-                          ],
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              TextButton(
+                                onPressed:
+                                    controller.presentManageLibraryAccess,
+                                child: const Text('Manage library'),
+                              ),
+                              TextButton(
+                                onPressed: controller.openSystemPhotoSettings,
+                                child: const Text('Open settings'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
+              );
             }),
             Expanded(
               child: Obx(() {
@@ -132,7 +138,10 @@ class VaultHomePage extends GetView<VaultController> {
                             'Import photos and videos from your library. '
                             'They are stored only on this device in private app storage.',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13),
+                            style: TextStyle(
+                              color: cs.onSurfaceVariant,
+                              fontSize: 13,
+                            ),
                           ),
                           const SizedBox(height: 24),
                           FilledButton.icon(

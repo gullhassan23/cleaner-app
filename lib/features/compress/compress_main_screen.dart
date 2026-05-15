@@ -140,8 +140,10 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                       asset: asset,
                                       isSelected: selected,
                                       primaryColor: theme.colorScheme.primary,
-                                      onPressed: () =>
-                                          controller.toggleSelection(asset.id),
+                                      onPressed:
+                                          () => controller.toggleSelection(
+                                            asset.id,
+                                          ),
                                     );
                                   }, childCount: displayItems.length),
                                   gridDelegate:
@@ -149,7 +151,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                         crossAxisCount: 2,
                                         mainAxisSpacing: _gridGap,
                                         crossAxisSpacing: _gridGap,
-                                        childAspectRatio: 0.72,
+                                        childAspectRatio: 0.8,
                                       ),
                                 ),
                               ),
@@ -161,7 +163,8 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                           ? const Center(
                                             child: Padding(
                                               padding: EdgeInsets.all(12),
-                                              child: CircularProgressIndicator(),
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ),
                                           )
                                           : const SizedBox.shrink(),
@@ -443,58 +446,56 @@ class _CompressGridTile extends StatelessWidget {
             right: 8,
             bottom: 8,
             child: Material(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                  child: InkWell(
-                    onTap: onPressed,
-                    borderRadius: BorderRadius.circular(10),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 10,
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Save',
-                                  style: theme.textTheme.titleSmall?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.1,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  sizeLabel,
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: Colors.white.withValues(
-                                      alpha: 0.95,
-                                    ),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(10),
+              child: InkWell(
+                onTap: onPressed,
+                borderRadius: BorderRadius.circular(10),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Save',
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.chevron_right_rounded,
-                            color: Colors.white.withValues(alpha: 0.95),
-                            size: 22,
-                          ),
-                        ],
+                            const SizedBox(height: 2),
+                            Text(
+                              sizeLabel,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: Colors.white.withValues(alpha: 0.95),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: Colors.white.withValues(alpha: 0.95),
+                        size: 22,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
           ),
+        ],
+      ),
     );
   }
 }

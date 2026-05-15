@@ -1,4 +1,5 @@
 import 'package:cleaner_app/utils/colors.dart';
+import 'package:cleaner_app/widgets/storage_strip.dart';
 import 'package:flutter/material.dart';
 
 class DashboardAppbar extends StatelessWidget {
@@ -21,63 +22,80 @@ class DashboardAppbar extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 8, 12, 4),
-          child: Row(
+          child: Column(
             children: [
-              Text(
-                'Cleaner',
-                style: TextStyle(
-                  fontSize: 34,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.8,
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              const Spacer(),
-              Material(
-                color: kDashBlue,
-                borderRadius: BorderRadius.circular(20),
-                child: InkWell(
-                  onTap:
-                      () => ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(const SnackBar(content: Text('PRO'))),
-                  borderRadius: BorderRadius.circular(20),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.thumb_up_alt_rounded,
-                          size: 16,
-                          color: Colors.white,
-                        ),
-                        SizedBox(width: 6),
-                        Text(
-                          'PRO',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
+              Row(
+                children: [
+                  Text(
+                    'Cleaner',
+                    style: TextStyle(
+                      fontSize: 34,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.8,
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
-                ),
+                  const Spacer(),
+                  Material(
+                    color: kDashBlue,
+                    borderRadius: BorderRadius.circular(20),
+                    child: InkWell(
+                      onTap:
+                          () => ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(const SnackBar(content: Text('PRO'))),
+                      borderRadius: BorderRadius.circular(20),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.thumb_up_alt_rounded,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 6),
+                            Text(
+                              'PRO',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (onSort != null)
+                    IconButton(
+                      onPressed: onSort,
+                      icon: Icon(
+                        Icons.sort_rounded,
+                        color: kDashGrey,
+                        size: 26,
+                      ),
+                    ),
+                  IconButton(
+                    onPressed: onSettings,
+                    icon: Icon(
+                      Icons.settings_outlined,
+                      color: kDashGrey,
+                      size: 26,
+                    ),
+                  ),
+                ],
               ),
-              if (onSort != null)
-                IconButton(
-                  onPressed: onSort,
-                  icon: Icon(Icons.sort_rounded, color: kDashGrey, size: 26),
-                ),
-              IconButton(
-                onPressed: onSettings,
-                icon: Icon(Icons.settings_outlined, color: kDashGrey, size: 26),
-              ),
+              StorageStrip(),
             ],
           ),
         ),
+
         Expanded(child: child),
       ],
     );

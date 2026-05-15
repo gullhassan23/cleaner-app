@@ -31,6 +31,8 @@ class CategoryGridCard extends StatelessWidget {
   final Widget? topInset;
   final VoidCallback? onTap;
 
+  static const double _imageInset = 8;
+
   @override
   Widget build(BuildContext context) {
     final showGreyPlaceholder = placeholderIcon && !solidBlack;
@@ -48,45 +50,24 @@ class CategoryGridCard extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                if (solidBlack)
-                  const ColoredBox(color: Colors.black)
-                else if (preview != null)
-                  LayoutBuilder(
-                    builder: (context, c) {
-                      if (inlineVideo) {
-                        return InlineLoopingVideoFill(
-                          asset: preview!,
-                          maxWidth: c.maxWidth,
-                          maxHeight: c.maxHeight,
-                        );
-                      }
-                      final d = math
-                          .max(c.maxWidth, c.maxHeight)
-                          .ceil()
-                          .clamp(64, 640);
-                      return CleanerThumbnail(
-                        asset: preview!,
-                        size: d.toDouble(),
-                        borderRadius: 0,
-                      );
-                    },
-                  )
-                else
-                  const DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [kCardGreyTop, kCardGreyBottom],
-                      ),
+                Positioned.fill(
+                  child: Padding(
+                    padding: const EdgeInsets.all(_imageInset),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(14),
+                      child: _buildMediaLayer(),
                     ),
                   ),
+                ),
                 if (showGreyPlaceholder)
-                  const Center(
-                    child: Icon(
-                      Icons.image_outlined,
-                      size: 42,
-                      color: kDashGrey,
+                  Padding(
+                    padding: const EdgeInsets.all(_imageInset),
+                    child: const Center(
+                      child: Icon(
+                        Icons.image_outlined,
+                        size: 42,
+                        color: kDashGrey,
+                      ),
                     ),
                   ),
                 DecoratedBox(
@@ -160,6 +141,40 @@ class CategoryGridCard extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMediaLayer() {
+    if (solidBlack) {
+      return const ColoredBox(color: Colors.black);
+    }
+    if (preview != null) {
+      return LayoutBuilder(
+        builder: (context, c) {
+          if (inlineVideo) {
+            return InlineLoopingVideoFill(
+              asset: preview!,
+              maxWidth: c.maxWidth,
+              maxHeight: c.maxHeight,
+            );
+          }
+          final d = math.max(c.maxWidth, c.maxHeight).ceil().clamp(64, 640);
+          return CleanerThumbnail(
+            asset: preview!,
+            size: d.toDouble(),
+            borderRadius: 0,
+          );
+        },
+      );
+    }
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [kCardGreyTop, kCardGreyBottom],
         ),
       ),
     );

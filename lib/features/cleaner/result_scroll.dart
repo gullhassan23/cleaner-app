@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/widgets/cleaner/category_grid.dart';
-import 'package:cleaner_app/widgets/storage_strip.dart';
+
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +14,9 @@ class ResultsScrollBody extends StatelessWidget {
   const ResultsScrollBody({super.key, required this.controller});
 
   final CleanerController controller;
+
+  static const double _cardGap = 12;
+  static const double _columnGap = 12;
 
   String _sizeLabel(int bytes) {
     if (bytes <= 0) {
@@ -32,10 +35,13 @@ class ResultsScrollBody extends StatelessWidget {
     return s;
   }
 
+  double _cardHeight(double columnWidth, double aspectRatio) {
+    return columnWidth / aspectRatio;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final gap = 10.0;
       final similarBytes = controller.bytesForKind(
         CleanerDashboardKind.similarPhotos,
       );
@@ -71,145 +77,152 @@ class ResultsScrollBody extends StatelessWidget {
         CleanerDashboardKind.screenshots,
       );
 
-      return SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 4, 16, 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const StorageStrip(),
-            SizedBox(height: gap),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.44,
-                    child: Column(
-                      children: [
-                        CategoryGridCard(
-                          height: 118,
-                          title: 'Similar Photos',
-                          sizeLabel: _sizeLabel(similarBytes),
-                          preview: similarPreview,
-                          placeholderIcon: similarPreview == null,
-                          onTap:
-                              similarCount == 0
-                                  ? null
-                                  : controller.openSimilarSheet,
-                        ),
-                        SizedBox(height: gap),
-                        CategoryGridCard(
-                          height: 118,
-                          title: 'Duplicate Photos',
-                          sizeLabel: _sizeLabel(dupBytes),
-                          preview: dupPreview,
-                          placeholderIcon: dupPreview == null,
-                          onTap:
-                              dupCount == 0
-                                  ? null
-                                  : controller.openDuplicateSheet,
-                        ),
-                        SizedBox(height: gap),
-                        CategoryGridCard(
-                          height: 118,
-                          title: 'Similar Videos',
-                          sizeLabel: '0 KB',
-                          preview: null,
-                          placeholderIcon: true,
-                          onTap: null,
-                        ),
-                        SizedBox(height: gap),
-                        CategoryGridCard(
-                          height: 118,
-                          title: 'Similar Burst Photos',
-                          sizeLabel: '0 KB',
-                          preview: null,
-                          placeholderIcon: true,
-                          onTap: null,
-                        ),
-                      ],
+      final bottomInset = MediaQuery.paddingOf(context).bottom;
+
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          final columnWidth = (constraints.maxWidth - _columnGap) / 2;
+          // final compactHeight = _cardHeight(columnWidth, 1.05);
+          final tallHeight = _cardHeight(columnWidth, 0.88);
+          // final mediumHeight = _cardHeight(columnWidth, 0.98);
+
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
+            padding: EdgeInsets.fromLTRB(16, 4, 16, 24 + bottomInset + 96),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: _cardGap),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          CategoryGridCard(
+                            height: tallHeight,
+                            title: 'Similar Photos',
+                            sizeLabel: _sizeLabel(similarBytes),
+                            preview: similarPreview,
+                            placeholderIcon: similarPreview == null,
+                            onTap:
+                                similarCount == 0
+                                    ? null
+                                    : controller.openSimilarSheet,
+                          ),
+                          const SizedBox(height: _cardGap),
+                          CategoryGridCard(
+                            height: tallHeight,
+                            title: 'Duplicate Photos',
+                            sizeLabel: _sizeLabel(dupBytes),
+                            preview: dupPreview,
+                            placeholderIcon: dupPreview == null,
+                            onTap:
+                                dupCount == 0
+                                    ? null
+                                    : controller.openDuplicateSheet,
+                          ),
+                          const SizedBox(height: _cardGap),
+                          CategoryGridCard(
+                            height: tallHeight,
+                            title: 'Similar Videos',
+                            sizeLabel: '0 KB',
+                            preview: null,
+                            placeholderIcon: true,
+                            onTap: null,
+                          ),
+                          // const SizedBox(height: _cardGap),
+                          // CategoryGridCard(
+                          //   height: compactHeight,
+                          //   title: 'Similar Burst Photos',
+                          //   sizeLabel: '0 KB',
+                          //   preview: null,
+                          //   placeholderIcon: true,
+                          //   onTap: null,
+                          // ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: _columnGap),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          CategoryGridCard(
+                            height: tallHeight,
+                            title: 'Videos',
+                            sizeLabel: _sizeLabel(videoBytes),
+                            preview: videoPreview,
+                            solidBlack: videoPreview == null,
+                            inlineVideo: videoPreview != null,
+                            placeholderIcon: false,
+                            onTap:
+                                videoCount == 0
+                                    ? null
+                                    : controller.openVideosSheet,
+                          ),
+                          const SizedBox(height: _cardGap),
+                          CategoryGridCard(
+                            height: tallHeight,
+                            title: 'Screenshots',
+                            sizeLabel: _sizeLabel(shotBytes),
+                            preview: shotPreview,
+                            placeholderIcon: shotPreview == null,
+                            subtitleAboveTitle: 'Optimize Your Storage',
+                            topInset: _screenshotsFakeRow(kDashBlue),
+                            onTap:
+                                shotCount == 0
+                                    ? null
+                                    : controller.openScreenshotsSheet,
+                          ),
+                          const SizedBox(height: _cardGap),
+                          CategoryGridCard(
+                            height: tallHeight,
+                            title: 'Similar Live Photos',
+                            sizeLabel: _sizeLabel(similarBytes),
+                            preview: similarPreview,
+                            placeholderIcon: similarPreview == null,
+                            onTap:
+                                similarCount == 0
+                                    ? null
+                                    : controller.openSimilarSheet,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: _cardGap),
+                Material(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(20),
+                  clipBehavior: Clip.antiAlias,
+                  child: ListTile(
+                    onTap: () => Get.toNamed(AppRoutes.aiPhotoEditor),
+                    leading: const Icon(Icons.image, color: Colors.white),
+                    title: const Text(
+                      'AI Photo Editor',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    subtitle: const Text(
+                      'Improve photo quality',
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: Colors.white70,
                     ),
                   ),
-                  SizedBox(width: gap),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.44,
-                    child: Column(
-                      children: [
-                        CategoryGridCard(
-                          height: 200,
-                          title: 'Videos',
-                          sizeLabel: _sizeLabel(videoBytes),
-                          preview: videoPreview,
-                          solidBlack: videoPreview == null,
-                          inlineVideo: videoPreview != null,
-                          placeholderIcon: false,
-                          onTap:
-                              videoCount == 0
-                                  ? null
-                                  : controller.openVideosSheet,
-                        ),
-                        SizedBox(height: gap),
-                        CategoryGridCard(
-                          height: 168,
-                          title: 'Screenshots',
-                          sizeLabel: _sizeLabel(shotBytes),
-                          preview: shotPreview,
-                          placeholderIcon: shotPreview == null,
-                          subtitleAboveTitle: 'Optimize Your Storage',
-                          topInset: _screenshotsFakeRow(kDashBlue),
-                          onTap:
-                              shotCount == 0
-                                  ? null
-                                  : controller.openScreenshotsSheet,
-                        ),
-                        SizedBox(height: gap),
-                        CategoryGridCard(
-                          height: 118,
-                          title: 'Similar Live Photos',
-                          sizeLabel: _sizeLabel(similarBytes),
-                          preview: similarPreview,
-                          placeholderIcon: similarPreview == null,
-                          onTap:
-                              similarCount == 0
-                                  ? null
-                                  : controller.openSimilarSheet,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(height: 1),
-            Material(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(20),
-              clipBehavior: Clip.antiAlias,
-              child: ListTile(
-                onTap: () => Get.toNamed(AppRoutes.aiPhotoEditor),
-                leading: const Icon(Icons.image, color: Colors.white),
-                title: const Text(
-                  'AI Photo Editor',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                subtitle: const Text(
-                  'Improve photo quality',
-                  style: TextStyle(color: Colors.white70),
-                ),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 16,
-                  color: Colors.white70,
-                ),
-              ),
-            ),
-            SizedBox(height: gap),
-          ],
-        ),
+          );
+        },
       );
     });
   }
