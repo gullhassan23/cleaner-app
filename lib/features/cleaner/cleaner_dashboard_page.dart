@@ -8,7 +8,7 @@ import 'package:cleaner_app/features/cleaner/result_scroll.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_dashboard_sort.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_scan_phase.dart';
 
-import 'package:cleaner_app/models/photo_library/scan_state_entity.dart';
+import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/utils/colors.dart';
 
 import 'package:cleaner_app/utils/permission.dart';
@@ -38,7 +38,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                 onOpenSettings: controller.openAppSettings,
                 onManageLimited: controller.presentLimitedMediaPicker,
               ),
-              onSettings: () => _openSettingsMenu(context, perm),
+              onSettings: () => Get.toNamed<void>(AppRoutes.settings),
             );
           }
 
@@ -48,7 +48,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                 message: controller.lastError.value ?? 'Unknown error',
                 onRetry: controller.startFullScan,
               ),
-              onSettings: () => _openSettingsMenu(context, perm),
+              onSettings: () => Get.toNamed<void>(AppRoutes.settings),
             );
           }
 
@@ -58,57 +58,18 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                 progress: controller.scanProgress.value,
                 label: controller.scanStageLabel.value,
               ),
-              onSettings: () => _openSettingsMenu(context, perm),
+              onSettings: () => Get.toNamed<void>(AppRoutes.settings),
             );
           }
 
           return DashboardAppbar(
-            onSettings: () => _openSettingsMenu(context, perm),
+            onSettings: () => Get.toNamed<void>(AppRoutes.settings),
             onSort: () => _openSortSheet(context),
             child: ResultsScrollBody(controller: controller),
           );
         }),
       ),
     );
-  }
-
-  Future<void> _openSettingsMenu(
-    BuildContext context,
-    PermissionStateEntity perm,
-  ) async {
-    final choice = await showModalBottomSheet<String>(
-      context: context,
-      showDragHandle: true,
-      builder:
-          (ctx) => SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (perm.canAccess) ...[
-                  ListTile(
-                    leading: const Icon(Icons.refresh_rounded),
-                    title: const Text('Refresh library'),
-                    onTap: () => Navigator.pop(ctx, 'refresh'),
-                  ),
-                ],
-                ListTile(
-                  leading: const Icon(Icons.settings_rounded),
-                  title: const Text('App settings'),
-                  onTap: () => Navigator.pop(ctx, 'settings'),
-                ),
-              ],
-            ),
-          ),
-    );
-    if (choice == 'refresh' && perm.canAccess) {
-      if (perm.isLimited || perm.canOpenSystemPicker) {
-        await controller.changeGalleryAccess();
-      } else {
-        await controller.startFullScan();
-      }
-    } else if (choice == 'settings') {
-      await controller.openAppSettings();
-    }
   }
 
   Future<void> _openSortSheet(BuildContext context) async {

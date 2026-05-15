@@ -18,6 +18,8 @@ abstract final class AppRoutes {
   static const vaultMediaPicker = '/vault/media/picker';
   static const vaultMediaPreview = '/vault/media/preview';
 
+  static const settings = '/settings';
+
   static const chargingHome = '/charging/home';
   static const chargingSelect = '/charging/select';
   static const chargingPreview = '/charging/preview';

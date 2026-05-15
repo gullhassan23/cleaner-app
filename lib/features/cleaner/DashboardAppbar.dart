@@ -96,7 +96,7 @@ class DashboardAppbar extends StatelessWidget {
           ),
         ),
 
-        Expanded(child: child),
+        Flexible(fit: FlexFit.loose, child: child),
       ],
     );
   }

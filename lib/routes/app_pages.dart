@@ -1,4 +1,5 @@
 import 'package:cleaner_app/features/cleaner/ai_photo_editor_page.dart';
+import 'package:cleaner_app/features/settings/settings.dart';
 import 'package:cleaner_app/modules/charging/bindings/charging_binding.dart';
 import 'package:cleaner_app/modules/charging/views/charging_display_view.dart';
 import 'package:cleaner_app/modules/charging/views/charging_home_view.dart';
@@ -68,6 +69,10 @@ abstract final class AppPages {
     GetPage<dynamic>(
       name: AppRoutes.aiPhotoEditor,
       page: () => const AiPhotoEditorPage(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.settings,
+      page: () => const SettingsPage(),
     ),
     GetPage<dynamic>(
       name: AppRoutes.vaultMediaPicker,

@@ -90,7 +90,7 @@ class ResultsScrollBody extends StatelessWidget {
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
             ),
-            padding: EdgeInsets.fromLTRB(16, 4, 16, 24 + bottomInset + 96),
+            padding: EdgeInsets.fromLTRB(16, 4, 16, 12 + bottomInset + 72),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
