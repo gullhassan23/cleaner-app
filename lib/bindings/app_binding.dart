@@ -2,6 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../modules/app_lock/bindings/app_lock_binding.dart';
 import '../modules/charging/platform/charging_nav_coordinator.dart';
 import '../modules/charging/services/charging_catalog_service.dart';
 import '../modules/charging/services/charging_preferences_service.dart';
@@ -26,6 +27,7 @@ class AppBinding extends Bindings {
     );
     Get.put(LocalAuthentication(), permanent: true);
     Get.put(VaultLifecycleCoordinator(), permanent: true);
+    AppLockBinding().dependencies();
 
     Get.put(PhotoPermissionService(), permanent: true);
     Get.put(GalleryMediaService(), permanent: true);

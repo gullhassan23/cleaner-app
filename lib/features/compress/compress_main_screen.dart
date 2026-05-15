@@ -347,18 +347,17 @@ class _CompressHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: onBack,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-              icon: Icon(
-                Icons.chevron_left_rounded,
-                size: 28,
+            Text(
+              'Compress',
+              style: theme.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.w700,
                 color: onSurface,
+                letterSpacing: -0.5,
               ),
             ),
-            const Spacer(),
+
             if (showSortIcon || showRefreshFallback)
               IconButton(
                 onPressed: onSortOrRefresh,
@@ -374,14 +373,7 @@ class _CompressHeader extends StatelessWidget {
               ),
           ],
         ),
-        Text(
-          'Compress',
-          style: theme.textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: onSurface,
-            letterSpacing: -0.5,
-          ),
-        ),
+
         const SizedBox(height: 6),
         Text.rich(
           TextSpan(

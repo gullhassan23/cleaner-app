@@ -1,5 +1,7 @@
+import 'package:cleaner_app/modules/app_lock/controllers/app_lock_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const _kGroupedBg = Color(0xFFF2F2F7);
 const _kSectionLabel = Color(0xFF8E8E93);
@@ -20,7 +22,6 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _usePasscode = false;
   bool _removeAfterImport = false;
   bool _faceId = false;
-  bool _appLock = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +86,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: _faceId,
                 onChanged: (v) => setState(() => _faceId = v),
               ),
-              _SettingsToggleRow(
-                label: 'App Lock',
-                value: _appLock,
-                onChanged: (v) => setState(() => _appLock = v),
-              ),
+              const _AppLockToggleRow(),
               _SettingsNavRow(label: 'Languages', onTap: () {}),
             ],
           ),
@@ -239,6 +236,24 @@ class _SettingsNavRow extends StatelessWidget {
   }
 }
 
+class _AppLockToggleRow extends StatelessWidget {
+  const _AppLockToggleRow();
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<AppLockController>();
+    return Obx(() {
+      final enabled = controller.isEnabled.value;
+      final loading = controller.isLoading.value;
+      return _SettingsToggleRow(
+        label: 'App Lock',
+        value: enabled,
+        onChanged: loading ? null : (v) => controller.onToggleRequested(v),
+      );
+    });
+  }
+}
+
 class _SettingsToggleRow extends StatelessWidget {
   const _SettingsToggleRow({
     required this.label,
@@ -248,7 +263,7 @@ class _SettingsToggleRow extends StatelessWidget {
 
   final String label;
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {

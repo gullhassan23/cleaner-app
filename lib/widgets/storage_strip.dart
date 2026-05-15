@@ -61,17 +61,25 @@ class _StorageStripState extends State<StorageStrip> {
                   fontWeight: FontWeight.w500,
                 ),
                 children: [
-                  const TextSpan(text: 'Used: '),
+                  const TextSpan(
+                    text: 'Used: ',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
+                  ),
                   TextSpan(
                     text: used != null ? _gb(used) : '—',
                     style: const TextStyle(
+                      fontSize: 17,
                       color: kDashBlue,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   TextSpan(
                     text: total != null ? ' / ${_gb(total)}' : '',
-                    style: const TextStyle(color: kDashGrey),
+                    style: const TextStyle(
+                      color: kDashGrey,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ),

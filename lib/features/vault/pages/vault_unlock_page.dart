@@ -59,7 +59,10 @@ class _VaultUnlockPageState extends State<VaultUnlockPage> {
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: filled ? cs.primary : cs.outline.withValues(alpha: 0.45),
+                      color:
+                          filled
+                              ? cs.primary
+                              : cs.outline.withValues(alpha: 0.45),
                     ),
                   );
                 }),
@@ -85,7 +88,7 @@ class _VaultUnlockPageState extends State<VaultUnlockPage> {
                                 child: Icon(
                                   Icons.fingerprint_rounded,
                                   color: cs.primary,
-                                  size: 36,
+                                  size: 30,
                                 ),
                               ),
                             ),

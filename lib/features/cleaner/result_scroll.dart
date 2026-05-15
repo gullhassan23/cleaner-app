@@ -204,6 +204,7 @@ class ResultsScrollBody extends StatelessWidget {
                     title: const Text(
                       'AI Photo Editor',
                       style: TextStyle(
+                        fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),

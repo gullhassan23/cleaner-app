@@ -1,5 +1,8 @@
 import 'package:cleaner_app/features/cleaner/ai_photo_editor_page.dart';
 import 'package:cleaner_app/features/settings/settings.dart';
+import 'package:cleaner_app/modules/app_lock/bindings/app_lock_binding.dart';
+import 'package:cleaner_app/modules/app_lock/views/app_lock_setup_view.dart';
+import 'package:cleaner_app/modules/app_lock/views/app_lock_verify_pin_view.dart';
 import 'package:cleaner_app/modules/charging/bindings/charging_binding.dart';
 import 'package:cleaner_app/modules/charging/views/charging_display_view.dart';
 import 'package:cleaner_app/modules/charging/views/charging_home_view.dart';
@@ -73,6 +76,17 @@ abstract final class AppPages {
     GetPage<dynamic>(
       name: AppRoutes.settings,
       page: () => const SettingsPage(),
+      binding: AppLockBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.appLockSetup,
+      page: () => const AppLockSetupView(),
+      binding: AppLockSetupBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.appLockVerifyDisable,
+      page: () => const AppLockVerifyPinView(),
+      binding: AppLockVerifyBinding(),
     ),
     GetPage<dynamic>(
       name: AppRoutes.vaultMediaPicker,

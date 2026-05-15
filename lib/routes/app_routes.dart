@@ -20,6 +20,9 @@ abstract final class AppRoutes {
 
   static const settings = '/settings';
 
+  static const appLockSetup = '/app-lock/setup';
+  static const appLockVerifyDisable = '/app-lock/verify-disable';
+
   static const chargingHome = '/charging/home';
   static const chargingSelect = '/charging/select';
   static const chargingPreview = '/charging/preview';
