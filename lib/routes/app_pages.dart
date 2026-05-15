@@ -1,3 +1,10 @@
+import 'package:cleaner_app/features/cleaner/ai_photo_editor_page.dart';
+import 'package:cleaner_app/modules/charging/bindings/charging_binding.dart';
+import 'package:cleaner_app/modules/charging/views/charging_display_view.dart';
+import 'package:cleaner_app/modules/charging/views/charging_home_view.dart';
+import 'package:cleaner_app/modules/charging/views/charging_preview_view.dart';
+import 'package:cleaner_app/modules/charging/views/charging_selection_view.dart';
+import 'package:cleaner_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,7 +12,7 @@ import '../bindings/compress_binding.dart';
 import '../bindings/contacts_binding.dart';
 import '../bindings/main_shell_binding.dart';
 import '../bindings/vault_binding.dart';
-import '../features/cleaner/pages/ai_photo_editor_page.dart';
+
 import '../features/compress/compress_review_page.dart';
 import '../features/contacts/contacts_backup_page.dart';
 import '../features/contacts/contacts_duplicates_page.dart';
@@ -14,7 +21,7 @@ import '../features/contacts/contacts_incomplete_page.dart';
 import '../features/contacts/contacts_list_page.dart';
 import '../features/vault/pages/vault_media_picker_page.dart';
 import '../features/vault/pages/vault_media_preview_page.dart';
-import '../widgets/bottomNavbar.dart';
+
 import 'app_routes.dart';
 
 abstract final class AppPages {
@@ -77,6 +84,26 @@ abstract final class AppPages {
         return VaultMediaPreviewPage(model: args.model, file: args.file);
       },
       binding: VaultBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.chargingHome,
+      page: () => const ChargingHomeView(),
+      binding: ChargingBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.chargingSelect,
+      page: () => const ChargingSelectionView(),
+      binding: ChargingBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.chargingPreview,
+      page: () => const ChargingPreviewView(),
+      binding: ChargingBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.chargingDisplay,
+      page: () => const ChargingDisplayView(),
+      binding: ChargingBinding(),
     ),
   ];
 

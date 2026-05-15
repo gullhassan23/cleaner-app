@@ -1,4 +1,5 @@
 import 'package:cleaner_app/controllers/theme_controller.dart';
+import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,7 +41,7 @@ class MoreToolsPage extends StatelessWidget {
             title: 'Charging Animation',
             subtitle: 'Customize charging screen',
             icon: const _ChargingAnimationIcon(),
-            onTap: () {},
+            onTap: () => Get.toNamed<void>(AppRoutes.chargingHome),
           ),
           const SizedBox(height: 12),
           _ToolCard(

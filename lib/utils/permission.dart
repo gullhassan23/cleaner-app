@@ -21,6 +21,7 @@ class PermissionBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final isLimited = permission.isLimited;
 
     return Center(
@@ -36,10 +37,10 @@ class PermissionBody extends StatelessWidget {
               Text(
                 isLimited ? 'Limited library access' : 'Allow photos & videos',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
-                  color: Colors.black,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 10),
@@ -48,7 +49,11 @@ class PermissionBody extends StatelessWidget {
                     ? 'You can manage which items Cleaner can see, or grant full access in Settings.'
                     : 'Cleaner needs access to scan for duplicates, similar shots, videos, and screenshots.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15, color: kDashGrey, height: 1.45),
+                style: TextStyle(
+                  fontSize: 15,
+                  color: theme.colorScheme.onSurfaceVariant,
+                  height: 1.45,
+                ),
               ),
               const SizedBox(height: 22),
               if (isLimited) ...[

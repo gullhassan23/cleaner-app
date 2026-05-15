@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:cleaner_app/controllers/cleaner_controller.dart';
-import 'package:cleaner_app/features/cleaner/pages/DashboardAppbar.dart';
-import 'package:cleaner_app/features/cleaner/pages/result_scroll.dart';
+import 'package:cleaner_app/features/cleaner/DashboardAppbar.dart';
+
+import 'package:cleaner_app/features/cleaner/result_scroll.dart';
 
 import 'package:cleaner_app/models/cleaner/cleaner_dashboard_sort.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_scan_phase.dart';
@@ -185,6 +186,7 @@ class _ScanningBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(28),
@@ -193,13 +195,13 @@ class _ScanningBody extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
+              Text(
                 'Analyzing your library',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
-                  color: Colors.black,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 10),

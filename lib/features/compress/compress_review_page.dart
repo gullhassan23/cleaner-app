@@ -1,6 +1,3 @@
-
-
-
 import 'package:cleaner_app/widgets/compress/compression_progress_card.dart';
 import 'package:cleaner_app/widgets/compress/preview_card.dart';
 import 'package:cleaner_app/widgets/compress/quality_card.dart';
@@ -9,7 +6,6 @@ import 'package:cleaner_app/widgets/compress/size_summary.dart';
 import 'package:cleaner_app/widgets/compress/status_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 import '../../widgets/state_message_card.dart';
 import '../../models/compress/compress_entities.dart';
@@ -104,21 +100,21 @@ class CompressReviewPage extends GetView<CompressReviewController> {
               Text('Quality', style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 12),
               Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children:
-                    CompressionQualityPreset.values
-                        .map(
-                          (preset) => QualityCard(
-                            preset: preset,
-                            isSelected: session.quality == preset,
-                            onTap: () => controller.updateQuality(preset),
-                          ),
-                        )
-                        .toList(growable: false),
+                spacing: 10,
+                runSpacing: 10,
+                children: CompressionQualityPreset.values
+                    .map(
+                      (preset) => QualityCard(
+                        preset: preset,
+                        isSelected: session.quality == preset,
+                        onTap: () => controller.updateQuality(preset),
+                      ),
+                    )
+                    .toList(growable: false),
               ),
               const SizedBox(height: 20),
-              if (session.isCompressing || session.progress.phase != CompressionPhase.idle)
+              if (session.isCompressing ||
+                  session.progress.phase != CompressionPhase.idle)
                 CompressionProgressCard(progress: session.progress),
               if (session.successMessage != null) ...[
                 const SizedBox(height: 16),
@@ -138,17 +134,22 @@ class CompressReviewPage extends GetView<CompressReviewController> {
               ],
               if (session.results.isNotEmpty) ...[
                 const SizedBox(height: 20),
-                Text('Compression results', style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  'Compression results',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 const SizedBox(height: 12),
-                ...session.results.map((result) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: ResultCard(
-                    asset: selectedAssets.firstWhereOrNull(
-                      (asset) => asset.id == result.assetId,
+                ...session.results.map(
+                  (result) => Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: ResultCard(
+                      asset: selectedAssets.firstWhereOrNull(
+                        (asset) => asset.id == result.assetId,
+                      ),
+                      result: result,
                     ),
-                    result: result,
                   ),
-                )),
+                ),
               ],
             ],
           );
@@ -157,19 +158,3 @@ class CompressReviewPage extends GetView<CompressReviewController> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

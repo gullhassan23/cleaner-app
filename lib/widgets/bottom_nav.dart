@@ -1,4 +1,5 @@
-import 'package:cleaner_app/features/cleaner/pages/cleaner_dashboard_page.dart';
+import 'package:cleaner_app/features/cleaner/cleaner_dashboard_page.dart';
+
 import 'package:cleaner_app/features/compress/compress_main_screen.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
 import 'package:cleaner_app/features/more/more_settting.dart';

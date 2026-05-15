@@ -1,4 +1,3 @@
-
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -8,16 +7,15 @@ class DashboardAppbar extends StatelessWidget {
     required this.child,
     required this.onSettings,
     this.onSort,
- 
   });
 
   final Widget child;
   final VoidCallback onSettings;
   final VoidCallback? onSort;
- 
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -25,13 +23,13 @@ class DashboardAppbar extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 8, 12, 4),
           child: Row(
             children: [
-              const Text(
+              Text(
                 'Cleaner',
                 style: TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.w700,
                   letterSpacing: -0.8,
-                  color: Colors.black,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const Spacer(),

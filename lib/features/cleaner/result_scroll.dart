@@ -78,103 +78,110 @@ class ResultsScrollBody extends StatelessWidget {
           children: [
             const StorageStrip(),
             SizedBox(height: gap),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      CategoryGridCard(
-                        height: 118,
-                        title: 'Similar Photos',
-                        sizeLabel: _sizeLabel(similarBytes),
-                        preview: similarPreview,
-                        placeholderIcon: similarPreview == null,
-                        onTap:
-                            similarCount == 0
-                                ? null
-                                : controller.openSimilarSheet,
-                      ),
-                      SizedBox(height: gap),
-                      CategoryGridCard(
-                        height: 118,
-                        title: 'Duplicate Photos',
-                        sizeLabel: _sizeLabel(dupBytes),
-                        preview: dupPreview,
-                        placeholderIcon: dupPreview == null,
-                        onTap:
-                            dupCount == 0
-                                ? null
-                                : controller.openDuplicateSheet,
-                      ),
-                      SizedBox(height: gap),
-                      CategoryGridCard(
-                        height: 118,
-                        title: 'Similar Videos',
-                        sizeLabel: '0 KB',
-                        preview: null,
-                        placeholderIcon: true,
-                        onTap: null,
-                      ),
-                      SizedBox(height: gap),
-                      CategoryGridCard(
-                        height: 118,
-                        title: 'Similar Burst Photos',
-                        sizeLabel: '0 KB',
-                        preview: null,
-                        placeholderIcon: true,
-                        onTap: null,
-                      ),
-                    ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.44,
+                    child: Column(
+                      children: [
+                        CategoryGridCard(
+                          height: 118,
+                          title: 'Similar Photos',
+                          sizeLabel: _sizeLabel(similarBytes),
+                          preview: similarPreview,
+                          placeholderIcon: similarPreview == null,
+                          onTap:
+                              similarCount == 0
+                                  ? null
+                                  : controller.openSimilarSheet,
+                        ),
+                        SizedBox(height: gap),
+                        CategoryGridCard(
+                          height: 118,
+                          title: 'Duplicate Photos',
+                          sizeLabel: _sizeLabel(dupBytes),
+                          preview: dupPreview,
+                          placeholderIcon: dupPreview == null,
+                          onTap:
+                              dupCount == 0
+                                  ? null
+                                  : controller.openDuplicateSheet,
+                        ),
+                        SizedBox(height: gap),
+                        CategoryGridCard(
+                          height: 118,
+                          title: 'Similar Videos',
+                          sizeLabel: '0 KB',
+                          preview: null,
+                          placeholderIcon: true,
+                          onTap: null,
+                        ),
+                        SizedBox(height: gap),
+                        CategoryGridCard(
+                          height: 118,
+                          title: 'Similar Burst Photos',
+                          sizeLabel: '0 KB',
+                          preview: null,
+                          placeholderIcon: true,
+                          onTap: null,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(width: gap),
-                Expanded(
-                  child: Column(
-                    children: [
-                      CategoryGridCard(
-                        height: 200,
-                        title: 'Videos',
-                        sizeLabel: _sizeLabel(videoBytes),
-                        preview: videoPreview,
-                        solidBlack: videoPreview == null,
-                        inlineVideo: videoPreview != null,
-                        placeholderIcon: false,
-                        onTap:
-                            videoCount == 0 ? null : controller.openVideosSheet,
-                      ),
-                      SizedBox(height: gap),
-                      CategoryGridCard(
-                        height: 168,
-                        title: 'Screenshots',
-                        sizeLabel: _sizeLabel(shotBytes),
-                        preview: shotPreview,
-                        placeholderIcon: shotPreview == null,
-                        subtitleAboveTitle: 'Optimize Your Storage',
-                        topInset: _screenshotsFakeRow(kDashBlue),
-                        onTap:
-                            shotCount == 0
-                                ? null
-                                : controller.openScreenshotsSheet,
-                      ),
-                      SizedBox(height: gap),
-                      CategoryGridCard(
-                        height: 118,
-                        title: 'Similar Live Photos',
-                        sizeLabel: _sizeLabel(similarBytes),
-                        preview: similarPreview,
-                        placeholderIcon: similarPreview == null,
-                        onTap:
-                            similarCount == 0
-                                ? null
-                                : controller.openSimilarSheet,
-                      ),
-                    ],
+                  SizedBox(width: gap),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.44,
+                    child: Column(
+                      children: [
+                        CategoryGridCard(
+                          height: 200,
+                          title: 'Videos',
+                          sizeLabel: _sizeLabel(videoBytes),
+                          preview: videoPreview,
+                          solidBlack: videoPreview == null,
+                          inlineVideo: videoPreview != null,
+                          placeholderIcon: false,
+                          onTap:
+                              videoCount == 0
+                                  ? null
+                                  : controller.openVideosSheet,
+                        ),
+                        SizedBox(height: gap),
+                        CategoryGridCard(
+                          height: 168,
+                          title: 'Screenshots',
+                          sizeLabel: _sizeLabel(shotBytes),
+                          preview: shotPreview,
+                          placeholderIcon: shotPreview == null,
+                          subtitleAboveTitle: 'Optimize Your Storage',
+                          topInset: _screenshotsFakeRow(kDashBlue),
+                          onTap:
+                              shotCount == 0
+                                  ? null
+                                  : controller.openScreenshotsSheet,
+                        ),
+                        SizedBox(height: gap),
+                        CategoryGridCard(
+                          height: 118,
+                          title: 'Similar Live Photos',
+                          sizeLabel: _sizeLabel(similarBytes),
+                          preview: similarPreview,
+                          placeholderIcon: similarPreview == null,
+                          onTap:
+                              similarCount == 0
+                                  ? null
+                                  : controller.openSimilarSheet,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            SizedBox(height: gap),
+            SizedBox(height: 1),
             Material(
               color: Colors.blue,
               borderRadius: BorderRadius.circular(20),

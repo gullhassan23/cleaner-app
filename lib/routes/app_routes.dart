@@ -17,4 +17,12 @@ abstract final class AppRoutes {
 
   static const vaultMediaPicker = '/vault/media/picker';
   static const vaultMediaPreview = '/vault/media/preview';
+
+  static const chargingHome = '/charging/home';
+  static const chargingSelect = '/charging/select';
+  static const chargingPreview = '/charging/preview';
+  static const chargingDisplay = '/charging/display';
+
+  @Deprecated('Use chargingHome')
+  static const chargingAnimation = chargingHome;
 }
