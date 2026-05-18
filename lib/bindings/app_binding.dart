@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../modules/app_lock/bindings/app_lock_binding.dart';
+import '../modules/photo_widget/bindings/photo_widget_binding.dart';
 import '../modules/charging/platform/charging_nav_coordinator.dart';
 import '../modules/charging/services/charging_catalog_service.dart';
 import '../modules/charging/services/charging_preferences_service.dart';
@@ -59,5 +60,7 @@ class AppBinding extends Bindings {
       ),
       permanent: true,
     );
+
+    PhotoWidgetBinding().dependencies();
   }
 }

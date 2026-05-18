@@ -28,6 +28,11 @@ abstract final class AppRoutes {
   static const chargingPreview = '/charging/preview';
   static const chargingDisplay = '/charging/display';
 
+  static const photoWidgetHub = '/photo-widget';
+  static const photoWidgetAlbum = '/photo-widget/album';
+  static const photoWidgetPicker = '/photo-widget/picker';
+  static const photoWidgetStyle = '/photo-widget/style';
+
   @Deprecated('Use chargingHome')
   static const chargingAnimation = chargingHome;
 }

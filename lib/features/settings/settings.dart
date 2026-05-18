@@ -1,5 +1,8 @@
 import 'package:cleaner_app/controllers/theme_controller.dart';
 import 'package:cleaner_app/modules/app_lock/controllers/app_lock_controller.dart';
+import 'package:cleaner_app/modules/photo_widget/bindings/photo_widget_binding.dart';
+import 'package:cleaner_app/modules/photo_widget/controllers/photo_widget_controller.dart';
+import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,7 +95,14 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(height: 6),
             _SettingsGroup(
               children: [
-                _SettingsNavRow(label: 'Photo Widget', onTap: () {}),
+                _SettingsNavRow(
+                  label: 'Photo Widget',
+                  onTap: () {
+                    PhotoWidgetBinding().dependencies();
+                    Get.toNamed(AppRoutes.photoWidgetHub);
+                  },
+                ),
+                const _PhotoWidgetEnableToggleRow(),
                 _SettingsToggleRow(
                   label: 'Face ID',
                   value: _faceId,
@@ -305,6 +315,50 @@ class _ThemeModePicker extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _PhotoWidgetEnableToggleRow extends StatelessWidget {
+  const _PhotoWidgetEnableToggleRow();
+
+  @override
+  Widget build(BuildContext context) {
+    PhotoWidgetBinding().dependencies();
+    final controller = Get.find<PhotoWidgetController>();
+    return Obx(() {
+      if (controller.isLoading.value) {
+        return _SettingsToggleRow(
+          label: 'Photo Widget Enabled',
+          value: false,
+          onChanged: null,
+        );
+      }
+      return _SettingsToggleRow(
+        label: 'Photo Widget Enabled',
+        value: controller.isEnabled,
+        onChanged: controller.isSyncing.value
+            ? null
+            : (enabled) async {
+                if (enabled) {
+                  if (!controller.hasWidgetContent) {
+                    Get.snackbar(
+                      'No photos',
+                      'Create an album and import photos first.',
+                    );
+                    Get.toNamed(AppRoutes.photoWidgetHub);
+                    return;
+                  }
+                }
+                final ok = await controller.setEnabled(enabled);
+                if (enabled && !ok) {
+                  Get.snackbar(
+                    'Cannot enable',
+                    'Add photos to your widget album first.',
+                  );
+                }
+              },
+      );
+    });
   }
 }
 

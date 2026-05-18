@@ -4,6 +4,11 @@ import 'package:cleaner_app/modules/app_lock/bindings/app_lock_binding.dart';
 import 'package:cleaner_app/modules/app_lock/views/app_lock_setup_view.dart';
 import 'package:cleaner_app/modules/app_lock/views/app_lock_verify_pin_view.dart';
 import 'package:cleaner_app/modules/charging/bindings/charging_binding.dart';
+import 'package:cleaner_app/modules/photo_widget/bindings/photo_widget_binding.dart';
+import 'package:cleaner_app/modules/photo_widget/views/photo_widget_album_view.dart';
+import 'package:cleaner_app/modules/photo_widget/views/photo_widget_hub_view.dart';
+import 'package:cleaner_app/modules/photo_widget/views/photo_widget_picker_view.dart';
+import 'package:cleaner_app/modules/photo_widget/views/photo_widget_style_view.dart';
 import 'package:cleaner_app/modules/charging/views/charging_display_view.dart';
 import 'package:cleaner_app/modules/charging/views/charging_home_view.dart';
 import 'package:cleaner_app/modules/charging/views/charging_preview_view.dart';
@@ -125,6 +130,25 @@ abstract final class AppPages {
       name: AppRoutes.chargingDisplay,
       page: () => const ChargingDisplayView(),
       binding: ChargingBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.photoWidgetHub,
+      page: () => const PhotoWidgetHubView(),
+      binding: PhotoWidgetRouteBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.photoWidgetAlbum,
+      page: () => const PhotoWidgetAlbumView(),
+      binding: PhotoWidgetRouteBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.photoWidgetPicker,
+      page: () => const PhotoWidgetPickerView(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.photoWidgetStyle,
+      page: () => const PhotoWidgetStyleView(),
+      binding: PhotoWidgetRouteBinding(),
     ),
   ];
 

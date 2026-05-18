@@ -8,6 +8,8 @@ import android.provider.Settings
 import com.example.cleaner_app.charging.ChargingOverlayActivity
 import com.example.cleaner_app.charging.ChargingOverlayLauncher
 import com.example.cleaner_app.charging.ChargingPrefs
+import com.example.cleaner_app.photowidget.PhotoWidgetChannel
+import com.example.cleaner_app.photowidget.PhotoWidgetProvider
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -17,9 +19,16 @@ class MainActivity : FlutterFragmentActivity() {
 
     private var powerReceiver: android.content.BroadcastReceiver? = null
     private var powerEvents: EventChannel.EventSink? = null
+    private var pendingOpenPhotoWidget = false
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+
+        if (intent?.getBooleanExtra(PhotoWidgetProvider.EXTRA_OPEN_PHOTO_WIDGET, false) == true) {
+            pendingOpenPhotoWidget = true
+        }
+
+        PhotoWidgetChannel.register(this, flutterEngine.dartExecutor.binaryMessenger)
 
         EventChannel(
             flutterEngine.dartExecutor.binaryMessenger,
@@ -78,6 +87,31 @@ class MainActivity : FlutterFragmentActivity() {
                     }
                 }
                 else -> result.notImplemented()
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        if (intent.getBooleanExtra(PhotoWidgetProvider.EXTRA_OPEN_PHOTO_WIDGET, false)) {
+            pendingOpenPhotoWidget = true
+            flutterEngine?.dartExecutor?.binaryMessenger?.let { messenger ->
+                notifyFlutterOpenPhotoWidget(messenger)
+            }
+        }
+    }
+
+    private fun notifyFlutterOpenPhotoWidget(messenger: io.flutter.plugin.common.BinaryMessenger) {
+        MethodChannel(messenger, "cleaner_app/photo_widget").invokeMethod("openPhotoWidget", null)
+        pendingOpenPhotoWidget = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (pendingOpenPhotoWidget) {
+            flutterEngine?.dartExecutor?.binaryMessenger?.let { messenger ->
+                notifyFlutterOpenPhotoWidget(messenger)
             }
         }
     }

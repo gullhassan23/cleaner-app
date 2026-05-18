@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photo_widget_label">Photo Widget</string>
+    <string name="photo_widget_description">Shows photos from Cleaner App on your home screen.</string>
+    <string name="photo_widget_empty_text">Tap to set up photos</string>
+    <string name="photo_widget_empty_cd">Photo widget placeholder</string>
+</resources>
