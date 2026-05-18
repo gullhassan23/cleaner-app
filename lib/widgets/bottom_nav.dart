@@ -2,7 +2,7 @@ import 'package:cleaner_app/features/cleaner/cleaner_dashboard_page.dart';
 
 import 'package:cleaner_app/features/compress/compress_main_screen.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
-import 'package:cleaner_app/features/more/more_setting.dart';
+import 'package:cleaner_app/features/more/more_tools.dart';
 import 'package:cleaner_app/controllers/main_shell_controller.dart';
 import 'package:cleaner_app/features/vault/vault_root_page.dart';
 import 'package:flutter/material.dart';

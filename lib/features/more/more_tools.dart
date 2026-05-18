@@ -1,4 +1,3 @@
-import 'package:cleaner_app/controllers/theme_controller.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +19,7 @@ class MoreToolsPage extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-        leading: const _MoreToolsLeading(),
+
         title: Text(
           'More Tools',
           style: TextStyle(
@@ -34,8 +33,6 @@ class MoreToolsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
-          const _AppearanceCard(),
-          const SizedBox(height: 12),
           _ToolCard(
             iconBackdrop: scheme.primary,
             title: 'Charging Animation',
@@ -53,96 +50,6 @@ class MoreToolsPage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _AppearanceCard extends StatelessWidget {
-  const _AppearanceCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final theme = Theme.of(context);
-    final c = Get.find<ThemeController>();
-
-    return Material(
-      color: scheme.surface,
-      borderRadius: BorderRadius.circular(12),
-      clipBehavior: Clip.antiAlias,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Appearance',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: scheme.onSurfaceVariant,
-                letterSpacing: -0.2,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Obx(
-              () => SegmentedButton<ThemeMode>(
-                style: SegmentedButton.styleFrom(
-                  visualDensity: VisualDensity.compact,
-                  textStyle: theme.textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                showSelectedIcon: false,
-                segments: const [
-                  ButtonSegment<ThemeMode>(
-                    value: ThemeMode.light,
-                    label: Text('Light'),
-                    icon: Icon(Icons.light_mode_outlined, size: 18),
-                  ),
-                  ButtonSegment<ThemeMode>(
-                    value: ThemeMode.dark,
-                    label: Text('Dark'),
-                    icon: Icon(Icons.dark_mode_outlined, size: 18),
-                  ),
-                  ButtonSegment<ThemeMode>(
-                    value: ThemeMode.system,
-                    label: Text('System'),
-                    icon: Icon(Icons.brightness_auto_outlined, size: 18),
-                  ),
-                ],
-                selected: {c.themeMode.value},
-                multiSelectionEnabled: false,
-                emptySelectionAllowed: false,
-                onSelectionChanged: (next) {
-                  if (next.isNotEmpty) {
-                    c.setThemeMode(next.first);
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MoreToolsLeading extends StatelessWidget {
-  const _MoreToolsLeading();
-
-  @override
-  Widget build(BuildContext context) {
-    final navigator = Navigator.of(context);
-    final scheme = Theme.of(context).colorScheme;
-    if (!navigator.canPop()) {
-      return const SizedBox(width: 56);
-    }
-    return IconButton(
-      padding: EdgeInsets.zero,
-      alignment: Alignment.centerRight,
-      icon: Icon(Icons.chevron_left, color: scheme.primary, size: 32),
-      onPressed: () => navigator.maybePop(),
     );
   }
 }

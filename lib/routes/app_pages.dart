@@ -70,10 +70,12 @@ abstract final class AppPages {
       binding: CompressBinding(),
     ),
     GetPage<dynamic>(
+      transition: Transition.downToUp,
       name: AppRoutes.aiPhotoEditor,
       page: () => const AiPhotoEditorPage(),
     ),
     GetPage<dynamic>(
+      transition: Transition.leftToRight,
       name: AppRoutes.settings,
       page: () => const SettingsPage(),
       binding: AppLockBinding(),

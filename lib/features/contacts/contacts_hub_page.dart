@@ -15,7 +15,12 @@ class ContactsHubPage extends GetView<ContactsHubController> {
       backgroundColor: theme.colorScheme.surfaceContainerHighest.withValues(
         alpha: 0.4,
       ),
-      appBar: AppBar(title: const Text('Contacts')),
+
+      appBar: AppBar(
+        title: Text('Contacts'),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       body: Obx(() {
         final repo = controller.repo;
         repo.contacts.length;
@@ -53,38 +58,42 @@ class ContactsHubPage extends GetView<ContactsHubController> {
               icon: Icons.person,
               title: 'Contacts',
               trailingCount: repo.totalCount,
-              onTap: () => Get.toNamed<void>(
-                AppRoutes.contactsList,
-                id: AppRoutes.contactsNestedNavigatorId,
-              ),
+              onTap:
+                  () => Get.toNamed<void>(
+                    AppRoutes.contactsList,
+                    id: AppRoutes.contactsNestedNavigatorId,
+                  ),
             ),
             _HubRow(
               icon: Icons.cloud_upload_outlined,
               title: 'Contacts Backup',
-              onTap: () => Get.toNamed<void>(
-                AppRoutes.contactsBackup,
-                id: AppRoutes.contactsNestedNavigatorId,
-              ),
+              onTap:
+                  () => Get.toNamed<void>(
+                    AppRoutes.contactsBackup,
+                    id: AppRoutes.contactsNestedNavigatorId,
+                  ),
             ),
             _HubRow(
               icon: Icons.people_outline,
               title: 'Duplicate Contacts',
               subtitle: 'Names. Numbers. Emails.',
               trailingCount: repo.duplicateInvolvedCount,
-              onTap: () => Get.toNamed<void>(
-                AppRoutes.contactsDuplicates,
-                id: AppRoutes.contactsNestedNavigatorId,
-              ),
+              onTap:
+                  () => Get.toNamed<void>(
+                    AppRoutes.contactsDuplicates,
+                    id: AppRoutes.contactsNestedNavigatorId,
+                  ),
             ),
             _HubRow(
               icon: Icons.person_off_outlined,
               title: 'Incomplete Contacts',
               subtitle: 'Names. Numbers. Emails.',
               trailingCount: repo.incompleteCount,
-              onTap: () => Get.toNamed<void>(
-                AppRoutes.contactsIncomplete,
-                id: AppRoutes.contactsNestedNavigatorId,
-              ),
+              onTap:
+                  () => Get.toNamed<void>(
+                    AppRoutes.contactsIncomplete,
+                    id: AppRoutes.contactsNestedNavigatorId,
+                  ),
             ),
           ],
         );

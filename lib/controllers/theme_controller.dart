@@ -30,9 +30,10 @@ class ThemeController extends GetxController {
     }
   }
 
-  /// Updates reactive state, notifies [GetMaterialApp] via [Get.changeThemeMode]
-  /// (lighter than rebuilding the whole app), and persists in the background.
+  /// Updates reactive [themeMode] (read by [GetMaterialApp] via [Obx]) and
+  /// persists in the background. No-op when the mode is unchanged.
   void setThemeMode(ThemeMode mode) {
+    if (themeMode.value == mode) return;
     themeMode.value = mode;
     Get.changeThemeMode(mode);
     unawaited(_persist(mode));

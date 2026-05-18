@@ -17,12 +17,11 @@ class ContactsListPage extends GetView<ContactsListController> {
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         leading: TextButton(
-          onPressed: () => Get.back<void>(
-            id: AppRoutes.contactsNestedNavigatorId,
-          ),
-          child: const Text('< Back'),
+          onPressed:
+              () => Get.back<void>(id: AppRoutes.contactsNestedNavigatorId),
+          child: const Text('Back'),
         ),
-        leadingWidth: 88,
+
         title: const Text('Contacts'),
         actions: [
           Obx(
@@ -171,10 +170,7 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _ContactTile extends GetView<ContactsListController> {
-  const _ContactTile({
-    required this.contact,
-    required this.onTap,
-  });
+  const _ContactTile({required this.contact, required this.onTap});
 
   final Contact contact;
   final Future<void> Function() onTap;

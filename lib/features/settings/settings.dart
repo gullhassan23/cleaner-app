@@ -1,14 +1,8 @@
+import 'package:cleaner_app/controllers/theme_controller.dart';
 import 'package:cleaner_app/modules/app_lock/controllers/app_lock_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-const _kGroupedBg = Color(0xFFF2F2F7);
-const _kSectionLabel = Color(0xFF8E8E93);
-const _kIosBlue = Color(0xFF007AFF);
-const _kChevron = Color(0xFFC7C7CC);
-const _kDivider = Color(0xFFC6C6C8);
-const _kRowLabel = Color(0xFF000000);
 
 /// iOS-style grouped Settings screen (reference layout).
 class SettingsPage extends StatefulWidget {
@@ -25,85 +19,104 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: _kGroupedBg,
-      appBar: AppBar(
-        backgroundColor: _kGroupedBg,
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        centerTitle: true,
-        leadingWidth: 88,
-        leading: _SettingsBackButton(onPressed: () => Navigator.maybePop(context)),
-        title: const Text(
-          'Settings',
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-            color: _kRowLabel,
-            letterSpacing: -0.4,
+    final themeController = Get.find<ThemeController>();
+
+    return Obx(() {
+      // Rebuild when appearance changes so [Theme.of] picks up the new mode.
+      themeController.themeMode.value;
+      final scheme = Theme.of(context).colorScheme;
+      final groupedBg = scheme.surfaceContainerLow;
+
+      return Scaffold(
+        backgroundColor: groupedBg,
+        appBar: AppBar(
+          backgroundColor: groupedBg,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          centerTitle: true,
+          leadingWidth: 88,
+          leading: _SettingsBackButton(
+            onPressed: () => Navigator.maybePop(context),
+          ),
+          title: Text(
+            'Settings',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              color: scheme.onSurface,
+              letterSpacing: -0.4,
+            ),
           ),
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-        children: [
-          const _SectionHeader(label: 'UPGRADE'),
-          const SizedBox(height: 6),
-          _SettingsGroup(
-            children: [
-              _SettingsNavRow(
-                label: 'Restore Purchases',
-                onTap: () {},
-              ),
-            ],
-          ),
-          const SizedBox(height: 22),
-          const _SectionHeader(label: 'PRIVATE PHOTO SETTINGS'),
-          const SizedBox(height: 6),
-          _SettingsGroup(
-            children: [
-              _SettingsToggleRow(
-                label: 'Use Passcode',
-                value: _usePasscode,
-                onChanged: (v) => setState(() => _usePasscode = v),
-              ),
-              _SettingsToggleRow(
-                label: 'Remove After Import',
-                value: _removeAfterImport,
-                onChanged: (v) => setState(() => _removeAfterImport = v),
-              ),
-            ],
-          ),
-          const SizedBox(height: 22),
-          const _SectionHeader(label: 'CUSTOM SETTINGS'),
-          const SizedBox(height: 6),
-          _SettingsGroup(
-            children: [
-              _SettingsNavRow(label: 'Photo Widget', onTap: () {}),
-              _SettingsToggleRow(
-                label: 'Face ID',
-                value: _faceId,
-                onChanged: (v) => setState(() => _faceId = v),
-              ),
-              const _AppLockToggleRow(),
-              _SettingsNavRow(label: 'Languages', onTap: () {}),
-            ],
-          ),
-          const SizedBox(height: 22),
-          const _SectionHeader(label: 'OTHERS'),
-          const SizedBox(height: 6),
-          _SettingsGroup(
-            children: [
-              _SettingsNavRow(label: 'Get Help', onTap: () {}),
-              _SettingsNavRow(label: 'Rate 5 Stars', onTap: () {}),
-              _SettingsNavRow(label: 'Share With Friends', onTap: () {}),
-              _SettingsNavRow(label: 'About Us', onTap: () {}),
-            ],
-          ),
-        ],
-      ),
-    );
+        body: ListView(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+          children: [
+            const _SectionHeader(label: 'UPGRADE'),
+            const SizedBox(height: 6),
+            _SettingsGroup(
+              children: [
+                _SettingsNavRow(
+                  label: 'Restore Purchases',
+                  onTap: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 22),
+            const _SectionHeader(label: 'PRIVATE PHOTO SETTINGS'),
+            const SizedBox(height: 6),
+            _SettingsGroup(
+              children: [
+                _SettingsToggleRow(
+                  label: 'Use Passcode',
+                  value: _usePasscode,
+                  onChanged: (v) => setState(() => _usePasscode = v),
+                ),
+                _SettingsToggleRow(
+                  label: 'Remove After Import',
+                  value: _removeAfterImport,
+                  onChanged: (v) => setState(() => _removeAfterImport = v),
+                ),
+              ],
+            ),
+            const SizedBox(height: 22),
+            const _SectionHeader(label: 'APPEARANCE'),
+            const SizedBox(height: 6),
+            const _SettingsGroup(
+              children: [
+                _ThemeModePicker(),
+              ],
+            ),
+            const SizedBox(height: 22),
+            const _SectionHeader(label: 'CUSTOM SETTINGS'),
+            const SizedBox(height: 6),
+            _SettingsGroup(
+              children: [
+                _SettingsNavRow(label: 'Photo Widget', onTap: () {}),
+                _SettingsToggleRow(
+                  label: 'Face ID',
+                  value: _faceId,
+                  onChanged: (v) => setState(() => _faceId = v),
+                ),
+                const _AppLockToggleRow(),
+                _SettingsNavRow(label: 'Languages', onTap: () {}),
+              ],
+            ),
+            const SizedBox(height: 22),
+            const _SectionHeader(label: 'OTHERS'),
+            const SizedBox(height: 6),
+            _SettingsGroup(
+              children: [
+                _SettingsNavRow(label: 'Get Help', onTap: () {}),
+                _SettingsNavRow(label: 'Rate 5 Stars', onTap: () {}),
+                _SettingsNavRow(label: 'Share With Friends', onTap: () {}),
+                _SettingsNavRow(label: 'About Us', onTap: () {}),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -114,23 +127,25 @@ class _SettingsBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: CupertinoButton(
         padding: const EdgeInsets.only(left: 4),
         minSize: 0,
         onPressed: onPressed,
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(CupertinoIcons.back, size: 22, color: _kIosBlue),
-            SizedBox(width: 2),
+            Icon(CupertinoIcons.back, size: 22, color: primary),
+            const SizedBox(width: 2),
             Text(
               'Back',
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w400,
-                color: _kIosBlue,
+                color: primary,
                 letterSpacing: -0.4,
               ),
             ),
@@ -148,14 +163,16 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.only(left: 16),
       child: Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w400,
-          color: _kSectionLabel,
+          color: scheme.onSurfaceVariant,
           letterSpacing: -0.08,
         ),
       ),
@@ -170,8 +187,10 @@ class _SettingsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Material(
-      color: Colors.white,
+      color: scheme.surface,
       borderRadius: BorderRadius.circular(10),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -179,11 +198,11 @@ class _SettingsGroup extends StatelessWidget {
         children: [
           for (var i = 0; i < children.length; i++) ...[
             if (i > 0)
-              const Divider(
+              Divider(
                 height: 0.5,
                 thickness: 0.5,
                 indent: 16,
-                color: _kDivider,
+                color: scheme.outlineVariant,
               ),
             children[i],
           ],
@@ -201,8 +220,10 @@ class _SettingsNavRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Material(
-      color: Colors.white,
+      color: scheme.surface,
       child: InkWell(
         onTap: onTap,
         child: SizedBox(
@@ -214,22 +235,73 @@ class _SettingsNavRow extends StatelessWidget {
                 Expanded(
                   child: Text(
                     label,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w400,
-                      color: _kRowLabel,
+                      color: scheme.onSurface,
                       letterSpacing: -0.4,
                     ),
                   ),
                 ),
-                const Icon(
+                Icon(
                   CupertinoIcons.chevron_forward,
                   size: 18,
-                  color: _kChevron,
+                  color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ThemeModePicker extends StatelessWidget {
+  const _ThemeModePicker();
+
+  @override
+  Widget build(BuildContext context) {
+    final c = Get.find<ThemeController>();
+    final theme = Theme.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+      child: Obx(
+        () => SegmentedButton<ThemeMode>(
+          style: SegmentedButton.styleFrom(
+            visualDensity: VisualDensity.compact,
+            textStyle: theme.textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          showSelectedIcon: false,
+          segments: const [
+            ButtonSegment<ThemeMode>(
+              value: ThemeMode.light,
+              label: Text('Light'),
+              icon: Icon(Icons.light_mode_outlined, size: 18),
+            ),
+            ButtonSegment<ThemeMode>(
+              value: ThemeMode.dark,
+              label: Text('Dark'),
+              icon: Icon(Icons.dark_mode_outlined, size: 18),
+            ),
+            ButtonSegment<ThemeMode>(
+              value: ThemeMode.system,
+              label: Text('System'),
+              icon: Icon(Icons.brightness_auto_outlined, size: 18),
+            ),
+          ],
+          selected: {c.themeMode.value},
+          multiSelectionEnabled: false,
+          emptySelectionAllowed: false,
+          onSelectionChanged: (next) {
+            if (next.isEmpty) return;
+            final picked = next.first;
+            if (picked == c.themeMode.value) return;
+            c.setThemeMode(picked);
+          },
         ),
       ),
     );
@@ -267,6 +339,8 @@ class _SettingsToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return SizedBox(
       height: 44,
       child: Padding(
@@ -276,10 +350,10 @@ class _SettingsToggleRow extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w400,
-                  color: _kRowLabel,
+                  color: scheme.onSurface,
                   letterSpacing: -0.4,
                 ),
               ),
