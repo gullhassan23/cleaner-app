@@ -1,5 +1,5 @@
-import 'package:cleaner_app/controllers/contacts_hub_controller.dart';
-import 'package:cleaner_app/controllers/contacts_list_controller.dart';
+import 'package:cleaner_app/controllers/contacts/contacts_hub_controller.dart';
+import 'package:cleaner_app/controllers/contacts/contacts_list_controller.dart';
 import 'package:cleaner_app/services/contacts/contacts_repository.dart';
 import 'package:get/get.dart';
 

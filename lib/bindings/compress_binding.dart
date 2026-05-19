@@ -2,9 +2,9 @@ import 'package:get/get.dart';
 
 import '../services/photo_library/photo_library_use_cases.dart';
 import '../services/compression/media_compression_service.dart';
-import '../controllers/compress_picker_controller.dart';
-import '../controllers/compress_review_controller.dart';
-import '../controllers/compress_session_controller.dart';
+import '../controllers/compress/compress_picker_controller.dart';
+import '../controllers/compress/compress_review_controller.dart';
+import '../controllers/compress/compress_session_controller.dart';
 
 class CompressBinding extends Bindings {
   @override

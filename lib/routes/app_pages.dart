@@ -1,25 +1,25 @@
 import 'package:cleaner_app/features/cleaner/ai_photo_editor_page.dart';
 import 'package:cleaner_app/features/settings/settings.dart';
-import 'package:cleaner_app/modules/app_lock/bindings/app_lock_binding.dart';
-import 'package:cleaner_app/modules/app_lock/views/app_lock_setup_view.dart';
-import 'package:cleaner_app/modules/app_lock/views/app_lock_verify_pin_view.dart';
-import 'package:cleaner_app/modules/charging/bindings/charging_binding.dart';
-import 'package:cleaner_app/modules/photo_widget/bindings/photo_widget_binding.dart';
-import 'package:cleaner_app/modules/photo_widget/views/photo_widget_album_view.dart';
-import 'package:cleaner_app/modules/photo_widget/views/photo_widget_hub_view.dart';
-import 'package:cleaner_app/modules/photo_widget/views/photo_widget_picker_view.dart';
-import 'package:cleaner_app/modules/photo_widget/views/photo_widget_style_view.dart';
-import 'package:cleaner_app/modules/charging/views/charging_display_view.dart';
-import 'package:cleaner_app/modules/charging/views/charging_home_view.dart';
-import 'package:cleaner_app/modules/charging/views/charging_preview_view.dart';
-import 'package:cleaner_app/modules/charging/views/charging_selection_view.dart';
+import 'package:cleaner_app/features/app_lock/bindings/app_lock_binding.dart';
+import 'package:cleaner_app/features/app_lock/views/app_lock_setup_view.dart';
+import 'package:cleaner_app/features/app_lock/views/app_lock_verify_pin_view.dart';
+import 'package:cleaner_app/features/charging/bindings/charging_binding.dart';
+import 'package:cleaner_app/bindings/photo_widget_binding.dart';
+import 'package:cleaner_app/features/photo_widget/photo_widget_album_view.dart';
+import 'package:cleaner_app/features/photo_widget/photo_widget_hub_view.dart';
+import 'package:cleaner_app/features/photo_widget/photo_widget_picker_view.dart';
+import 'package:cleaner_app/features/photo_widget/photo_widget_style_view.dart';
+import 'package:cleaner_app/features/charging/views/charging_display_view.dart';
+import 'package:cleaner_app/features/charging/views/charging_home_view.dart';
+import 'package:cleaner_app/features/charging/views/charging_preview_view.dart';
+import 'package:cleaner_app/features/charging/views/charging_selection_view.dart';
 import 'package:cleaner_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../bindings/compress_binding.dart';
 import '../bindings/contacts_binding.dart';
-import '../bindings/main_shell_binding.dart';
+import '../bindings/bottomNav_binding.dart';
 import '../bindings/vault_binding.dart';
 
 import '../features/compress/compress_review_page.dart';
@@ -28,8 +28,8 @@ import '../features/contacts/contacts_duplicates_page.dart';
 import '../features/contacts/contacts_hub_page.dart';
 import '../features/contacts/contacts_incomplete_page.dart';
 import '../features/contacts/contacts_list_page.dart';
-import '../features/vault/pages/vault_media_picker_page.dart';
-import '../features/vault/pages/vault_media_preview_page.dart';
+import '../features/vault/vault_media_picker_page.dart';
+import '../features/vault/vault_media_preview_page.dart';
 
 import 'app_routes.dart';
 
@@ -66,8 +66,8 @@ abstract final class AppPages {
   static final List<GetPage<dynamic>> _rootStack = <GetPage<dynamic>>[
     GetPage<dynamic>(
       name: AppRoutes.main,
-      page: MainShellPage.new,
-      binding: MainShellBinding(),
+      page: BottomNav.new,
+      binding: BottomNavBinding(),
     ),
     GetPage<dynamic>(
       name: AppRoutes.compressReview,

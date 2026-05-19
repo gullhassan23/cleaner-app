@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 import '../../widgets/state_message_card.dart';
 import '../../models/compress/compress_entities.dart';
 
-import '../../repositories/photo_library_repository.dart';
-import '../../controllers/compress_review_controller.dart';
+import '../../services/repositories/photo_library_repository.dart';
+import '../../controllers/compress/compress_review_controller.dart';
 
 class CompressReviewPage extends GetView<CompressReviewController> {
   const CompressReviewPage({super.key});

@@ -3,7 +3,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:cleaner_app/controllers/ai_gallery_sheet_controller.dart';
+import 'package:cleaner_app/controllers/photo_editing/ai_gallery_sheet_controller.dart';
 import 'package:cleaner_app/models/photo_library/scan_state_entity.dart';
 import 'package:cleaner_app/services/gallery/gallery_media_service.dart';
 import 'package:cleaner_app/services/permissions/photo_permission_service.dart';
@@ -54,33 +54,39 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
     final openSettings = state.needsSettings;
     await showDialog<void>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Photos access'),
-        content: Text(
-          openSettings
-              ? 'Photo access is blocked. Enable it in Settings to pick images.'
-              : 'Allow photo library access to choose an image.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('OK'),
+      builder: (ctx) {
+        final cs = Theme.of(ctx).colorScheme;
+        return AlertDialog(
+          backgroundColor: cs.surface,
+          title: Text('Photos access', style: TextStyle(color: cs.onSurface)),
+          content: Text(
+            openSettings
+                ? 'Photo access is blocked. Enable it in Settings to pick images.'
+                : 'Allow photo library access to choose an image.',
+            style: TextStyle(color: cs.onSurfaceVariant),
           ),
-          if (openSettings)
+          actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-                Get.find<PhotoPermissionService>().openAppSettings();
-              },
-              child: const Text('Settings'),
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('OK'),
             ),
-        ],
-      ),
+            if (openSettings)
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  Get.find<PhotoPermissionService>().openAppSettings();
+                },
+                child: const Text('Settings'),
+              ),
+          ],
+        );
+      },
     );
   }
 
   Future<void> _cropPickedAsset(BuildContext sheetContext, AssetEntity asset) async {
     Navigator.of(sheetContext).pop();
+    final isDark = Theme.of(sheetContext).brightness == Brightness.dark;
     final gallery = Get.find<GalleryMediaService>();
     final file = await gallery.getOriginalFile(asset.id);
     if (!mounted || file == null) {
@@ -98,13 +104,13 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: 'Crop',
-          toolbarColor: Colors.white,
-          toolbarWidgetColor: Colors.black87,
-          statusBarLight: true,
-          backgroundColor: const Color(0xFFF1F5F9),
+          toolbarColor: isDark ? const Color(0xFF1C1B1F) : Colors.white,
+          toolbarWidgetColor: isDark ? Colors.white : Colors.black87,
+          statusBarLight: !isDark,
+          backgroundColor: isDark ? const Color(0xFF121212) : const Color(0xFFF1F5F9),
           activeControlsWidgetColor: _primaryBlue,
           cropGridColor: Colors.white.withValues(alpha: 0.9),
-          cropFrameColor: Colors.white,
+          cropFrameColor: isDark ? const Color(0xFFE0E0E0) : Colors.white,
           showCropGrid: true,
           cropGridColumnCount: 3,
           cropGridRowCount: 3,
@@ -152,21 +158,29 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    const bg = Color(0xFFF8F6F4);
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+    final scaffoldBg = theme.scaffoldBackgroundColor;
+
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: scaffoldBg,
       appBar: AppBar(
-        backgroundColor: bg,
+        backgroundColor: scaffoldBg,
         surfaceTintColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'AI Photo Editor',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            color: cs.onSurface,
+          ),
         ),
         actions: [
           IconButton(
             tooltip: 'Choose from library',
             onPressed: () => _openImageSheet(AiPhotoEditorFeature.photoEnhance),
-            icon: const Icon(Icons.photo_library_outlined),
+            icon: Icon(Icons.photo_library_outlined, color: cs.onSurface),
           ),
         ],
       ),
@@ -174,14 +188,17 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
         padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
         children: [
           _FeatureCard(
-            background: const Color(0xFFEDE7F6),
+            background: isDark ? const Color(0xFF352A47) : const Color(0xFFEDE7F6),
             title: 'Photo Enhance',
-            titleColor: const Color(0xFF4527A0),
+            titleColor: isDark ? const Color(0xFFE1BEE7) : const Color(0xFF4527A0),
             subtitle: 'Boost quality',
-            subtitleColor: const Color(0xFF6A1B9A).withValues(alpha: 0.75),
-            demo: const _SplitDemoThumb(
-              left: Color(0xFFD1C4E9),
-              right: Color(0xFF7E57C2),
+            subtitleColor: isDark
+                ? const Color(0xFFCE93D8).withValues(alpha: 0.85)
+                : const Color(0xFF6A1B9A).withValues(alpha: 0.75),
+            demo: _SplitDemoThumb(
+              left: isDark ? const Color(0xFF4A3F5C) : const Color(0xFFD1C4E9),
+              right: isDark ? const Color(0xFF6A4BA8) : const Color(0xFF7E57C2),
+              dividerColor: cs.outline.withValues(alpha: 0.45),
               leftIcon: Icons.blur_on_rounded,
               rightIcon: Icons.auto_awesome_rounded,
             ),
@@ -189,14 +206,17 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
           ),
           const SizedBox(height: 14),
           _FeatureCard(
-            background: const Color(0xFFFFE0D4),
+            background: isDark ? const Color(0xFF3D2E26) : const Color(0xFFFFE0D4),
             title: 'Fix Old Photo',
-            titleColor: const Color(0xFF3E2723),
+            titleColor: isDark ? const Color(0xFFFFCCBC) : const Color(0xFF3E2723),
             subtitle: 'Restore old memories',
-            subtitleColor: const Color(0xFF5D4037).withValues(alpha: 0.8),
-            demo: const _SplitDemoThumb(
-              left: Color(0xFFBDBDBD),
-              right: Color(0xFFFFCC80),
+            subtitleColor: isDark
+                ? const Color(0xFFFFAB91).withValues(alpha: 0.9)
+                : const Color(0xFF5D4037).withValues(alpha: 0.8),
+            demo: _SplitDemoThumb(
+              left: isDark ? const Color(0xFF5D5D5D) : const Color(0xFFBDBDBD),
+              right: isDark ? const Color(0xFF8D6E63) : const Color(0xFFFFCC80),
+              dividerColor: cs.outline.withValues(alpha: 0.45),
               leftIcon: Icons.history_edu_rounded,
               rightIcon: Icons.palette_rounded,
             ),
@@ -278,17 +298,20 @@ class _SplitDemoThumb extends StatelessWidget {
   const _SplitDemoThumb({
     required this.left,
     required this.right,
+    required this.dividerColor,
     required this.leftIcon,
     required this.rightIcon,
   });
 
   final Color left;
   final Color right;
+  final Color dividerColor;
   final IconData leftIcon;
   final IconData rightIcon;
 
   @override
   Widget build(BuildContext context) {
+    const iconOnDemo = Color(0xE6FFFFFF);
     return ClipRRect(
       borderRadius: BorderRadius.circular(14),
       child: Row(
@@ -303,17 +326,17 @@ class _SplitDemoThumb extends StatelessWidget {
                   child: const ColoredBox(color: Colors.transparent),
                 ),
                 Center(
-                  child: Icon(leftIcon, color: Colors.white.withValues(alpha: 0.85), size: 28),
+                  child: Icon(leftIcon, color: iconOnDemo, size: 28),
                 ),
               ],
             ),
           ),
-          Container(width: 1, color: Colors.white.withValues(alpha: 0.85)),
+          Container(width: 1, color: dividerColor),
           Expanded(
             child: ColoredBox(
               color: right,
               child: Center(
-                child: Icon(rightIcon, color: Colors.white.withValues(alpha: 0.95), size: 28),
+                child: Icon(rightIcon, color: iconOnDemo, size: 28),
               ),
             ),
           ),
@@ -365,13 +388,14 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
   @override
   Widget build(BuildContext context) {
     final h = MediaQuery.sizeOf(context).height * 0.62;
+    final cs = Theme.of(context).colorScheme;
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
         height: h,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: cs.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -382,7 +406,7 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: cs.outlineVariant,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -394,12 +418,16 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
                   Expanded(
                     child: Text(
                       controller.sheetTitle,
-                      style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: cs.onSurface,
+                      ),
                     ),
                   ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.close_rounded),
+                    icon: Icon(Icons.close_rounded, color: cs.onSurface),
                   ),
                 ],
               ),
@@ -410,13 +438,13 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
                 final loading = controller.loading.value;
                 final ended = controller.end.value;
                 if (list.isEmpty && loading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator(color: cs.primary));
                 }
                 if (list.isEmpty) {
                   return Center(
                     child: Text(
                       'No photos found',
-                      style: TextStyle(color: Colors.grey.shade600),
+                      style: TextStyle(color: cs.onSurfaceVariant),
                     ),
                   );
                 }
@@ -431,20 +459,23 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
                   itemCount: list.length + (loading && !ended ? 1 : 0),
                   itemBuilder: (context, i) {
                     if (i >= list.length) {
-                      return const Center(
+                      return Center(
                         child: Padding(
-                          padding: EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12),
                           child: SizedBox(
                             width: 24,
                             height: 24,
-                            child: CircularProgressIndicator(strokeWidth: 2),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: cs.primary,
+                            ),
                           ),
                         ),
                       );
                     }
                     final a = list[i];
                     return Material(
-                      color: Colors.grey.shade200,
+                      color: cs.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(8),
                       clipBehavior: Clip.antiAlias,
                       child: InkWell(
@@ -484,7 +515,7 @@ class _GalleryThumb extends StatelessWidget {
             gaplessPlayback: true,
           );
         }
-        return const ColoredBox(color: Color(0xFFE2E8F0));
+        return ColoredBox(color: Theme.of(context).colorScheme.surfaceContainerHigh);
       },
     );
   }

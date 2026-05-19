@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
-import 'package:cleaner_app/repositories/photo_library_repository.dart';
+import 'package:cleaner_app/services/repositories/photo_library_repository.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

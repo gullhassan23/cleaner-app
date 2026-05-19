@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cleaner_app/controllers/cleaner_controller.dart';
+import 'package:cleaner_app/controllers/cleaner/cleaner_controller.dart';
 import 'package:cleaner_app/features/cleaner/DashboardAppbar.dart';
 
 import 'package:cleaner_app/features/cleaner/result_scroll.dart';

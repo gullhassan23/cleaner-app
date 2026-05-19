@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import '../../repositories/vault_repository.dart';
+import '../repositories/vault_repository.dart';
 
 /// Locks the vault crypto session when the app leaves the foreground.
 class VaultLifecycleCoordinator extends GetxService with WidgetsBindingObserver {

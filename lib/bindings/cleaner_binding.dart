@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../controllers/cleaner_controller.dart';
-import '../repositories/photo_library_repository.dart';
+import '../controllers/cleaner/cleaner_controller.dart';
+import '../services/repositories/photo_library_repository.dart';
 import '../services/cleaner/duplicate_detector_service.dart';
 import '../services/cleaner/gallery_scan_coordinator.dart';
 import '../services/cleaner/similar_detector_service.dart';

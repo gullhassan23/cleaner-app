@@ -8,7 +8,7 @@ import '../../models/photo_library/scan_state_entity.dart';
 import '../../utils/bytes_formatter.dart';
 import '../../widgets/state_message_card.dart';
 import '../../widgets/compress/asset_thumbnail.dart';
-import '../../controllers/compress_picker_controller.dart';
+import '../../controllers/compress/compress_picker_controller.dart';
 
 class CompressMainScreen extends GetView<CompressPickerController> {
   const CompressMainScreen({super.key});

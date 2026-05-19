@@ -12,7 +12,7 @@ import 'package:photo_manager/photo_manager.dart';
 
 import '../../models/vault/vault_media_model.dart';
 import '../../models/vault/vault_result.dart';
-import '../../repositories/vault_repository.dart';
+import '../repositories/vault_repository.dart';
 import '../permissions/photo_permission_service.dart';
 import 'vault_crypto.dart';
 import 'vault_service.dart';

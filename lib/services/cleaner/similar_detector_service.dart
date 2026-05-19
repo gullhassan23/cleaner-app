@@ -4,7 +4,7 @@ import 'package:image/image.dart' as img;
 
 import '../../models/cleaner/cleaner_media_cluster.dart';
 import '../../models/photo_library/photo_asset_entity.dart';
-import '../../repositories/photo_library_repository.dart';
+import '../repositories/photo_library_repository.dart';
 
 typedef SimilarProgressCallback = void Function(int completed, int total);
 

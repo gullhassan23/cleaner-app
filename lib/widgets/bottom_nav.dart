@@ -3,20 +3,16 @@ import 'package:cleaner_app/features/cleaner/cleaner_dashboard_page.dart';
 import 'package:cleaner_app/features/compress/compress_main_screen.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
 import 'package:cleaner_app/features/more/more_tools.dart';
-import 'package:cleaner_app/controllers/main_shell_controller.dart';
+import 'package:cleaner_app/controllers/bottomnav_controller.dart';
 import 'package:cleaner_app/features/vault/vault_root_page.dart';
+import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// Matches reference app bottom bar accent colors.
-const Color _kNavBlue = Color(0xFF4A89F3);
-const Color _kNavOrange = Color(0xFFFF9500);
-const Color _kNavPurple = Color(0xFFAF52DE);
-const Color _kNavGrey = Color(0xFF8E8E93);
-const Color _kNavBarFill = Color(0x1A4A89F3);
 
-class MainShellPage extends GetView<MainShellController> {
-  const MainShellPage({super.key});
+class BottomNav extends GetView<BottomNavController> {
+  const BottomNav({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +62,7 @@ class _FloatingBottomBar extends StatelessWidget {
     required this.selectedIndex,
   });
 
-  final MainShellController controller;
+  final BottomNavController controller;
   final int selectedIndex;
 
   @override
@@ -77,7 +73,7 @@ class _FloatingBottomBar extends StatelessWidget {
     final barFill =
         scheme.brightness == Brightness.dark
             ? scheme.surfaceContainerHigh.withValues(alpha: 0.94)
-            : _kNavBarFill;
+            : kNavBarFill;
 
     return Material(
       color: Colors.transparent,
@@ -103,40 +99,40 @@ class _FloatingBottomBar extends StatelessWidget {
                 label: 'Clean',
                 selected: idx == 0,
                 icon: Icons.delete_rounded,
-                selectedColor: _kNavBlue,
-                idleColor: _kNavGrey,
+                selectedColor: kNavBlue,
+                idleColor: kNavGrey,
                 onTap: () => controller.selectTab(0),
               ),
               _NavCell(
                 label: 'Contacts',
                 selected: idx == 1,
                 icon: Icons.person_rounded,
-                selectedColor: _kNavBlue,
-                idleColor: _kNavOrange,
+                selectedColor: kNavBlue,
+                idleColor: kNavOrange,
                 onTap: () => controller.selectTab(1),
               ),
               _NavCell(
                 label: 'Compress',
                 selected: idx == 2,
                 icon: Icons.video_camera_back_rounded,
-                selectedColor: _kNavBlue,
-                idleColor: _kNavPurple,
+                selectedColor: kNavBlue,
+                idleColor: kNavPurple,
                 onTap: () => controller.selectTab(2),
               ),
               _NavCell(
                 label: 'Vault',
                 selected: idx == 3,
                 icon: Icons.lock_rounded,
-                selectedColor: _kNavBlue,
-                idleColor: _kNavBlue,
+                selectedColor: kNavBlue,
+                idleColor: kNavBlue,
                 onTap: () => controller.selectTab(3),
               ),
               _NavCell(
                 label: 'More',
                 selected: idx == 4,
                 icon: Icons.grid_view_rounded,
-                selectedColor: _kNavBlue,
-                idleColor: _kNavPurple,
+                selectedColor: kNavBlue,
+                idleColor: kNavPurple,
                 onTap: () => controller.selectTab(4),
               ),
             ],
@@ -172,7 +168,7 @@ class _NavCell extends StatelessWidget {
   Widget build(BuildContext context) {
     const iconSize = 22.0;
     final iconColor = selected ? selectedColor : idleColor;
-    final labelColor = selected ? selectedColor : _kNavGrey;
+    final labelColor = selected ? selectedColor : kNavGrey;
 
     return Expanded(
       child: InkWell(

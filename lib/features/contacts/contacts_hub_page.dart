@@ -1,4 +1,4 @@
-import 'package:cleaner_app/controllers/contacts_hub_controller.dart';
+import 'package:cleaner_app/controllers/contacts/contacts_hub_controller.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/widgets/state_message_card.dart';
 import 'package:flutter/material.dart';

@@ -6,7 +6,7 @@ import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:cleaner_app/controllers/cleaner_controller.dart';
+import 'package:cleaner_app/controllers/cleaner/cleaner_controller.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_dashboard_kind.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
 

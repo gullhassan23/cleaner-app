@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:cleaner_app/controllers/vault_controller.dart';
-import 'package:cleaner_app/controllers/vault_setup_pin_controller.dart';
-import 'package:cleaner_app/features/vault/pages/vault_home_page.dart';
-import 'package:cleaner_app/features/vault/pages/vault_setup_pin_page.dart';
-import 'package:cleaner_app/features/vault/pages/vault_unlock_page.dart';
+import 'package:cleaner_app/controllers/vault/vault_controller.dart';
+import 'package:cleaner_app/controllers/vault/vault_setup_pin_controller.dart';
+import 'package:cleaner_app/features/vault/vault_home_page.dart';
+import 'package:cleaner_app/features/vault/vault_setup_pin_page.dart';
+import 'package:cleaner_app/features/vault/vault_unlock_page.dart';
 
 class VaultRootPage extends GetView<VaultController> {
   const VaultRootPage({super.key});
