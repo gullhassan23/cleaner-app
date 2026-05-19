@@ -2,11 +2,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../controllers/app_lock_controller.dart';
-import '../controllers/app_lock_setup_controller.dart';
-import '../controllers/app_lock_verify_controller.dart';
-import '../services/app_lock_lifecycle_coordinator.dart';
-import '../services/app_lock_service.dart';
+import '../controllers/applock/app_lock_controller.dart';
+import '../controllers/applock/app_lock_setup_controller.dart';
+import '../controllers/applock/app_lock_verify_controller.dart';
+import '../services/applock/app_lock_lifecycle_coordinator.dart';
+import '../services/applock/app_lock_service.dart';
 
 class AppLockBinding extends Bindings {
   @override

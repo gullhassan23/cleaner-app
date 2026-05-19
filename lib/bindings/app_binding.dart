@@ -2,12 +2,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../features/app_lock/bindings/app_lock_binding.dart';
+import 'app_lock_binding.dart';
 import 'photo_widget_binding.dart';
 import '../features/charging/platform/charging_nav_coordinator.dart';
-import '../features/charging/services/charging_catalog_service.dart';
-import '../features/charging/services/charging_preferences_service.dart';
-import '../features/charging/services/charging_service.dart';
+import '../services/charging/charging_catalog_service.dart';
+import '../services/charging/charging_preferences_service.dart';
+import '../services/charging/charging_service.dart';
 import '../services/vault/vault_lifecycle_coordinator.dart';
 import '../services/photo_library/photo_library_data_source.dart';
 import '../services/photo_library/photo_library_repository_impl.dart';

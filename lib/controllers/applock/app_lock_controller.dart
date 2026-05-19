@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-import '../../../routes/app_routes.dart';
-import '../services/app_lock_service.dart';
+import '../../routes/app_routes.dart';
+import '../../services/applock/app_lock_service.dart';
 
 /// Global app lock state: bootstrap, lock/unlock, settings toggle flows.
 class AppLockController extends GetxController {

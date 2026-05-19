@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../controllers/charging_controller.dart';
-import '../platform/charging_native_bridge.dart';
-import '../widgets/charging_animation_host.dart';
-import '../widgets/charging_backdrop.dart';
+import '../../controllers/charging/charging_controller.dart';
+import 'platform/charging_native_bridge.dart';
+import '../../widgets/charging/charging_animation_host.dart';
+import '../../widgets/charging/charging_backdrop.dart';
 
 /// Immersive charging display (auto-show on plug or manual open).
 class ChargingDisplayView extends GetView<ChargingController> {

@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../../routes/app_routes.dart';
-import '../services/charging_preferences_service.dart';
-import '../services/charging_service.dart';
+import '../../../services/charging/charging_preferences_service.dart';
+import '../../../services/charging/charging_service.dart';
 import 'charging_native_bridge.dart';
 import 'charging_power_events.dart';
 

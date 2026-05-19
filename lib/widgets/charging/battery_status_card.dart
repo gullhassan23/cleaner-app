@@ -2,7 +2,7 @@ import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../models/charging_ui_snapshot.dart';
+import '../../models/charging/charging_ui_snapshot.dart';
 
 class BatteryStatusCard extends StatelessWidget {
   const BatteryStatusCard({

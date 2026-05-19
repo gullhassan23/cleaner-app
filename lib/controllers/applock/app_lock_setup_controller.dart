@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-import '../services/app_lock_service.dart';
+import '../../services/applock/app_lock_service.dart';
 import 'app_lock_controller.dart';
 
 class AppLockSetupController extends GetxController {

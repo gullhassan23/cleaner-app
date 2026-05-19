@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import '../controllers/app_lock_controller.dart';
+import '../../controllers/applock/app_lock_controller.dart';
 
 /// Locks the app when it leaves the foreground (if app lock is enabled).
 class AppLockLifecycleCoordinator extends GetxService with WidgetsBindingObserver {

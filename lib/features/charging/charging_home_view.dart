@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/charging_controller.dart';
-import '../widgets/battery_status_card.dart';
-import '../widgets/charging_animation_host.dart';
-import '../widgets/charging_backdrop.dart';
+import '../../controllers/charging/charging_controller.dart';
+import '../../widgets/charging/battery_status_card.dart';
+import '../../widgets/charging/charging_animation_host.dart';
+import '../../widgets/charging/charging_backdrop.dart';
 
 class ChargingHomeView extends GetView<ChargingController> {
   const ChargingHomeView({super.key});

@@ -1,10 +1,11 @@
+import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
+import 'package:cleaner_app/features/appLock/app_lock_unlock_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bindings/app_binding.dart';
 import 'controllers/theme_controller.dart';
-import 'features/app_lock/controllers/app_lock_controller.dart';
-import 'features/app_lock/views/app_lock_unlock_view.dart';
+
 import 'utils/app_theme.dart';
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';

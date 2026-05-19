@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/charging_controller.dart';
-import '../models/charging_animation_model.dart';
-import '../widgets/battery_status_card.dart';
-import '../widgets/charging_animation_host.dart';
-import '../widgets/charging_backdrop.dart';
+import '../../controllers/charging/charging_controller.dart';
+import '../../models/charging/charging_animation_model.dart';
+import '../../widgets/charging/battery_status_card.dart';
+import '../../widgets/charging/charging_animation_host.dart';
+import '../../widgets/charging/charging_backdrop.dart';
 
 class ChargingPreviewView extends GetView<ChargingController> {
   const ChargingPreviewView({super.key});

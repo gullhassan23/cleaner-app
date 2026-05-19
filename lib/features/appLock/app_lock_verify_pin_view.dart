@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../widgets/vault/vault_numeric_pad.dart';
-import '../controllers/app_lock_verify_controller.dart';
-import '../widgets/app_lock_pin_dots.dart';
+import '../../widgets/vault/vault_numeric_pad.dart';
+import '../../controllers/applock/app_lock_verify_controller.dart';
+import '../../widgets/appLock/app_lock_pin_dots.dart';
 
 class AppLockVerifyPinView extends GetView<AppLockVerifyController> {
   const AppLockVerifyPinView({super.key});

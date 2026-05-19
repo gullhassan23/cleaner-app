@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 
-import '../controllers/charging_controller.dart';
-import '../platform/charging_nav_coordinator.dart';
-import '../services/charging_catalog_service.dart';
-import '../services/charging_preferences_service.dart';
-import '../services/charging_service.dart';
+import '../controllers/charging/charging_controller.dart';
+import '../features/charging/platform/charging_nav_coordinator.dart';
+import '../services/charging/charging_catalog_service.dart';
+import '../services/charging/charging_preferences_service.dart';
+import '../services/charging/charging_service.dart';
 
 class ChargingBinding extends Bindings {
   @override

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:get/get.dart';
 
-import '../models/charging_ui_snapshot.dart';
+import '../../models/charging/charging_ui_snapshot.dart';
 
 class ChargingService extends GetxService {
   ChargingService() : _battery = Battery();

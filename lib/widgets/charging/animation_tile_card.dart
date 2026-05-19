@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../models/charging_animation_model.dart';
+import '../../models/charging/charging_animation_model.dart';
 
 class AnimationTileCard extends StatelessWidget {
   const AnimationTileCard({

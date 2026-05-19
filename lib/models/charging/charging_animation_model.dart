@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/animation_providers/charging_animation_source.dart';
+import '../../widgets/charging/animation_providers/charging_animation_source.dart';
 
 @immutable
 class ChargingAnimationModel {

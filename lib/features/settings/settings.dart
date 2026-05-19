@@ -1,5 +1,5 @@
 import 'package:cleaner_app/controllers/theme_controller.dart';
-import 'package:cleaner_app/features/app_lock/controllers/app_lock_controller.dart';
+import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
 import 'package:cleaner_app/bindings/photo_widget_binding.dart';
 import 'package:cleaner_app/controllers/photo_widget/photo_widget_controller.dart';
 import 'package:cleaner_app/routes/app_routes.dart';

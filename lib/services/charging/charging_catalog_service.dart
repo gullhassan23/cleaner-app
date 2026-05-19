@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../models/charging_animation_model.dart';
-import '../widgets/animation_providers/charging_animation_source.dart';
+import '../../models/charging/charging_animation_model.dart';
+import '../../widgets/charging/animation_providers/charging_animation_source.dart';
 
 class ChargingCatalogService extends GetxService {
   static const String lottieBase = 'assets/charging/lottie';

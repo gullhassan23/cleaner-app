@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../models/app_lock_result.dart';
+import '../../models/appLock/app_lock_result.dart';
 
 /// Persists app lock settings and handles PIN/biometric verification.
 class AppLockService extends GetxService {

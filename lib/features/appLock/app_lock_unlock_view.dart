@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
-import '../../../widgets/vault/vault_numeric_pad.dart';
-import '../controllers/app_lock_controller.dart';
-import '../widgets/app_lock_pin_dots.dart';
+import '../../widgets/vault/vault_numeric_pad.dart';
+
+import '../../widgets/appLock/app_lock_pin_dots.dart';
 
 class AppLockUnlockView extends StatefulWidget {
   const AppLockUnlockView({super.key});

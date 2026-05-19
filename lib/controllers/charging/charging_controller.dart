@@ -5,16 +5,16 @@ import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import '../../../routes/app_routes.dart';
-import '../models/charging_animation_model.dart';
-import '../models/charging_ui_snapshot.dart';
-import '../platform/charging_native_bridge.dart';
-import '../platform/charging_nav_coordinator.dart';
-import '../services/charging_catalog_service.dart';
-import '../services/charging_preferences_service.dart';
-import '../services/charging_service.dart';
-import '../widgets/animation_providers/charging_animation_config.dart';
-import '../widgets/animation_providers/charging_animation_source.dart';
+import '../../routes/app_routes.dart';
+import '../../models/charging/charging_animation_model.dart';
+import '../../models/charging/charging_ui_snapshot.dart';
+import '../../features/charging/platform/charging_native_bridge.dart';
+import '../../features/charging/platform/charging_nav_coordinator.dart';
+import '../../services/charging/charging_catalog_service.dart';
+import '../../services/charging/charging_preferences_service.dart';
+import '../../services/charging/charging_service.dart';
+import '../../widgets/charging/animation_providers/charging_animation_config.dart';
+import '../../widgets/charging/animation_providers/charging_animation_source.dart';
 
 class ChargingController extends GetxController with WidgetsBindingObserver {
   ChargingController({

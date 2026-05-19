@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/charging_controller.dart';
-import '../widgets/animation_tile_card.dart';
+import '../../controllers/charging/charging_controller.dart';
+import '../../widgets/charging/animation_tile_card.dart';
 
 class ChargingSelectionView extends GetView<ChargingController> {
   const ChargingSelectionView({super.key});
