@@ -64,7 +64,10 @@ class CompressPickerController extends GetxController {
     if (!session.hasSelection) {
       return;
     }
-    await Get.toNamed<void>(AppRoutes.compressReview);
+    await Get.toNamed<void>(
+      AppRoutes.compressReview,
+      id: AppRoutes.compressNestedNavigatorId,
+    );
   }
 
   PermissionStateEntity get permissionState => session.permissionState;

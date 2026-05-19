@@ -305,6 +305,7 @@ class _VaultThumbTileState extends State<_VaultThumbTile> {
           if (!context.mounted) return;
           await Get.toNamed<void>(
             AppRoutes.vaultMediaPreview,
+            id: AppRoutes.vaultNestedNavigatorId,
             arguments: VaultMediaPreviewArgs(model: widget.model, file: file),
           );
           await vault.refreshMedia();

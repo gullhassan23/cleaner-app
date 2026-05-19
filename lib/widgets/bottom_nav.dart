@@ -1,8 +1,7 @@
-import 'package:cleaner_app/features/cleaner/cleaner_dashboard_page.dart';
-
-import 'package:cleaner_app/features/compress/compress_main_screen.dart';
+import 'package:cleaner_app/features/cleaner/cleaner_root_page.dart';
+import 'package:cleaner_app/features/compress/compress_root_page.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
-import 'package:cleaner_app/features/more/more_tools.dart';
+import 'package:cleaner_app/features/more/more_root_page.dart';
 import 'package:cleaner_app/controllers/bottomnav_controller.dart';
 import 'package:cleaner_app/features/vault/vault_root_page.dart';
 import 'package:cleaner_app/utils/colors.dart';
@@ -24,14 +23,14 @@ class BottomNav extends GetView<BottomNavController> {
         () => IndexedStack(
           index: controller.currentIndex.value,
           children: [
-            const CleanerDashboardPage(),
+            const CleanerRootPage(),
             Obx(
               () =>
                   controller.contactsNavigatorReady.value
                       ? const ContactsRootPage()
                       : const SizedBox.shrink(),
             ),
-            const CompressMainScreen(),
+            const CompressRootPage(),
             Obx(() {
               if (!controller.vaultTabReady.value) {
                 if (controller.currentIndex.value == 3) {
@@ -41,7 +40,7 @@ class BottomNav extends GetView<BottomNavController> {
               }
               return const VaultRootPage();
             }),
-            const MoreToolsPage(),
+            const MoreRootPage(),
           ],
         ),
       ),

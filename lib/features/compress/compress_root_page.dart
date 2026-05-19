@@ -3,15 +3,15 @@ import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class VaultRootPage extends StatelessWidget {
-  const VaultRootPage({super.key});
+class CompressRootPage extends StatelessWidget {
+  const CompressRootPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      key: Get.nestedKey(AppRoutes.vaultNestedNavigatorId),
-      initialRoute: AppRoutes.vaultSetup,
-      onGenerateRoute: AppPages.vaultOnGenerateRoute,
+      key: Get.nestedKey(AppRoutes.compressNestedNavigatorId),
+      initialRoute: AppRoutes.compressMain,
+      onGenerateRoute: AppPages.compressOnGenerateRoute,
     );
   }
 }

@@ -199,7 +199,11 @@ class ResultsScrollBody extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   clipBehavior: Clip.antiAlias,
                   child: ListTile(
-                    onTap: () => Get.toNamed(AppRoutes.aiPhotoEditor),
+                    onTap:
+                        () => Get.toNamed<void>(
+                          AppRoutes.aiPhotoEditor,
+                          id: AppRoutes.cleanerNestedNavigatorId,
+                        ),
                     leading: const Icon(Icons.image, color: Colors.white),
                     title: const Text(
                       'AI Photo Editor',

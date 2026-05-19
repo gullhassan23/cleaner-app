@@ -46,7 +46,7 @@ class MoreToolsPage extends StatelessWidget {
             title: 'Cleaning Guide',
             subtitle: 'Learn how to clean safely',
             icon: const _CleaningGuideIcon(),
-            onTap: () {},
+            onTap: () => Get.toNamed<void>(AppRoutes.cleanupGuide),
           ),
         ],
       ),

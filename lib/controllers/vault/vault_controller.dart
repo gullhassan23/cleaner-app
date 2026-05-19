@@ -49,7 +49,7 @@ class VaultController extends GetxController {
     if (!unlocked) {
       unawaited(_handleLocked());
     } else {
-      shell.value = VaultShellState.home;
+      _goToShell(VaultShellState.home);
       unawaited(refreshMedia());
     }
   }
@@ -57,7 +57,7 @@ class VaultController extends GetxController {
   Future<void> _handleLocked() async {
     unlockPinDigits.value = '';
     if (await _repo.isSetupComplete()) {
-      shell.value = VaultShellState.unlock;
+      _goToShell(VaultShellState.unlock);
     }
   }
 
@@ -68,16 +68,36 @@ class VaultController extends GetxController {
     isLimitedLibrary.value = limited;
 
     if (!await _repo.isSetupComplete()) {
-      shell.value = VaultShellState.setup;
+      _goToShell(VaultShellState.setup);
       return;
     }
     if (_repo.sessionUnlocked.value) {
-      shell.value = VaultShellState.home;
+      _goToShell(VaultShellState.home);
       await refreshMedia();
     } else {
-      shell.value = VaultShellState.unlock;
+      _goToShell(VaultShellState.unlock);
     }
   }
+
+  void _goToShell(VaultShellState state) {
+    shell.value = state;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Get.nestedKey(AppRoutes.vaultNestedNavigatorId)?.currentState ==
+          null) {
+        return;
+      }
+      Get.offNamed<void>(
+        _routeFor(state),
+        id: AppRoutes.vaultNestedNavigatorId,
+      );
+    });
+  }
+
+  String _routeFor(VaultShellState state) => switch (state) {
+    VaultShellState.setup => AppRoutes.vaultSetup,
+    VaultShellState.unlock => AppRoutes.vaultUnlock,
+    VaultShellState.home => AppRoutes.vaultHome,
+  };
 
   Future<void> refreshMedia() async {
     final res = await _repo.loadMediaIndex();
@@ -114,7 +134,7 @@ class VaultController extends GetxController {
       enableBiometric: enableBiometric,
     );
     if (r.isSuccess) {
-      shell.value = VaultShellState.home;
+      _goToShell(VaultShellState.home);
       await refreshMedia();
     }
     return r;
@@ -234,7 +254,10 @@ class VaultController extends GetxController {
       }
     }
 
-    final pickedRaw = await Get.toNamed<dynamic>(AppRoutes.vaultMediaPicker);
+    final pickedRaw = await Get.toNamed<dynamic>(
+      AppRoutes.vaultMediaPicker,
+      id: AppRoutes.vaultNestedNavigatorId,
+    );
     if (pickedRaw is! List<AssetEntity> || pickedRaw.isEmpty) return;
     final picked = pickedRaw;
 

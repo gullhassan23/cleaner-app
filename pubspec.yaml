@@ -81,6 +81,8 @@ flutter:
 
   assets:
     - assets/charging/lottie/
+    - assets/cleaning_guide/
+    - assets/cleaning_guide/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

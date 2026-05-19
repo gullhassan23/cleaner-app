@@ -22,6 +22,14 @@ class CompressReviewController extends GetxController {
   }
 
   Future<void> _navigateToMainCompressTab() async {
+    if (Get.nestedKey(AppRoutes.compressNestedNavigatorId)?.currentState !=
+        null) {
+      await Get.offNamed<void>(
+        AppRoutes.compressMain,
+        id: AppRoutes.compressNestedNavigatorId,
+      );
+      return;
+    }
     await Get.offNamed<void>(AppRoutes.main);
     if (Get.isRegistered<BottomNavController>()) {
       Get.find<BottomNavController>().goToCompress();
