@@ -1,6 +1,8 @@
 import 'package:cleaner_app/controllers/theme_controller.dart';
 import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
 import 'package:cleaner_app/bindings/photo_widget_binding.dart';
+import 'package:cleaner_app/features/private_vault/data/datasources/vault_auth_service.dart';
+import 'package:cleaner_app/features/private_vault/presentation/bindings/private_vault_binding.dart';
 
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,105 +23,129 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _faceId = false;
 
   @override
+  void initState() {
+    super.initState();
+    _loadVaultPrefs();
+  }
+
+  Future<void> _loadVaultPrefs() async {
+    try {
+      PrivateVaultBinding().dependencies();
+      final auth = Get.find<VaultAuthService>();
+      final enabled = await auth.isEnabled();
+      final remove = await auth.getRemoveAfterImport();
+      if (mounted) {
+        setState(() {
+          _usePasscode = enabled;
+          _removeAfterImport = remove;
+        });
+      }
+    } catch (_) {}
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final themeController = Get.find<ThemeController>();
+    final scheme = Theme.of(context).colorScheme;
+    final groupedBg = scheme.surfaceContainerLow;
 
-    return Obx(() {
-      // Rebuild when appearance changes so [Theme.of] picks up the new mode.
-      themeController.themeMode.value;
-      final scheme = Theme.of(context).colorScheme;
-      final groupedBg = scheme.surfaceContainerLow;
-
-      return Scaffold(
+    return Scaffold(
+      backgroundColor: groupedBg,
+      appBar: AppBar(
         backgroundColor: groupedBg,
-        appBar: AppBar(
-          backgroundColor: groupedBg,
-          surfaceTintColor: Colors.transparent,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          centerTitle: true,
-          leadingWidth: 88,
-          leading: _SettingsBackButton(
-            onPressed: () => Navigator.maybePop(context),
-          ),
-          title: Text(
-            'Settings',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-              color: scheme.onSurface,
-              letterSpacing: -0.4,
-            ),
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+        leadingWidth: 88,
+        leading: _SettingsBackButton(
+          onPressed: () => Navigator.maybePop(context),
+        ),
+        title: Text(
+          'Settings',
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: scheme.onSurface,
+            letterSpacing: -0.4,
           ),
         ),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-          children: [
-            const _SectionHeader(label: 'UPGRADE'),
-            const SizedBox(height: 6),
-            _SettingsGroup(
-              children: [
-                _SettingsNavRow(label: 'Restore Purchases', onTap: () {}),
-              ],
-            ),
-            const SizedBox(height: 22),
-            const _SectionHeader(label: 'PRIVATE PHOTO SETTINGS'),
-            const SizedBox(height: 6),
-            _SettingsGroup(
-              children: [
-                _SettingsToggleRow(
-                  label: 'Use Passcode',
-                  value: _usePasscode,
-                  onChanged: (v) => setState(() => _usePasscode = v),
-                ),
-                _SettingsToggleRow(
-                  label: 'Remove After Import',
-                  value: _removeAfterImport,
-                  onChanged: (v) => setState(() => _removeAfterImport = v),
-                ),
-              ],
-            ),
-            const SizedBox(height: 22),
-            const _SectionHeader(label: 'APPEARANCE'),
-            const SizedBox(height: 6),
-            const _SettingsGroup(children: [_ThemeModePicker()]),
-            const SizedBox(height: 22),
-            const _SectionHeader(label: 'CUSTOM SETTINGS'),
-            const SizedBox(height: 6),
-            _SettingsGroup(
-              children: [
-                _SettingsNavRow(
-                  label: 'Photo Widget',
-                  onTap: () {
-                    PhotoWidgetBinding().dependencies();
-                    Get.toNamed(AppRoutes.photoWidgetHub);
-                  },
-                ),
-
-                _SettingsToggleRow(
-                  label: 'Face ID',
-                  value: _faceId,
-                  onChanged: (v) => setState(() => _faceId = v),
-                ),
-                const _AppLockToggleRow(),
-                _SettingsNavRow(label: 'Languages', onTap: () {}),
-              ],
-            ),
-            const SizedBox(height: 22),
-            const _SectionHeader(label: 'OTHERS'),
-            const SizedBox(height: 6),
-            _SettingsGroup(
-              children: [
-                _SettingsNavRow(label: 'Get Help', onTap: () {}),
-                _SettingsNavRow(label: 'Rate 5 Stars', onTap: () {}),
-                _SettingsNavRow(label: 'Share With Friends', onTap: () {}),
-                _SettingsNavRow(label: 'About Us', onTap: () {}),
-              ],
-            ),
-          ],
-        ),
-      );
-    });
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+        children: [
+          const _SectionHeader(label: 'UPGRADE'),
+          const SizedBox(height: 6),
+          _SettingsGroup(
+            children: [
+              _SettingsNavRow(label: 'Restore Purchases', onTap: () {}),
+            ],
+          ),
+          const SizedBox(height: 22),
+          const _SectionHeader(label: 'PRIVATE PHOTO SETTINGS'),
+          const SizedBox(height: 6),
+          _SettingsGroup(
+            children: [
+              _SettingsNavRow(
+                label: 'Private Vault',
+                onTap: () => Get.toNamed(AppRoutes.privateVaultRoot),
+              ),
+              _SettingsToggleRow(
+                label: 'Use Passcode',
+                value: _usePasscode,
+                onChanged: (v) {
+                  Get.toNamed(AppRoutes.privateVaultRoot);
+                  setState(() => _usePasscode = v);
+                },
+              ),
+              _SettingsToggleRow(
+                label: 'Remove After Import',
+                value: _removeAfterImport,
+                onChanged: (v) async {
+                  try {
+                    PrivateVaultBinding().dependencies();
+                    await Get.find<VaultAuthService>().setRemoveAfterImport(v);
+                  } catch (_) {}
+                  setState(() => _removeAfterImport = v);
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 22),
+          const _SectionHeader(label: 'CUSTOM SETTINGS'),
+          const SizedBox(height: 6),
+          _SettingsGroup(
+            children: [
+              _SettingsNavRow(
+                label: 'Photo Widget',
+                onTap: () {
+                  PhotoWidgetBinding().dependencies();
+                  Get.toNamed(AppRoutes.photoWidgetHub);
+                },
+              ),
+              _SettingsToggleRow(
+                label: 'Face ID',
+                value: _faceId,
+                onChanged: (v) => setState(() => _faceId = v),
+              ),
+              const _DarkModeToggleRow(),
+              const _AppLockToggleRow(),
+              _SettingsNavRow(label: 'Languages', onTap: () {}),
+            ],
+          ),
+          const SizedBox(height: 22),
+          const _SectionHeader(label: 'OTHERS'),
+          const SizedBox(height: 6),
+          _SettingsGroup(
+            children: [
+              _SettingsNavRow(label: 'Get Help', onTap: () {}),
+              _SettingsNavRow(label: 'Rate 5 Stars', onTap: () {}),
+              _SettingsNavRow(label: 'Share With Friends', onTap: () {}),
+              _SettingsNavRow(label: 'About Us', onTap: () {}),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -260,52 +286,17 @@ class _SettingsNavRow extends StatelessWidget {
   }
 }
 
-class _ThemeModePicker extends StatelessWidget {
-  const _ThemeModePicker();
+class _DarkModeToggleRow extends StatelessWidget {
+  const _DarkModeToggleRow();
 
   @override
   Widget build(BuildContext context) {
     final c = Get.find<ThemeController>();
-    final theme = Theme.of(context);
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
-      child: Obx(
-        () => SegmentedButton<ThemeMode>(
-          style: SegmentedButton.styleFrom(
-            visualDensity: VisualDensity.compact,
-            textStyle: theme.textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          showSelectedIcon: false,
-          segments: const [
-            ButtonSegment<ThemeMode>(
-              value: ThemeMode.light,
-              label: Text('Light'),
-              icon: Icon(Icons.light_mode_outlined, size: 18),
-            ),
-            ButtonSegment<ThemeMode>(
-              value: ThemeMode.dark,
-              label: Text('Dark'),
-              icon: Icon(Icons.dark_mode_outlined, size: 18),
-            ),
-            ButtonSegment<ThemeMode>(
-              value: ThemeMode.system,
-              label: Text('System'),
-              icon: Icon(Icons.brightness_auto_outlined, size: 18),
-            ),
-          ],
-          selected: {c.themeMode.value},
-          multiSelectionEnabled: false,
-          emptySelectionAllowed: false,
-          onSelectionChanged: (next) {
-            if (next.isEmpty) return;
-            final picked = next.first;
-            if (picked == c.themeMode.value) return;
-            c.setThemeMode(picked);
-          },
-        ),
+    return Obx(
+      () => _SettingsToggleRow(
+        label: 'Dark Mode',
+        value: c.isDarkMode,
+        onChanged: c.setDarkModeEnabled,
       ),
     );
   }

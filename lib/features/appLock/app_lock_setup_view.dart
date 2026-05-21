@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../widgets/vault/vault_numeric_pad.dart';
+import '../../widgets/app_lock/pin_numeric_pad.dart';
 import '../../controllers/applock/app_lock_setup_controller.dart';
 import '../../widgets/appLock/app_lock_pin_dots.dart';
 
@@ -87,7 +87,7 @@ class AppLockSetupView extends GetView<AppLockSetupController> {
                 );
               }),
               const Spacer(),
-              VaultNumericPad(
+              PinNumericPad(
                 onDigit: controller.appendDigit,
                 onDelete: controller.backspace,
               ),

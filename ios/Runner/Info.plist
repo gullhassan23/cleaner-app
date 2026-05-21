@@ -30,6 +30,8 @@
 	<string>Cleaner App needs access to your photo library so you can browse and compress photos and videos.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Cleaner App uses Face ID to unlock the app and your private vault.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Cleaner App uses the camera to capture photos and videos for your private vault.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Cleaner App reads your contacts to show lists, find duplicates and incomplete entries, let you edit them in the system Contacts app, and export a backup file when you choose.</string>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>

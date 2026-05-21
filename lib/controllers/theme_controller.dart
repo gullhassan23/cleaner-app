@@ -2,56 +2,43 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-/// Persists and exposes [ThemeMode] for [GetMaterialApp.themeMode].
+import '../services/theme/theme_preferences_service.dart';
+import '../utils/app_theme.dart';
+
+/// Single source of truth for [ThemeMode]; drives [GetMaterialApp.themeMode]
+/// via the root [Obx] in [MyApp].
 class ThemeController extends GetxController {
-  ThemeController(ThemeMode initial) : themeMode = initial.obs;
+  ThemeController({
+    required ThemePreferencesService prefs,
+    required ThemeMode initial,
+  })  : _prefs = prefs,
+        themeMode = initial.obs;
 
-  static const _prefsKey = 'app_theme_mode';
+  final ThemePreferencesService _prefs;
 
   final Rx<ThemeMode> themeMode;
 
-  static Future<ThemeMode> loadSaved() async {
-    final prefs = await SharedPreferences.getInstance();
-    return _parse(prefs.getString(_prefsKey)) ?? ThemeMode.system;
+  bool get isDarkMode => themeMode.value == ThemeMode.dark;
+
+  ThemeData get activeTheme =>
+      AppTheme.resolve(isDarkMode ? AppThemeVariant.dark : AppThemeVariant.light);
+
+  Brightness get activeBrightness =>
+      isDarkMode ? Brightness.dark : Brightness.light;
+
+  void setDarkModeEnabled(bool enabled) {
+    setThemeMode(enabled ? ThemeMode.dark : ThemeMode.light);
   }
 
-  static ThemeMode? _parse(String? raw) {
-    switch (raw) {
-      case 'light':
-        return ThemeMode.light;
-      case 'dark':
-        return ThemeMode.dark;
-      case 'system':
-        return ThemeMode.system;
-      default:
-        return null;
-    }
-  }
-
-  /// Updates reactive [themeMode] (read by [GetMaterialApp] via [Obx]) and
-  /// persists in the background. No-op when the mode is unchanged.
+  /// Updates [themeMode] and persists in the background. Root [Obx] applies
+  /// the change to [GetMaterialApp]; do not call [Get.changeThemeMode].
   void setThemeMode(ThemeMode mode) {
+    if (mode == ThemeMode.system) {
+      mode = ThemeMode.light;
+    }
     if (themeMode.value == mode) return;
     themeMode.value = mode;
-    Get.changeThemeMode(mode);
-    unawaited(_persist(mode));
-  }
-
-  static Future<void> _persist(ThemeMode mode) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_prefsKey, _serialize(mode));
-  }
-
-  static String _serialize(ThemeMode mode) {
-    switch (mode) {
-      case ThemeMode.light:
-        return 'light';
-      case ThemeMode.dark:
-        return 'dark';
-      case ThemeMode.system:
-        return 'system';
-    }
+    unawaited(_prefs.saveThemeMode(mode));
   }
 }

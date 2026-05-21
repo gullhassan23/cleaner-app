@@ -19,7 +19,7 @@ class MoreToolsPage extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-
+        automaticallyImplyLeading: false,
         title: Text(
           'More Tools',
           style: TextStyle(
@@ -33,6 +33,14 @@ class MoreToolsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
+          _ToolCard(
+            iconBackdrop: const Color(0xFF7C3AED),
+            title: 'Private Photos',
+            subtitle: 'Protect your secret photos',
+            icon: const Icon(Icons.lock_rounded, color: Colors.white, size: 28),
+            onTap: () => Get.toNamed<void>(AppRoutes.privateVaultRoot),
+          ),
+          const SizedBox(height: 12),
           _ToolCard(
             iconBackdrop: scheme.primary,
             title: 'Charging Animation',

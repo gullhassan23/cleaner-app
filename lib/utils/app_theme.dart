@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 
+/// Built-in appearance variants; extend for custom themes (e.g. OLED).
+enum AppThemeVariant { light, dark }
+
 abstract final class AppTheme {
+  static ThemeData resolve(AppThemeVariant variant) {
+    switch (variant) {
+      case AppThemeVariant.light:
+        return light;
+      case AppThemeVariant.dark:
+        return dark;
+    }
+  }
+
   static const _seedColor = Color(0xFF2563EB);
   static const _surfaceTint = Color(0xFFF8FAFC);
 

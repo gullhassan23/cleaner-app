@@ -29,12 +29,26 @@ abstract final class AppRoutes {
   static const compressMain = '/compress/main';
   static const compressReview = '/compress/review';
 
-  // —— Vault tab ——
-  static const vaultSetup = '/vault/setup';
-  static const vaultUnlock = '/vault/unlock';
-  static const vaultHome = '/vault/home';
-  static const vaultMediaPicker = '/vault/media/picker';
-  static const vaultMediaPreview = '/vault/media/preview';
+  // —— Private Vault (nested under [privateVaultRoot]) ——
+  static const privateVaultRoot = '/private-vault';
+  static const privateVaultGate = '/private-vault/gate';
+  static const privateVaultSetup = '/private-vault/setup';
+  static const privateVaultUnlock = '/private-vault/unlock';
+  static const privateVaultHome = '/private-vault/home';
+  static const privateVaultAlbums = '/private-vault/albums';
+  static const privateVaultPreview = '/private-vault/preview';
+  static const privateVaultSettings = '/private-vault/settings';
+  static const privateVaultSecurity = '/private-vault/security';
+  static const privateVaultChangePin = '/private-vault/change-pin';
+
+  @Deprecated('Use privateVaultSetup')
+  static const vaultSetup = privateVaultSetup;
+  @Deprecated('Use privateVaultUnlock')
+  static const vaultUnlock = privateVaultUnlock;
+  @Deprecated('Use privateVaultHome')
+  static const vaultHome = privateVaultHome;
+  @Deprecated('Use privateVaultPreview')
+  static const vaultMediaPreview = privateVaultPreview;
 
   // —— More tab ——
   static const moreTools = '/more/tools';

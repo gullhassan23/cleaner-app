@@ -3,7 +3,6 @@ import 'package:cleaner_app/features/compress/compress_root_page.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
 import 'package:cleaner_app/features/more/more_root_page.dart';
 import 'package:cleaner_app/controllers/bottomnav_controller.dart';
-import 'package:cleaner_app/features/vault/vault_root_page.dart';
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,15 +30,6 @@ class BottomNav extends GetView<BottomNavController> {
                       : const SizedBox.shrink(),
             ),
             const CompressRootPage(),
-            Obx(() {
-              if (!controller.vaultTabReady.value) {
-                if (controller.currentIndex.value == 3) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return const SizedBox.shrink();
-              }
-              return const VaultRootPage();
-            }),
             const MoreRootPage(),
           ],
         ),
@@ -119,20 +109,12 @@ class _FloatingBottomBar extends StatelessWidget {
                 onTap: () => controller.selectTab(2),
               ),
               _NavCell(
-                label: 'Vault',
-                selected: idx == 3,
-                icon: Icons.lock_rounded,
-                selectedColor: kNavBlue,
-                idleColor: kNavBlue,
-                onTap: () => controller.selectTab(3),
-              ),
-              _NavCell(
                 label: 'More',
-                selected: idx == 4,
+                selected: idx == 3,
                 icon: Icons.grid_view_rounded,
                 selectedColor: kNavBlue,
                 idleColor: kNavPurple,
-                onTap: () => controller.selectTab(4),
+                onTap: () => controller.selectTab(3),
               ),
             ],
           ),

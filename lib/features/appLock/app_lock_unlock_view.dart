@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
-import '../../widgets/vault/vault_numeric_pad.dart';
+import '../../widgets/app_lock/pin_numeric_pad.dart';
 
 import '../../widgets/appLock/app_lock_pin_dots.dart';
 
@@ -96,7 +96,7 @@ class _AppLockUnlockViewState extends State<AppLockUnlockView> {
                 future: c.isBiometricEnabled(),
                 builder: (context, snap) {
                   final showBio = snap.data == true;
-                  return VaultNumericPad(
+                  return PinNumericPad(
                     onDigit: c.appendUnlockDigit,
                     onDelete: c.backspaceUnlock,
                     bottomLeft: showBio

@@ -15,19 +15,36 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = Get.find<ThemeController>();
-    return GetMaterialApp(
-      title: 'Cleaner App',
-      debugShowCheckedModeBanner: false,
-      initialBinding: AppBinding(),
-      initialRoute: AppRoutes.main,
-      getPages: AppPages.pages,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: themeController.themeMode.value,
-      defaultTransition: Transition.cupertino,
-      builder: (context, child) => _AppShell(child: child),
-    );
+    return const _ReactiveThemeApp();
+  }
+}
+
+/// Rebuilds [GetMaterialApp] only when [ThemeController.themeMode] changes.
+class _ReactiveThemeApp extends StatelessWidget {
+  const _ReactiveThemeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final themeController = Get.find<ThemeController>();
+      return GetMaterialApp(
+        title: 'Cleaner App',
+        debugShowCheckedModeBanner: false,
+        initialBinding: AppBinding(),
+        initialRoute: AppRoutes.main,
+        getPages: AppPages.pages,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: themeController.themeMode.value,
+        defaultTransition: Transition.cupertino,
+        builder: (context, child) => AnimatedTheme(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          data: Theme.of(context),
+          child: _AppShell(child: child),
+        ),
+      );
+    });
   }
 }
 

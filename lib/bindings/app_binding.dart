@@ -8,7 +8,6 @@ import '../features/charging/platform/charging_nav_coordinator.dart';
 import '../services/charging/charging_catalog_service.dart';
 import '../services/charging/charging_preferences_service.dart';
 import '../services/charging/charging_service.dart';
-import '../services/vault/vault_lifecycle_coordinator.dart';
 import '../services/photo_library/photo_library_data_source.dart';
 import '../services/photo_library/photo_library_repository_impl.dart';
 import '../services/repositories/photo_library_repository.dart';
@@ -17,6 +16,9 @@ import '../services/deletion/photo_delete_service.dart';
 import '../services/gallery/gallery_media_service.dart';
 import '../services/permissions/photo_permission_service.dart';
 
+/// Global app dependencies. [ThemeController] and [ThemePreferencesService]
+/// are registered in [main] before [runApp] so the first frame uses the
+/// saved theme mode.
 class AppBinding extends Bindings {
   @override
   void dependencies() {
@@ -27,7 +29,6 @@ class AppBinding extends Bindings {
       permanent: true,
     );
     Get.put(LocalAuthentication(), permanent: true);
-    Get.put(VaultLifecycleCoordinator(), permanent: true);
     AppLockBinding().dependencies();
 
     Get.put(PhotoPermissionService(), permanent: true);

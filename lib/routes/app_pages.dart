@@ -18,9 +18,18 @@ import 'package:cleaner_app/features/charging/charging_selection_view.dart';
 import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_flow_page.dart';
 import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_page.dart';
 import 'package:cleaner_app/features/more/more_tools.dart';
-import 'package:cleaner_app/features/vault/vault_home_page.dart';
-import 'package:cleaner_app/features/vault/vault_setup_pin_page.dart';
-import 'package:cleaner_app/features/vault/vault_unlock_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/bindings/private_vault_binding.dart';
+import 'package:cleaner_app/features/private_vault/presentation/bindings/vault_route_bindings.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/private_vault_root_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_albums_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_change_pin_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_gate_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_home_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_pin_setup_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_preview_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_security_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_settings_page.dart';
+import 'package:cleaner_app/features/private_vault/presentation/pages/vault_unlock_page.dart';
 import 'package:cleaner_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,8 +37,6 @@ import 'package:get/get.dart';
 import '../bindings/compress_binding.dart';
 import '../bindings/contacts_binding.dart';
 import '../bindings/bottomNav_binding.dart';
-import '../bindings/vault_binding.dart';
-import '../controllers/vault/vault_setup_pin_controller.dart';
 
 import '../features/compress/compress_review_page.dart';
 import '../features/contacts/contacts_backup_page.dart';
@@ -37,8 +44,6 @@ import '../features/contacts/contacts_duplicates_page.dart';
 import '../features/contacts/contacts_hub_page.dart';
 import '../features/contacts/contacts_incomplete_page.dart';
 import '../features/contacts/contacts_list_page.dart';
-import '../features/vault/vault_media_picker_page.dart';
-import '../features/vault/vault_media_preview_page.dart';
 
 import 'app_routes.dart';
 
@@ -62,13 +67,13 @@ abstract final class AppPages {
       binding: ContactsBinding(),
     ),
     GetPage<dynamic>(
-      transition: Transition.leftToRight,
+      transition: Transition.upToDown,
       name: AppRoutes.contactsList,
       page: () => const ContactsListPage(),
       binding: ContactsBinding(),
     ),
     GetPage<dynamic>(
-      transition: Transition.leftToRight,
+      transition: Transition.upToDown,
       name: AppRoutes.contactsBackup,
       page: () => const ContactsBackupPage(),
       binding: ContactsBinding(),
@@ -101,58 +106,18 @@ abstract final class AppPages {
     ),
   ];
 
-  static final List<GetPage<dynamic>> vaultStack = <GetPage<dynamic>>[
-    GetPage<dynamic>(
-      name: AppRoutes.vaultSetup,
-      page: () => const VaultSetupPinPage(),
-      bindings: [
-        VaultBinding(),
-        BindingsBuilder(() {
-          Get.lazyPut<VaultSetupPinController>(() => VaultSetupPinController());
-        }),
-      ],
-    ),
-    GetPage<dynamic>(
-      name: AppRoutes.vaultUnlock,
-      page: () => const VaultUnlockPage(),
-      binding: VaultBinding(),
-    ),
-    GetPage<dynamic>(
-      name: AppRoutes.vaultHome,
-      page: () => const VaultHomePage(),
-      binding: VaultBinding(),
-    ),
-    GetPage<dynamic>(
-      transition: Transition.downToUp,
-      name: AppRoutes.vaultMediaPicker,
-      page: () => const VaultMediaPickerPage(),
-      binding: VaultBinding(),
-    ),
-    GetPage<dynamic>(
-      name: AppRoutes.vaultMediaPreview,
-      page: () {
-        final args = Get.arguments;
-        if (args is! VaultMediaPreviewArgs) {
-          return const SizedBox.shrink();
-        }
-        return VaultMediaPreviewPage(model: args.model, file: args.file);
-      },
-      binding: VaultBinding(),
-    ),
-  ];
-
   static final List<GetPage<dynamic>> moreStack = <GetPage<dynamic>>[
     GetPage<dynamic>(
       name: AppRoutes.moreTools,
       page: () => const MoreToolsPage(),
     ),
     GetPage<dynamic>(
-      transition: Transition.cupertino,
+      transition: Transition.upToDown,
       name: AppRoutes.cleanupGuide,
       page: () => const CleanupGuidePage(),
     ),
     GetPage<dynamic>(
-      transition: Transition.cupertino,
+      transition: Transition.upToDown,
       name: AppRoutes.cleanupGuideFlow,
       page: () => const CleanupGuideFlowPage(),
     ),
@@ -219,6 +184,58 @@ abstract final class AppPages {
       page: () => const PhotoWidgetStyleView(),
       binding: PhotoWidgetRouteBinding(),
     ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultRoot,
+      page: () => const PrivateVaultRootPage(),
+      binding: PrivateVaultBinding(),
+    ),
+  ];
+
+  static final List<GetPage<dynamic>> privateVaultStack = <GetPage<dynamic>>[
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultGate,
+      page: () => const VaultGatePage(),
+      binding: VaultGateBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultSetup,
+      page: () => const VaultPinSetupPage(),
+      binding: VaultAuthSetupBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultUnlock,
+      page: () => const VaultUnlockPage(),
+      binding: VaultAuthUnlockBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultHome,
+      page: () => const VaultHomePage(),
+      binding: VaultHomeBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultAlbums,
+      page: () => const VaultAlbumsPage(),
+      binding: VaultAlbumsBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultPreview,
+      page: () => const VaultPreviewPage(),
+      binding: VaultPreviewBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultSettings,
+      page: () => const VaultSettingsPage(),
+      binding: VaultSettingsBinding(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultSecurity,
+      page: () => const VaultSecurityPage(),
+    ),
+    GetPage<dynamic>(
+      name: AppRoutes.privateVaultChangePin,
+      page: () => const VaultChangePinPage(),
+      binding: VaultChangePinBinding(),
+    ),
   ];
 
   static final pages = <GetPage<dynamic>>[
@@ -226,8 +243,8 @@ abstract final class AppPages {
     ...cleanerStack,
     ...contactsStack,
     ...compressStack,
-    ...vaultStack,
     ...moreStack,
+    ...privateVaultStack,
   ];
 
   static Route<dynamic>? cleanerOnGenerateRoute(RouteSettings settings) =>
@@ -239,11 +256,11 @@ abstract final class AppPages {
   static Route<dynamic>? compressOnGenerateRoute(RouteSettings settings) =>
       _onGenerateRoute(settings, compressStack, AppRoutes.compressMain);
 
-  static Route<dynamic>? vaultOnGenerateRoute(RouteSettings settings) =>
-      _onGenerateRoute(settings, vaultStack, AppRoutes.vaultSetup);
-
   static Route<dynamic>? moreOnGenerateRoute(RouteSettings settings) =>
       _onGenerateRoute(settings, moreStack, AppRoutes.moreTools);
+
+  static Route<dynamic>? privateVaultOnGenerateRoute(RouteSettings settings) =>
+      _onGenerateRoute(settings, privateVaultStack, AppRoutes.privateVaultGate);
 
   static Route<dynamic>? _onGenerateRoute(
     RouteSettings settings,
@@ -275,4 +292,3 @@ abstract final class AppPages {
     return stack.firstWhere((p) => p.name == fallbackRoute);
   }
 }
-
