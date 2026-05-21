@@ -3,6 +3,7 @@ abstract final class AppRoutes {
   static const main = '/';
 
   static const settings = '/settings';
+  static const languagePicker = '/settings/languages';
 
   static const appLockSetup = '/app-lock/setup';
   static const appLockVerifyDisable = '/app-lock/verify-disable';

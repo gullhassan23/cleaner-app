@@ -99,7 +99,7 @@ class CompressSessionState {
         phase: CompressionPhase.idle,
         processedCount: 0,
         totalCount: 0,
-        label: 'Ready to compress',
+        label: '',
       ),
       results: <CompressedMediaResultEntity>[],
       isCompressing: false,

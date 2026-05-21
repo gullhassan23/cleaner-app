@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
+import 'package:cleaner_app/l10n/app_localizations.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -37,6 +39,11 @@ class ChargingController extends GetxController with WidgetsBindingObserver {
 
   Rx<ChargingUiSnapshot> get snapshot => _batteryService.snapshot;
 
+  AppLocalizations? get _l10n {
+    final ctx = Get.context;
+    return ctx != null ? AppLocalizations.of(ctx) : null;
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -64,26 +71,27 @@ class ChargingController extends GetxController with WidgetsBindingObserver {
   }
 
   ChargingAnimationConfig configFor(ChargingAnimationModel model) {
+    final title = _l10n?.chargingAnimationTitleFor(model.id) ?? model.id;
     switch (model.source) {
       case ChargingAnimationSource.lottie:
         return ChargingAnimationConfig.lottie(
           model.assetPath,
-          semanticsLabel: model.title,
+          semanticsLabel: title,
         );
       case ChargingAnimationSource.gif:
         return ChargingAnimationConfig.gif(
           model.assetPath,
-          semanticsLabel: model.title,
+          semanticsLabel: title,
         );
       case ChargingAnimationSource.video:
         return ChargingAnimationConfig.video(
           model.assetPath,
-          semanticsLabel: model.title,
+          semanticsLabel: title,
         );
       case ChargingAnimationSource.imageSequence:
         return ChargingAnimationConfig.imageSequence(
           [model.assetPath],
-          semanticsLabel: model.title,
+          semanticsLabel: title,
         );
     }
   }
@@ -102,7 +110,7 @@ class ChargingController extends GetxController with WidgetsBindingObserver {
     await _prefs.setSelectedAnimationId(model.id);
     await _navCoordinator.refreshListeners();
     if (showSnack) {
-      _showAppliedSnackbar(model.title);
+      _showAppliedSnackbar(model);
     }
   }
 
@@ -114,16 +122,19 @@ class ChargingController extends GetxController with WidgetsBindingObserver {
     await applyAnimation(model, showSnack: false);
     Get.until((route) => route.settings.name == AppRoutes.chargingHome);
     await Future<void>.delayed(Duration.zero);
-    _showAppliedSnackbar(model.title);
+    _showAppliedSnackbar(model);
   }
 
-  void _showAppliedSnackbar(String title) {
+  void _showAppliedSnackbar(ChargingAnimationModel model) {
     if (Get.isSnackbarOpen) {
       Get.closeAllSnackbars();
     }
+    final l10n = _l10n;
+    if (l10n == null) return;
+    final title = l10n.chargingAnimationTitleFor(model.id);
     Get.snackbar(
-      'Applied',
-      '$title is now your charging animation.',
+      l10n.chargingAppliedTitle,
+      l10n.chargingAppliedMessage(title),
       snackPosition: SnackPosition.BOTTOM,
       duration: const Duration(seconds: 2),
     );
@@ -146,55 +157,63 @@ class ChargingController extends GetxController with WidgetsBindingObserver {
   }
 
   String headlineFor(BatteryState state) {
+    final l10n = _l10n;
+    if (l10n == null) return '';
     switch (state) {
       case BatteryState.charging:
-        return 'Charging';
+        return l10n.chargingHeadlineCharging;
       case BatteryState.full:
-        return 'Fully charged';
+        return l10n.chargingHeadlineFullyCharged;
       case BatteryState.discharging:
-        return 'Disconnected';
+        return l10n.chargingHeadlineDisconnected;
       case BatteryState.unknown:
-        return 'Battery status';
+        return l10n.chargingHeadlineBatteryStatus;
       case BatteryState.connectedNotCharging:
-        return 'Power connected';
+        return l10n.chargingHeadlinePowerConnected;
     }
   }
 
   String subtitleFor(ChargingUiSnapshot s) {
+    final l10n = _l10n;
+    if (l10n == null) return '';
     switch (s.state) {
       case BatteryState.charging:
-        return 'Your device is drawing power.';
+        return l10n.chargingSubtitleCharging;
       case BatteryState.full:
-        return 'You can unplug whenever you are ready.';
+        return l10n.chargingSubtitleFullyCharged;
       case BatteryState.discharging:
-        return 'Plug in to see your charging animation.';
+        return l10n.chargingSubtitleDisconnected;
       case BatteryState.unknown:
-        return 'Battery state unavailable on this device.';
+        return l10n.chargingSubtitleUnknown;
       case BatteryState.connectedNotCharging:
-        return 'Power connected; battery is not actively charging.';
+        return l10n.chargingSubtitleConnectedNotCharging;
     }
   }
 
   String platformNote() {
+    final l10n = _l10n;
+    if (l10n == null) return '';
     if (Platform.isIOS) {
-      return 'iPhone par lock screen animation allowed nahi hai. App khol kar charging par animation dikhegi.';
+      return l10n.chargingPlatformNoteIos;
     }
-    return 'Android par charger lagate hi animation lock screen par khul sakti hai — pehle animation Apply karein, phir neeche battery setting allow karein.';
+    return l10n.chargingPlatformNoteAndroid;
   }
 
   List<String> lockScreenSetupSteps() {
+    final l10n = _l10n;
+    if (l10n == null) return const [];
     if (Platform.isIOS) {
-      return const [
-        'Apply an animation from Browse animations.',
-        'Open the app while the phone is charging.',
-        'Lock-screen auto show is not supported on iPhone.',
+      return [
+        l10n.chargingStepApplyAnimation,
+        l10n.chargingStepOpenWhileCharging,
+        l10n.chargingStepIosNoLockScreen,
       ];
     }
-    return const [
-      'Browse animations → Preview → Apply animation.',
-      'Tap "Allow lock screen on charge" below (battery optimization).',
-      'Lock the phone, plug in the charger — animation should appear.',
-      'Samsung / Xiaomi / Oppo: Settings → Apps → Cleaner App → allow background & display on lock screen.',
+    return [
+      l10n.chargingStepBrowsePreviewApply,
+      l10n.chargingStepAllowLockScreen,
+      l10n.chargingStepLockAndPlugIn,
+      l10n.chargingStepOemSettings,
     ];
   }
 

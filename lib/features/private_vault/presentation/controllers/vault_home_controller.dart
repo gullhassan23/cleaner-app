@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -123,7 +124,8 @@ class VaultHomeController extends GetxController {
     Get.back();
     final state = await _permissions.requestMediaPermission();
     if (!state.canAccess) {
-      Get.snackbar('Permission', 'Photo library access is required');
+      final l10n = AppLocalizations.of(Get.context!);
+      Get.snackbar(l10n.vaultPermissionTitle, l10n.vaultPhotoLibraryRequired);
       return;
     }
 
@@ -166,9 +168,10 @@ class VaultHomeController extends GetxController {
         },
       );
       await loadInitial();
+      final l10n = AppLocalizations.of(Get.context!);
       Get.snackbar(
-        'Import',
-        'Imported ${summary.importedCount} item(s)',
+        l10n.vaultImportTitle,
+        l10n.vaultImportedCount(summary.importedCount),
       );
     } finally {
       isImporting.value = false;

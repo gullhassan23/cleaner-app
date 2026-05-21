@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 
 class VaultEmptyState extends StatelessWidget {
@@ -27,7 +28,7 @@ class VaultEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Select Photos to begin importing.\nThey will be securely locked.',
+              context.l10n.vaultEmptyState,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15,

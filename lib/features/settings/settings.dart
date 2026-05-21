@@ -4,6 +4,7 @@ import 'package:cleaner_app/bindings/photo_widget_binding.dart';
 import 'package:cleaner_app/features/private_vault/data/datasources/vault_auth_service.dart';
 import 'package:cleaner_app/features/private_vault/presentation/bindings/private_vault_binding.dart';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final groupedBg = scheme.surfaceContainerLow;
 
@@ -61,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
           onPressed: () => Navigator.maybePop(context),
         ),
         title: Text(
-          'Settings',
+          l10n.settingsTitle,
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
@@ -73,24 +75,27 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         children: [
-          const _SectionHeader(label: 'UPGRADE'),
-          const SizedBox(height: 6),
-          _SettingsGroup(
-            children: [
-              _SettingsNavRow(label: 'Restore Purchases', onTap: () {}),
-            ],
-          ),
-          const SizedBox(height: 22),
-          const _SectionHeader(label: 'PRIVATE PHOTO SETTINGS'),
+          _SectionHeader(label: l10n.settingsSectionUpgrade),
           const SizedBox(height: 6),
           _SettingsGroup(
             children: [
               _SettingsNavRow(
-                label: 'Private Vault',
+                label: l10n.settingsRestorePurchases,
+                onTap: () {},
+              ),
+            ],
+          ),
+          const SizedBox(height: 22),
+          _SectionHeader(label: l10n.settingsSectionPrivatePhoto),
+          const SizedBox(height: 6),
+          _SettingsGroup(
+            children: [
+              _SettingsNavRow(
+                label: l10n.settingsPrivateVault,
                 onTap: () => Get.toNamed(AppRoutes.privateVaultRoot),
               ),
               _SettingsToggleRow(
-                label: 'Use Passcode',
+                label: l10n.settingsUsePasscode,
                 value: _usePasscode,
                 onChanged: (v) {
                   Get.toNamed(AppRoutes.privateVaultRoot);
@@ -98,7 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               _SettingsToggleRow(
-                label: 'Remove After Import',
+                label: l10n.settingsRemoveAfterImport,
                 value: _removeAfterImport,
                 onChanged: (v) async {
                   try {
@@ -111,36 +116,42 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
           const SizedBox(height: 22),
-          const _SectionHeader(label: 'CUSTOM SETTINGS'),
+          _SectionHeader(label: l10n.settingsSectionCustom),
           const SizedBox(height: 6),
           _SettingsGroup(
             children: [
               _SettingsNavRow(
-                label: 'Photo Widget',
+                label: l10n.settingsPhotoWidget,
                 onTap: () {
                   PhotoWidgetBinding().dependencies();
                   Get.toNamed(AppRoutes.photoWidgetHub);
                 },
               ),
               _SettingsToggleRow(
-                label: 'Face ID',
+                label: l10n.settingsFaceId,
                 value: _faceId,
                 onChanged: (v) => setState(() => _faceId = v),
               ),
               const _DarkModeToggleRow(),
               const _AppLockToggleRow(),
-              _SettingsNavRow(label: 'Languages', onTap: () {}),
+              _SettingsNavRow(
+                label: l10n.settingsLanguages,
+                onTap: () => Get.toNamed(AppRoutes.languagePicker),
+              ),
             ],
           ),
           const SizedBox(height: 22),
-          const _SectionHeader(label: 'OTHERS'),
+          _SectionHeader(label: l10n.settingsSectionOthers),
           const SizedBox(height: 6),
           _SettingsGroup(
             children: [
-              _SettingsNavRow(label: 'Get Help', onTap: () {}),
-              _SettingsNavRow(label: 'Rate 5 Stars', onTap: () {}),
-              _SettingsNavRow(label: 'Share With Friends', onTap: () {}),
-              _SettingsNavRow(label: 'About Us', onTap: () {}),
+              _SettingsNavRow(label: l10n.settingsGetHelp, onTap: () {}),
+              _SettingsNavRow(label: l10n.settingsRate5Stars, onTap: () {}),
+              _SettingsNavRow(
+                label: l10n.settingsShareWithFriends,
+                onTap: () {},
+              ),
+              _SettingsNavRow(label: l10n.settingsAboutUs, onTap: () {}),
             ],
           ),
         ],
@@ -157,6 +168,7 @@ class _SettingsBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
+    final l10n = context.l10n;
 
     return Align(
       alignment: Alignment.centerLeft,
@@ -167,10 +179,16 @@ class _SettingsBackButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(CupertinoIcons.back, size: 22, color: primary),
+            Icon(
+              Directionality.of(context) == TextDirection.rtl
+                  ? CupertinoIcons.forward
+                  : CupertinoIcons.back,
+              size: 22,
+              color: primary,
+            ),
             const SizedBox(width: 2),
             Text(
-              'Back',
+              l10n.commonBack,
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w400,
@@ -292,9 +310,10 @@ class _DarkModeToggleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.find<ThemeController>();
+    final l10n = context.l10n;
     return Obx(
       () => _SettingsToggleRow(
-        label: 'Dark Mode',
+        label: l10n.settingsThemeMode,
         value: c.isDarkMode,
         onChanged: c.setDarkModeEnabled,
       ),
@@ -308,11 +327,12 @@ class _AppLockToggleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AppLockController>();
+    final l10n = context.l10n;
     return Obx(() {
       final enabled = controller.isEnabled.value;
       final loading = controller.isLoading.value;
       return _SettingsToggleRow(
-        label: 'App Lock',
+        label: l10n.settingsAppLock,
         value: enabled,
         onChanged: loading ? null : (v) => controller.onToggleRequested(v),
       );

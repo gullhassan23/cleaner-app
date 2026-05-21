@@ -2,6 +2,7 @@ import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_constants.dart
 import 'package:cleaner_app/features/cleaning_guide/widgets/clean_pill_button.dart';
 import 'package:cleaner_app/features/cleaning_guide/widgets/guide_back_button.dart';
 import 'package:cleaner_app/features/cleaning_guide/widgets/guide_section_header.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class CleanupGuidePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: CleanupGuideConstants.guideBackground,
       appBar: AppBar(
@@ -23,9 +25,9 @@ class CleanupGuidePage extends StatelessWidget {
         centerTitle: true,
         leadingWidth: 88,
         leading: GuideHubBackButton(onPressed: () => Get.back<void>()),
-        title: const Text(
-          'Cleanup Guide',
-          style: TextStyle(
+        title: Text(
+          l10n.guideTitle,
+          style: const TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
             color: Colors.black,
@@ -36,10 +38,10 @@ class CleanupGuidePage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
-          const GuideSectionHeader(label: 'Apps'),
+          GuideSectionHeader(label: l10n.guideSectionApps),
           _AppsGroup(onClean: _openFlow),
           const SizedBox(height: 22),
-          const GuideSectionHeader(label: "App's Cache"),
+          GuideSectionHeader(label: l10n.guideSectionCache),
           _CacheAppRow(
             title: 'Tiktok',
             color: const Color(0xFF010101),
@@ -88,6 +90,7 @@ class _AppsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Material(
       color: CleanupGuideConstants.cardBackground,
       borderRadius: BorderRadius.circular(CleanupGuideConstants.cardRadius),
@@ -96,7 +99,7 @@ class _AppsGroup extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _AppsRow(
-            title: 'Offload Unused Apps',
+            title: l10n.guideOffloadUnusedApps,
             icon: Icons.settings_outlined,
             onClean: onClean,
           ),
@@ -107,7 +110,7 @@ class _AppsGroup extends StatelessWidget {
             color: Colors.black.withValues(alpha: 0.08),
           ),
           _AppsRow(
-            title: 'Delete Unused Apps',
+            title: l10n.guideDeleteUnusedApps,
             icon: Icons.delete_outline_rounded,
             onClean: onClean,
           ),

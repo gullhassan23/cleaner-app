@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -77,9 +78,10 @@ class PhotoWidgetPickerController extends GetxController {
       return;
     }
     if (selectedIds.length >= maxSelection) {
+      final l10n = AppLocalizations.of(Get.context!);
       Get.snackbar(
-        'Limit reached',
-        'You can import up to $maxSelection photos at a time.',
+        l10n.photoWidgetLimitReached,
+        l10n.photoWidgetImportLimit(maxSelection),
       );
       return;
     }

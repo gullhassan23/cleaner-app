@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,9 @@ class PermissionBody extends StatelessWidget {
               Icon(Icons.photo_library_outlined, size: 56, color: kDashBlue),
               const SizedBox(height: 16),
               Text(
-                isLimited ? 'Limited library access' : 'Allow photos & videos',
+                isLimited
+                    ? context.l10n.permissionLimitedLibraryAccess
+                    : context.l10n.permissionAllowPhotosVideos,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
@@ -46,8 +49,8 @@ class PermissionBody extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 isLimited
-                    ? 'You can manage which items Cleaner can see, or grant full access in Settings.'
-                    : 'Cleaner needs access to scan for duplicates, similar shots, videos, and screenshots.',
+                    ? context.l10n.permissionLimitedBody
+                    : context.l10n.permissionFullBody,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,
@@ -63,7 +66,7 @@ class PermissionBody extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: onManageLimited,
-                  child: const Text('Manage library access'),
+                  child: Text(context.l10n.permissionManageLibraryAccess),
                 ),
                 const SizedBox(height: 10),
               ],
@@ -73,13 +76,17 @@ class PermissionBody extends StatelessWidget {
                   foregroundColor: Colors.white,
                 ),
                 onPressed: onRequest,
-                child: Text(isLimited ? 'Refresh access' : 'Continue'),
+                child: Text(
+                  isLimited
+                      ? context.l10n.permissionRefreshAccess
+                      : context.l10n.commonContinue,
+                ),
               ),
               if (permission.needsSettings) ...[
                 const SizedBox(height: 10),
                 OutlinedButton(
                   onPressed: onOpenSettings,
-                  child: const Text('Open settings'),
+                  child: Text(context.l10n.permissionOpenSettings),
                 ),
               ],
             ],

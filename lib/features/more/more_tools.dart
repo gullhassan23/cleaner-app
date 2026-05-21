@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class MoreToolsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
     final groupedBg = scheme.surfaceContainerLow;
 
     return Scaffold(
@@ -21,7 +23,7 @@ class MoreToolsPage extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: Text(
-          'More Tools',
+          l10n.moreToolsTitle,
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
@@ -35,24 +37,24 @@ class MoreToolsPage extends StatelessWidget {
         children: [
           _ToolCard(
             iconBackdrop: const Color(0xFF7C3AED),
-            title: 'Private Photos',
-            subtitle: 'Protect your secret photos',
+            title: l10n.morePrivatePhotos,
+            subtitle: l10n.morePrivatePhotosSubtitle,
             icon: const Icon(Icons.lock_rounded, color: Colors.white, size: 28),
             onTap: () => Get.toNamed<void>(AppRoutes.privateVaultRoot),
           ),
           const SizedBox(height: 12),
           _ToolCard(
             iconBackdrop: scheme.primary,
-            title: 'Charging Animation',
-            subtitle: 'Customize charging screen',
+            title: l10n.moreChargingAnimation,
+            subtitle: l10n.moreChargingAnimationSubtitle,
             icon: const _ChargingAnimationIcon(),
             onTap: () => Get.toNamed<void>(AppRoutes.chargingHome),
           ),
           const SizedBox(height: 12),
           _ToolCard(
             iconBackdrop: const Color(0xFFFFB020),
-            title: 'Cleaning Guide',
-            subtitle: 'Learn how to clean safely',
+            title: l10n.moreCleaningGuide,
+            subtitle: l10n.moreCleaningGuideSubtitle,
             icon: const _CleaningGuideIcon(),
             onTap: () => Get.toNamed<void>(AppRoutes.cleanupGuide),
           ),

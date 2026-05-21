@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -11,6 +12,7 @@ class VaultPreviewPage extends GetView<VaultPreviewController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -77,9 +79,9 @@ class VaultPreviewPage extends GetView<VaultPreviewController> {
               TextButton.icon(
                 onPressed: controller.shareCurrent,
                 icon: const Icon(Icons.share, color: Color(0xFF007AFF)),
-                label: const Text(
-                  'Share',
-                  style: TextStyle(color: Color(0xFF007AFF)),
+                label: Text(
+                  l10n.commonShare,
+                  style: const TextStyle(color: Color(0xFF007AFF)),
                 ),
               ),
               TextButton.icon(
@@ -88,9 +90,9 @@ class VaultPreviewPage extends GetView<VaultPreviewController> {
                   Icons.delete_outline,
                   color: Color(0xFF007AFF),
                 ),
-                label: const Text(
-                  'Delete',
-                  style: TextStyle(color: Color(0xFF007AFF)),
+                label: Text(
+                  l10n.commonDelete,
+                  style: const TextStyle(color: Color(0xFF007AFF)),
                 ),
               ),
             ],

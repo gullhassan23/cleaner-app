@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
 import 'package:cleaner_app/services/repositories/photo_library_repository.dart';
 import 'package:cleaner_app/widgets/compress/dark_pill.dart';
@@ -13,6 +14,7 @@ class PreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final aspectRatio =
         asset.aspectRatio.isFinite && asset.aspectRatio > 0
             ? asset.aspectRatio
@@ -87,7 +89,10 @@ class PreviewCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          asset.title ?? (asset.isVideo ? 'Selected video' : 'Selected image'),
+                          asset.title ??
+                              (asset.isVideo
+                                  ? l10n.compressSelectedVideo
+                                  : l10n.compressSelectedImage),
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,

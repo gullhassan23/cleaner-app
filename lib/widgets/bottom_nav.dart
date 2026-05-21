@@ -1,8 +1,10 @@
+import 'package:cleaner_app/controllers/locale_controller.dart';
 import 'package:cleaner_app/features/cleaner/cleaner_root_page.dart';
 import 'package:cleaner_app/features/compress/compress_root_page.dart';
 import 'package:cleaner_app/features/contacts/contacts_root_page.dart';
 import 'package:cleaner_app/features/more/more_root_page.dart';
 import 'package:cleaner_app/controllers/bottomnav_controller.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,6 +40,9 @@ class BottomNav extends GetView<BottomNavController> {
         padding: EdgeInsets.fromLTRB(14, 0, 14, 10 + bottomInset),
         child: Obx(() {
           final idx = controller.currentIndex.value;
+          if (Get.isRegistered<LocaleController>()) {
+            Get.find<LocaleController>().locale.value;
+          }
           return _FloatingBottomBar(controller: controller, selectedIndex: idx);
         }),
       ),
@@ -57,7 +62,7 @@ class _FloatingBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final idx = selectedIndex;
-
+    final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final barFill =
         scheme.brightness == Brightness.dark
@@ -85,7 +90,7 @@ class _FloatingBottomBar extends StatelessWidget {
           child: Row(
             children: [
               _NavCell(
-                label: 'Clean',
+                label: l10n.navClean,
                 selected: idx == 0,
                 icon: Icons.delete_rounded,
                 selectedColor: kNavBlue,
@@ -93,7 +98,7 @@ class _FloatingBottomBar extends StatelessWidget {
                 onTap: () => controller.selectTab(0),
               ),
               _NavCell(
-                label: 'Contacts',
+                label: l10n.navContacts,
                 selected: idx == 1,
                 icon: Icons.person_rounded,
                 selectedColor: kNavBlue,
@@ -101,7 +106,7 @@ class _FloatingBottomBar extends StatelessWidget {
                 onTap: () => controller.selectTab(1),
               ),
               _NavCell(
-                label: 'Compress',
+                label: l10n.navCompress,
                 selected: idx == 2,
                 icon: Icons.video_camera_back_rounded,
                 selectedColor: kNavBlue,
@@ -109,7 +114,7 @@ class _FloatingBottomBar extends StatelessWidget {
                 onTap: () => controller.selectTab(2),
               ),
               _NavCell(
-                label: 'More',
+                label: l10n.navMore,
                 selected: idx == 3,
                 icon: Icons.grid_view_rounded,
                 selectedColor: kNavBlue,

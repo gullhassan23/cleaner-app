@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,7 @@ class ChargingPreviewView extends GetView<ChargingController> {
   @override
   Widget build(BuildContext context) {
     final model = _model;
+    final l10n = context.l10n;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -31,7 +33,7 @@ class ChargingPreviewView extends GetView<ChargingController> {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          model.title,
+          l10n.chargingAnimationTitleFor(model.id),
           style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -74,7 +76,7 @@ class ChargingPreviewView extends GetView<ChargingController> {
                       onPressed: () {
                         unawaited(controller.applyFromPreview(model));
                       },
-                      child: const Text('Apply animation'),
+                      child: Text(l10n.chargingApplyAnimation),
                     ),
                   ),
                 ),

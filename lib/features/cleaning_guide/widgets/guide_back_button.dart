@@ -1,4 +1,5 @@
 import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_constants.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,14 +17,14 @@ class GuideHubBackButton extends StatelessWidget {
         padding: const EdgeInsets.only(left: 4),
         minSize: 0,
         onPressed: onPressed,
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(CupertinoIcons.back, size: 22, color: CleanupGuideConstants.iosBlue),
-            SizedBox(width: 2),
+            const Icon(CupertinoIcons.back, size: 22, color: CleanupGuideConstants.iosBlue),
+            const SizedBox(width: 2),
             Text(
-              'Back',
-              style: TextStyle(
+              context.l10n.commonBack,
+              style: const TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w400,
                 color: CleanupGuideConstants.iosBlue,

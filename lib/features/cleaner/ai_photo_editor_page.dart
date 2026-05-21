@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:cleaner_app/controllers/photo_editing/ai_gallery_sheet_controller.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/photo_library/scan_state_entity.dart';
 import 'package:cleaner_app/services/gallery/gallery_media_service.dart';
 import 'package:cleaner_app/services/permissions/photo_permission_service.dart';
@@ -36,14 +37,15 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
       return;
     }
     if (!mounted) return;
+    final l10n = context.l10n;
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => _AiGalleryBottomSheet(
         sheetTitle: switch (feature) {
-          AiPhotoEditorFeature.photoEnhance => 'Pick a photo to enhance',
-          AiPhotoEditorFeature.fixOldPhoto => 'Pick an old photo to restore',
+          AiPhotoEditorFeature.photoEnhance => l10n.cleanerPickPhotoToEnhance,
+          AiPhotoEditorFeature.fixOldPhoto => l10n.cleanerPickOldPhotoToRestore,
         },
         onPick: (asset) => _cropPickedAsset(ctx, asset),
       ),
@@ -55,20 +57,24 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
     await showDialog<void>(
       context: context,
       builder: (ctx) {
+        final l10n = ctx.l10n;
         final cs = Theme.of(ctx).colorScheme;
         return AlertDialog(
           backgroundColor: cs.surface,
-          title: Text('Photos access', style: TextStyle(color: cs.onSurface)),
+          title: Text(
+            l10n.cleanerPhotosAccessTitle,
+            style: TextStyle(color: cs.onSurface),
+          ),
           content: Text(
             openSettings
-                ? 'Photo access is blocked. Enable it in Settings to pick images.'
-                : 'Allow photo library access to choose an image.',
+                ? l10n.cleanerPhotosAccessBlocked
+                : l10n.cleanerPhotosAccessRequest,
             style: TextStyle(color: cs.onSurfaceVariant),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('OK'),
+              child: Text(l10n.commonOk),
             ),
             if (openSettings)
               TextButton(
@@ -76,7 +82,7 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
                   Navigator.pop(ctx);
                   Get.find<PhotoPermissionService>().openAppSettings();
                 },
-                child: const Text('Settings'),
+                child: Text(l10n.commonSettings),
               ),
           ],
         );
@@ -92,18 +98,19 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
     if (!mounted || file == null) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open that image.')),
+          SnackBar(content: Text(context.l10n.cleanerCouldNotOpenImage)),
         );
       }
       return;
     }
 
+    final l10n = context.l10n;
     final cropped = await ImageCropper().cropImage(
       sourcePath: file.path,
       compressQuality: 92,
       uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: 'Crop',
+          toolbarTitle: l10n.cleanerCrop,
           toolbarColor: isDark ? const Color(0xFF1C1B1F) : Colors.white,
           toolbarWidgetColor: isDark ? Colors.white : Colors.black87,
           statusBarLight: !isDark,
@@ -124,9 +131,9 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
           ],
         ),
         IOSUiSettings(
-          title: 'Crop',
-          doneButtonTitle: 'Done',
-          cancelButtonTitle: 'Cancel',
+          title: l10n.cleanerCrop,
+          doneButtonTitle: l10n.commonDone,
+          cancelButtonTitle: l10n.commonCancel,
           aspectRatioLockEnabled: false,
           resetAspectRatioEnabled: true,
           rotateButtonsHidden: false,
@@ -146,12 +153,14 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
       );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Photo saved to your gallery.')),
+        SnackBar(content: Text(context.l10n.cleanerPhotoSavedToGallery)),
       );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not save to gallery: $e')),
+        SnackBar(
+          content: Text(context.l10n.cleanerCouldNotSaveToGallery('$e')),
+        ),
       );
     }
   }
@@ -159,6 +168,7 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final cs = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
     final scaffoldBg = theme.scaffoldBackgroundColor;
@@ -169,7 +179,7 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
         backgroundColor: scaffoldBg,
         surfaceTintColor: Colors.transparent,
         title: Text(
-          'AI Photo Editor',
+          l10n.cleanerAiPhotoEditorTitle,
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 18,
@@ -178,7 +188,7 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
         ),
         actions: [
           IconButton(
-            tooltip: 'Choose from library',
+            tooltip: l10n.cleanerChooseFromLibrary,
             onPressed: () => _openImageSheet(AiPhotoEditorFeature.photoEnhance),
             icon: Icon(Icons.photo_library_outlined, color: cs.onSurface),
           ),
@@ -189,9 +199,9 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
         children: [
           _FeatureCard(
             background: isDark ? const Color(0xFF352A47) : const Color(0xFFEDE7F6),
-            title: 'Photo Enhance',
+            title: l10n.cleanerPhotoEnhance,
             titleColor: isDark ? const Color(0xFFE1BEE7) : const Color(0xFF4527A0),
-            subtitle: 'Boost quality',
+            subtitle: l10n.cleanerBoostQuality,
             subtitleColor: isDark
                 ? const Color(0xFFCE93D8).withValues(alpha: 0.85)
                 : const Color(0xFF6A1B9A).withValues(alpha: 0.75),
@@ -207,9 +217,9 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
           const SizedBox(height: 14),
           _FeatureCard(
             background: isDark ? const Color(0xFF3D2E26) : const Color(0xFFFFE0D4),
-            title: 'Fix Old Photo',
+            title: l10n.cleanerFixOldPhoto,
             titleColor: isDark ? const Color(0xFFFFCCBC) : const Color(0xFF3E2723),
-            subtitle: 'Restore old memories',
+            subtitle: l10n.cleanerRestoreOldMemories,
             subtitleColor: isDark
                 ? const Color(0xFFFFAB91).withValues(alpha: 0.9)
                 : const Color(0xFF5D4037).withValues(alpha: 0.8),
@@ -443,7 +453,7 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
                 if (list.isEmpty) {
                   return Center(
                     child: Text(
-                      'No photos found',
+                      context.l10n.cleanerNoPhotosFound,
                       style: TextStyle(color: cs.onSurfaceVariant),
                     ),
                   );

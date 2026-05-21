@@ -1,5 +1,6 @@
 import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_constants.dart';
 import 'package:cleaner_app/features/cleaning_guide/widgets/guide_back_button.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,16 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
   int _currentPage = 0;
 
   static const int _stepCount = 4;
+
+  List<String> _stepSubtitles(BuildContext context) {
+    final l10n = context.l10n;
+    return [
+      l10n.guideStepOpenSettings,
+      l10n.guideStepClickGeneral,
+      l10n.guideStepTapIphoneStorage,
+      l10n.guideStepEnableOffload,
+    ];
+  }
 
   @override
   void initState() {
@@ -41,7 +52,9 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final isLast = _currentPage >= _stepCount - 1;
+    final subtitles = _stepSubtitles(context);
 
     return Scaffold(
       backgroundColor: CleanupGuideConstants.flowBackground,
@@ -59,10 +72,10 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              CleanupGuideConstants.flowTitle,
+            Text(
+              l10n.guideFlowTitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF1C1C1E),
@@ -73,7 +86,7 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
               child: Text(
-                CleanupGuideConstants.offloadSubtitles[_currentPage],
+                subtitles[_currentPage],
                 key: ValueKey<int>(_currentPage),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
@@ -121,7 +134,7 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
                     elevation: 0,
                   ),
                   child: Text(
-                    isLast ? 'Close Guide' : 'Next',
+                    isLast ? l10n.guideFlowClose : l10n.guideFlowNext,
                     style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,

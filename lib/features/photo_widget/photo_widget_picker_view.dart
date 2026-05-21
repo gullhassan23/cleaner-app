@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -33,18 +34,19 @@ class _PhotoWidgetPickerViewState extends State<PhotoWidgetPickerView> {
     final controller = Get.find<PhotoWidgetPickerController>();
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Import photos'),
+        title: Text(l10n.photoWidgetImportPhotosTitle),
         actions: [
           Obx(() {
             final n = controller.selectedIds.length;
             return TextButton(
               onPressed: n == 0 ? null : controller.confirm,
               child: Text(
-                'Done ($n)',
+                l10n.photoWidgetDoneCount(n),
                 style: TextStyle(
                   color: cs.primary,
                   fontWeight: FontWeight.w700,
@@ -59,7 +61,7 @@ class _PhotoWidgetPickerViewState extends State<PhotoWidgetPickerView> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: Text(
-              'Select up to ${controller.maxSelection} photos.',
+              l10n.photoWidgetSelectUpTo(controller.maxSelection),
               style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13),
             ),
           ),

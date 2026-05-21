@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/compress/compress_entities.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
@@ -13,6 +14,7 @@ class ResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Card(
       margin: EdgeInsets.zero,
@@ -22,7 +24,7 @@ class ResultCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              asset?.title ?? 'Compressed file',
+              asset?.title ?? l10n.compressCompressedFile,
               style: theme.textTheme.titleMedium,
             ),
             const SizedBox(height: 10),
@@ -31,17 +33,21 @@ class ResultCard extends StatelessWidget {
               runSpacing: 10,
               children: [
                 DarkPill(
-                  label:
-                      'From ${BytesFormatter.humanize(result.originalBytes)}',
+                  label: l10n.compressFromSize(
+                    BytesFormatter.humanize(result.originalBytes),
+                  ),
                   dark: false,
                 ),
                 DarkPill(
-                  label:
-                      'To ${BytesFormatter.humanize(result.compressedBytes)}',
+                  label: l10n.compressToSize(
+                    BytesFormatter.humanize(result.compressedBytes),
+                  ),
                   dark: false,
                 ),
                 DarkPill(
-                  label: 'Saved ${BytesFormatter.humanize(result.savedBytes)}',
+                  label: l10n.compressSavedSize(
+                    BytesFormatter.humanize(result.savedBytes),
+                  ),
                   dark: false,
                 ),
               ],

@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 import '../../data/datasources/vault_auth_service.dart';
@@ -47,7 +48,7 @@ class VaultPinSetupController extends GetxController {
     }
 
     if (pin != _firstPin) {
-      errorMessage.value = 'PINs do not match. Try again.';
+      errorMessage.value = AppLocalizations.of(Get.context!).vaultPinsDoNotMatch;
       setupStep.value = 0;
       _firstPin = null;
       return;

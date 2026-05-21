@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 enum AppThemeVariant { light, dark }
 
 abstract final class AppTheme {
+  /// Stable instances — never recreate on rebuild or theme toggle.
+  static final ThemeData light = _buildLight();
+  static final ThemeData dark = _buildDark();
+
   static ThemeData resolve(AppThemeVariant variant) {
     switch (variant) {
       case AppThemeVariant.light:
@@ -16,7 +20,7 @@ abstract final class AppTheme {
   static const _seedColor = Color(0xFF2563EB);
   static const _surfaceTint = Color(0xFFF8FAFC);
 
-  static ThemeData get light {
+  static ThemeData _buildLight() {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: _seedColor,
       brightness: Brightness.light,
@@ -80,7 +84,7 @@ abstract final class AppTheme {
     );
   }
 
-  static ThemeData get dark {
+  static ThemeData _buildDark() {
     final colorScheme = ColorScheme.fromSeed(
       seedColor: _seedColor,
       brightness: Brightness.dark,

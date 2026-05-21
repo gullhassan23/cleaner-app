@@ -1,0 +1,642 @@
+{
+  "@@locale": "ar",
+  "appTitle": "تطبيق التنظيف",
+  "commonBack": "رجوع",
+  "commonCancel": "إلغاء",
+  "commonConfirm": "تأكيد",
+  "commonOk": "موافق",
+  "commonDone": "تم",
+  "commonDelete": "حذف",
+  "commonShare": "مشاركة",
+  "commonSave": "حفظ",
+  "commonTryAgain": "حاول مرة أخرى",
+  "commonContinue": "متابعة",
+  "commonSettings": "الإعدادات",
+  "navClean": "تنظيف",
+  "navContacts": "جهات الاتصال",
+  "navCompress": "ضغط",
+  "navMore": "المزيد",
+  "settingsTitle": "الإعدادات",
+  "settingsSectionUpgrade": "ترقية",
+  "settingsRestorePurchases": "استعادة المشتريات",
+  "settingsSectionPrivatePhoto": "إعدادات الصور الخاصة",
+  "settingsPrivateVault": "الخزنة الخاصة",
+  "settingsUsePasscode": "استخدام رمز المرور",
+  "settingsRemoveAfterImport": "إزالة بعد الاستيراد",
+  "settingsSectionCustom": "إعدادات مخصصة",
+  "settingsPhotoWidget": "أداة الصور",
+  "settingsFaceId": "Face ID",
+  "settingsLanguages": "اللغات",
+  "settingsSectionOthers": "أخرى",
+  "settingsGetHelp": "الحصول على مساعدة",
+  "settingsRate5Stars": "قيّم بـ 5 نجوم",
+  "settingsShareWithFriends": "مشاركة مع الأصدقاء",
+  "settingsAboutUs": "من نحن",
+  "settingsThemeMode": "وضع السمة",
+  "settingsAppLock": "قفل التطبيق",
+  "languagePickerTitle": "اللغات",
+  "languageEnglish": "الإنجليزية",
+  "languageUrdu": "الأردية",
+  "languageChinese": "الصينية",
+  "languageArabic": "العربية",
+  "languageSpanish": "الإسبانية",
+  "cleanerAppTitle": "منظف",
+  "cleanerPro": "احترافي",
+  "cleanerSortLargestFirst": "الأكبر أولاً",
+  "cleanerSortSmallestFirst": "الأصغر أولاً",
+  "cleanerSortNewestDateFirst": "أحدث تاريخ",
+  "cleanerSortOldestDateFirst": "أقدم تاريخ",
+  "cleanerAnalyzingLibrary": "جاري تحليل مكتبتك",
+  "cleanerUnknownError": "خطأ غير معروف",
+  "cleanerScanPreparing": "جاري التحضير…",
+  "cleanerScanLoadingLibrary": "جاري تحميل المكتبة…",
+  "cleanerScanFindingDuplicates": "جاري البحث عن الملفات المكررة…",
+  "cleanerScanFindingSimilar": "جاري البحث عن صور مشابهة…",
+  "cleanerScanDone": "تم",
+  "cleanerScanSomethingWentWrong": "حدث خطأ ما",
+  "cleanerCategorySimilarPhotos": "صور مشابهة",
+  "cleanerCategoryDuplicatePhotos": "صور مكررة",
+  "cleanerCategorySimilarVideos": "فيديوهات مشابهة",
+  "cleanerCategoryVideos": "فيديوهات",
+  "cleanerCategoryScreenshots": "لقطات الشاشة",
+  "cleanerCategorySimilarLivePhotos": "صور حية مشابهة",
+  "cleanerOptimizeYourStorage": "حسّن مساحة التخزين",
+  "cleanerAiPhotoEditor": "محرر الصور بالذكاء الاصطناعي",
+  "cleanerImprovePhotoQuality": "تحسين جودة الصورة",
+  "cleanerPickPhotoToEnhance": "اختر صورة للتحسين",
+  "cleanerPickOldPhotoToRestore": "اختر صورة قديمة للاستعادة",
+  "cleanerPhotosAccessTitle": "الوصول إلى الصور",
+  "cleanerPhotosAccessBlocked": "الوصول للصور محظور. فعّله في الإعدادات.",
+  "cleanerPhotosAccessRequest": "اسمح بالوصول لمكتبة الصور.",
+  "cleanerCouldNotOpenImage": "تعذر فتح الصورة.",
+  "cleanerCrop": "قص",
+  "cleanerPhotoSavedToGallery": "تم حفظ الصورة في المعرض.",
+  "cleanerCouldNotSaveToGallery": "تعذر الحفظ: {error}",
+  "@cleanerCouldNotSaveToGallery": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerAiPhotoEditorTitle": "محرر الصور بالذكاء الاصطناعي",
+  "cleanerChooseFromLibrary": "اختر من المكتبة",
+  "cleanerPhotoEnhance": "تحسين الصورة",
+  "cleanerBoostQuality": "تعزيز الجودة",
+  "cleanerFixOldPhoto": "إصلاح صورة قديمة",
+  "cleanerRestoreOldMemories": "استعادة الذكريات",
+  "cleanerNoPhotosFound": "لم يتم العثور على صور",
+  "cleanerStorageUsed": "مستخدم:",
+  "cleanerStorageUnavailable": "—",
+  "cleanerBest": "الأفضل",
+  "cleanerDeleteSelected": "حذف المحدد",
+  "cleanerGroupNumber": "المجموعة {number}",
+  "@cleanerGroupNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerDeletedTitle": "تم الحذف",
+  "cleanerDeletedMessage": "{count, plural, one{عنصر واحد · {size} متاح} other{{count} عناصر · {size} متاح}}",
+  "@cleanerDeletedMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerSomeItemsNotRemoved": "لم تُزال بعض العناصر",
+  "cleanerSomeItemsFailed": "{count} فشل",
+  "@cleanerSomeItemsFailed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerNothingDeleted": "لم يُحذف شيء",
+  "cleanerNothingDeletedHint": "حاول مرة أخرى أو تحقق من الأذونات.",
+  "cleanerSelectedSummary": "{count} محدد · {size}",
+  "@cleanerSelectedSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsTitle": "جهات الاتصال",
+  "contactsAccessNeeded": "مطلوب الوصول لجهات الاتصال",
+  "contactsAccessBody": "اسمح بالوصول لعرض العدد والقوائم.",
+  "contactsOpenSettings": "فتح الإعدادات",
+  "contactsBackup": "نسخ احتياطي",
+  "contactsDuplicateContacts": "جهات مكررة",
+  "contactsIncompleteContacts": "جهات غير مكتملة",
+  "contactsNamesNumbersEmails": "الأسماء. الأرقام. البريد.",
+  "contactsIncompleteDescription": "يجب أن يحتوي كل جهة على اسم ورقم وبريد.",
+  "contactsNoName": "بدون اسم",
+  "contactsMissingPrefix": "مفقود: {fields}",
+  "@contactsMissingPrefix": {
+    "placeholders": {
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsMissingName": "الاسم",
+  "contactsMissingNumber": "الرقم",
+  "contactsMissingEmail": "البريد",
+  "contactsSelect": "تحديد",
+  "contactsSearchHint": "ابحث بالاسم أو الرقم",
+  "contactsNoSearchResults": "لا توجد نتائج.",
+  "contactsNoDuplicates": "لا توجد مجموعات مكررة.",
+  "contactsSameNumber": "نفس الرقم",
+  "contactsSameName": "نفس الاسم",
+  "contactsSharedNumber": "رقم مشترك",
+  "contactsExportTitle": "تصدير جهات الاتصال",
+  "contactsExportBody": "ينشئ ملف .vcf واحد.",
+  "contactsExportPreparing": "جاري التحضير…",
+  "contactsExportAllShare": "تصدير الكل ومشاركة",
+  "contactsExportSubsetHint": "يمكنك أيضاً التحديد من القائمة.",
+  "contactsShareCount": "{count, plural, one{مشاركة جهة واحدة} other{مشاركة {count} جهات}}",
+  "@contactsShareCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactsGroupCount": "{count, plural, one{جهة واحدة} other{{count} جهات}}",
+  "@contactsGroupCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressTitle": "ضغط",
+  "compressVideoSaveUpTo": "اضغط الفيديو لتوفير حتى",
+  "compressSort": "فرز",
+  "compressRefresh": "تحديث",
+  "compressClear": "مسح",
+  "compressNext": "التالي",
+  "compressButton": "ضغط",
+  "compressNoVideosFound": "لا توجد فيديوهات",
+  "compressNoVideosBody": "ستظهر الفيديوهات بعد منح الوصول.",
+  "compressReload": "إعادة التحميل",
+  "compressMediaAccessBlocked": "الوصول للوسائط محظور",
+  "compressAllowMediaAccess": "السماح بالوصول",
+  "compressMediaBlockedBody": "فعّل الوصول في الإعدادات.",
+  "compressMediaRequestBody": "مطلوب الوصول للمعرض.",
+  "compressAllowAccess": "السماح",
+  "compressRetry": "إعادة",
+  "compressNoMediaSelected": "لم يُحدد وسائط",
+  "compressNoMediaSelectedBody": "ارجع واختر فيديواً واحداً على الأقل.",
+  "compressQuality": "الجودة",
+  "compressCompressionResults": "نتائج الضغط",
+  "compressQualityLow": "منخفض",
+  "compressQualityMedium": "متوسط",
+  "compressQualityHigh": "عالي",
+  "compressQualitySavings": "ضغط {percent}%",
+  "@compressQualitySavings": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSelectMediaTitle": "اختر وسائط للضغط",
+  "compressSelectMediaBody": "اختر ملفات ثم تابع.",
+  "compressManageAccess": "إدارة الوصول",
+  "compressVisibleItems": "العناصر الظاهرة",
+  "compressSelected": "محدد",
+  "compressSelectedSize": "الحجم المحدد",
+  "compressOriginal": "الأصلي",
+  "compressCompressed": "مضغوط",
+  "compressEstimatedSavings": "التوفير المتوقع: {size}",
+  "@compressEstimatedSavings": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedVideo": "الفيديو المحدد",
+  "compressSelectedImage": "الصورة المحددة",
+  "compressCompressedFile": "الملف المضغوط",
+  "compressFromSize": "من {size}",
+  "@compressFromSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressToSize": "إلى {size}",
+  "@compressToSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSavedSize": "وفّر {size}",
+  "@compressSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCompressionProgress": "تقدم الضغط",
+  "compressCurrentFile": "الملف الحالي: {label}",
+  "@compressCurrentFile": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCurrentFileProgress": "التقدم: {percent}%",
+  "@compressCurrentFileProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressProgressDone": "{processed} من {total} · {remaining} متبقي",
+  "@compressProgressDone": {
+    "placeholders": {
+      "processed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressProgressButton": "{percent}% · {remaining}",
+  "@compressProgressButton": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedCount": "{count, plural, one{1 محدد} other{{count} محدد}}",
+  "@compressSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressItemsSelected": "{count, plural, one{عنصر واحد} other{{count} عناصر}}",
+  "@compressItemsSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCheckPermission": "تعذر التحقق من الإذن.",
+  "compressUnableRequestPermission": "تعذر طلب الإذن.",
+  "compressUnableLoadGallery": "تعذر تحميل المعرض.",
+  "compressUnableLoadMore": "تعذر تحميل المزيد.",
+  "compressReadyToCompress": "جاهز للضغط",
+  "compressPreparingCompression": "جاري التحضير",
+  "compressCompressingItem": "ضغط {label}",
+  "@compressCompressingItem": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressFinalizingCompression": "جاري الإنهاء",
+  "compressCompressedCount": "{done} من {total}",
+  "@compressCompressedCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressCompressionComplete": "اكتمل الضغط",
+  "compressCompressedSummary": "ضُغط {success} من {total}",
+  "@compressCompressedSummary": {
+    "placeholders": {
+      "success": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCompressSelected": "تعذر ضغط الوسائط.",
+  "compressFailedCount": "{count, plural, one{فشل واحد} other{فشل {count}}}",
+  "@compressFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSuccessMessage": "حُفظ في المعرض. {size}، {count, plural, one{عنصر} other{{count} عناصر}}",
+  "@compressSuccessMessage": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressOriginalUnavailable": "الملف الأصلي غير متاح.",
+  "compressCompressionFailed": "فشل الضغط: {error}",
+  "@compressCompressionFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreToolsTitle": "أدوات إضافية",
+  "morePrivatePhotos": "صور خاصة",
+  "morePrivatePhotosSubtitle": "احمِ صورك السرية",
+  "moreChargingAnimation": "رسوم الشحن",
+  "moreChargingAnimationSubtitle": "خصّص شاشة الشحن",
+  "moreCleaningGuide": "دليل التنظيف",
+  "moreCleaningGuideSubtitle": "تعلّم التنظيف الآمن",
+  "guideTitle": "دليل التنظيف",
+  "guideSectionApps": "التطبيقات",
+  "guideSectionCache": "ذاكرة التطبيق",
+  "guideOffloadUnusedApps": "تفريغ التطبيقات",
+  "guideDeleteUnusedApps": "حذف التطبيقات",
+  "guideFlowTitle": "تفريغ التطبيقات",
+  "guideStepOpenSettings": "افتح الإعدادات",
+  "guideStepClickGeneral": "اضغط عام",
+  "guideStepTapIphoneStorage": "مساحة iPhone",
+  "guideStepEnableOffload": "فعّل التفريغ",
+  "guideFlowNext": "التالي",
+  "guideFlowClose": "إغلاق الدليل",
+  "guideClean": "تنظيف",
+  "chargingAnimationTitle": "رسوم الشحن",
+  "chargingViewAnimation": "عرض الرسوم",
+  "chargingBrowseAnimations": "تصفح الرسوم",
+  "chargingAllowLockScreenOnCharge": "السماح بشاشة القفل",
+  "chargingLockScreenSetup": "إعداد شاشة القفل",
+  "chargingChooseAnimation": "اختر رسماً",
+  "chargingNoAnimationSelected": "لم يُحدد رسم",
+  "chargingChooseAnimationAppBar": "اختر رسماً",
+  "chargingApplyAnimation": "تطبيق الرسم",
+  "chargingBatteryPercent": "{level}%",
+  "@chargingBatteryPercent": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "chargingHeadlineCharging": "جاري الشحن",
+  "chargingHeadlineFullyCharged": "مشحون بالكامل",
+  "chargingHeadlineDisconnected": "غير متصل",
+  "chargingHeadlineBatteryStatus": "حالة البطارية",
+  "chargingHeadlinePowerConnected": "الطاقة متصلة",
+  "chargingSubtitleCharging": "جهازك يشحن.",
+  "chargingSubtitleFullyCharged": "يمكنك فصل الشاحن.",
+  "chargingSubtitleDisconnected": "وصّل الشاحن لرؤية الرسوم.",
+  "chargingSubtitleUnknown": "الحالة غير متاحة.",
+  "chargingSubtitleConnectedNotCharging": "متصل ولا يشحن.",
+  "chargingAppliedTitle": "تم التطبيق",
+  "chargingAppliedMessage": "{title} أصبح رسم الشحن.",
+  "@chargingAppliedMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "chargingAnimationSemantics": "رسم الشحن",
+  "chargingMissingLottieAsset": "ملف Lottie مفقود",
+  "chargingStepApplyAnimation": "طبّق من التصفح.",
+  "chargingStepOpenWhileCharging": "افتح أثناء الشحن.",
+  "chargingStepIosNoLockScreen": "غير مدعوم على iPhone.",
+  "chargingStepBrowsePreviewApply": "تصفح → معاينة → تطبيق",
+  "chargingStepAllowLockScreen": "اضغط السماح بشاشة القفل.",
+  "chargingStepLockAndPlugIn": "أقفل ووصّل الشاحن.",
+  "chargingStepOemSettings": "Samsung/Xiaomi/Oppo: اسمح بالخلفية.",
+  "chargingPlatformNoteIos": "الرسوم على شاشة القفل غير مدعومة على iPhone.",
+  "chargingPlatformNoteAndroid": "على Android وصّل الشاحن.",
+  "chargingAnimNeonBattery": "بطارية نيون",
+  "chargingAnimCircularCharge": "شحن دائري",
+  "chargingAnimCyberpunk": "سايبربانك",
+  "chargingAnimGlowingEnergy": "طاقة متوهجة",
+  "chargingAnimMinimalBattery": "بطارية بسيطة",
+  "chargingAnimFuturisticPulse": "نبض مستقبلية",
+  "chargingAnimLiquidWave": "موجة سائلة",
+  "chargingAnimAuroraRing": "حلقة الشفق",
+  "appLockLocked": "التطبيق مقفل",
+  "appLockEnterPinOrBiometrics": "أدخل PIN أو البصمة.",
+  "appLockSetupTitle": "إعداد قفل التطبيق",
+  "appLockCreatePin": "أنشئ PIN من 4 أرقام",
+  "appLockConfirmPin": "أكد PIN",
+  "appLockCreatePinHint": "ستستخدمه لفتح التطبيق.",
+  "appLockConfirmPinHint": "أدخل نفس PIN.",
+  "appLockEnableBiometric": "تفعيل Face ID / البصمة",
+  "appLockBiometricSubtitle": "افتح دون كتابة PIN",
+  "appLockContinue": "متابعة",
+  "appLockFinishSetup": "إنهاء الإعداد",
+  "appLockTurnOffTitle": "إيقاف القفل",
+  "appLockEnterPinToTurnOff": "أدخل PIN للإيقاف",
+  "appLockVerifyPinToDisable": "تحقق من PIN الحالي.",
+  "appLockTooManyAttempts": "محاولات كثيرة.",
+  "appLockIncorrectPin": "PIN غير صحيح.",
+  "appLockPinsDoNotMatch": "PIN غير متطابق.",
+  "appLockSetupFailed": "فشل الإعداد",
+  "appLockCouldNotDisable": "تعذر الإيقاف",
+  "appLockSnackbarTitle": "قفل التطبيق",
+  "appLockBiometricReason": "فتح تطبيق التنظيف",
+  "photoWidgetTitle": "أداة الصور",
+  "photoWidgetShowOnHomeScreen": "عرض على الشاشة الرئيسية",
+  "photoWidgetActive": "الأداة نشطة",
+  "photoWidgetTurnOnAfterImport": "تشغيل بعد الاستيراد",
+  "photoWidgetImportFirst": "استورد الصور أولاً",
+  "photoWidgetMyAlbums": "ألبوماتي",
+  "photoWidgetWidgetStyle": "نمط الأداة",
+  "photoWidgetCreateAlbum": "إنشاء ألبوم",
+  "photoWidgetEnterAlbumName": "أدخل اسم الألبوم:",
+  "photoWidgetWidgetSource": "مصدر الأداة",
+  "photoWidgetAlbum": "ألبوم",
+  "photoWidgetAlbumNotFound": "الألبوم غير موجود",
+  "photoWidgetUseForHomeScreen": "لأداة الشاشة الرئيسية",
+  "photoWidgetActiveAlbum": "ألبوم الأداة النشط",
+  "photoWidgetAddNewPhotos": "إضافة صور",
+  "photoWidgetImportPhotos": "استيراد صور",
+  "photoWidgetImportPhotosTitle": "استيراد الصور",
+  "photoWidgetDoneCount": "تم ({count})",
+  "@photoWidgetDoneCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetSelectUpTo": "اختر حتى {max} صور.",
+  "@photoWidgetSelectUpTo": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetGrid": "شبكة",
+  "photoWidgetSlideshow": "عرض شرائح",
+  "photoWidgetPreview": "معاينة",
+  "photoWidgetGridDescription": "شبكة 2×2 على الشاشة.",
+  "photoWidgetSlideshowDescription": "تدوير بالمؤقت (15 ثانية على الأقل).",
+  "photoWidgetRenameAlbum": "إعادة تسمية",
+  "photoWidgetDeleteAlbumTitle": "حذف الألبوم؟",
+  "photoWidgetDeleteAlbumBody": "ستُزال من ذاكرة الأداة.",
+  "photoWidgetAddWidgetTitle": "إضافة أداة الصور",
+  "photoWidgetHelpAndroid": "1. استورد في ألبوم\n2. اضغط مطولاً → أدوات\n3. Cleaner App → Photo Widget\n4. اسحب\n\nأو ثبّت أدناه.",
+  "photoWidgetHelpIos": "1. اضغط مطولاً\n2. +\n3. ابحث عن التطبيق\n4. Add Widget\n\nملاحظة: iOS يحدّث بالجدول.",
+  "photoWidgetPinWidget": "تثبيت الأداة",
+  "photoWidgetPinWidgetButton": "تثبيت على الشاشة",
+  "photoWidgetPinFollowPrompt": "اتبع مطالبة النظام.",
+  "photoWidgetPinManualSteps": "استخدم الخطوات اليدوية.",
+  "photoWidgetHelp": "مساعدة",
+  "photoWidgetDefaultAlbumName": "ألبوم {number}",
+  "@photoWidgetDefaultAlbumName": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetPermissionRequired": "مطلوب إذن",
+  "photoWidgetAllowPhotoAccess": "اسمح بالوصول للصور.",
+  "photoWidgetLimitReached": "بلغ الحد",
+  "photoWidgetAlbumFull": "الألبوم ممتلئ (30 كحد أقصى).",
+  "photoWidgetImportLimit": "استورد حتى {max} في المرة.",
+  "@photoWidgetImportLimit": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetImportFailed": "فشل الاستيراد",
+  "photoWidgetCouldNotSave": "تعذر الحفظ.",
+  "photoWidgetPartialImport": "استيراد جزئي",
+  "photoWidgetPartialImportMessage": "استورد {imported} من {total}.",
+  "@photoWidgetPartialImportMessage": {
+    "placeholders": {
+      "imported": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetAddToHomeTitle": "إضافة للشاشة",
+  "photoWidgetAddToHomeBody": "اضغط مطولاً → أدوات أو مساعدة.",
+  "photoWidgetUpdated": "تم التحديث",
+  "photoWidgetUpdatedBody": "حدّث الأداة على الشاشة.",
+  "photoWidgetPinSnackbarTitle": "أداة",
+  "vaultPrivatePhotos": "صور خاصة",
+  "vaultMediaCount": "{photos, plural, one{صورة واحدة} other{{photos} صور}}, {videos, plural, one{فيديو واحد} other{{videos} فيديوهات}}",
+  "@vaultMediaCount": {
+    "placeholders": {
+      "photos": {
+        "type": "int"
+      },
+      "videos": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSelectAll": "تحديد الكل",
+  "vaultDeleteSelected": "حذف المحدد",
+  "vaultAddPhotos": "إضافة صور",
+  "vaultCouldNotOpen": "تعذر فتح الصور",
+  "vaultGoBack": "رجوع",
+  "vaultEmptyState": "اختر صوراً للاستيراد.\nستُقفل بأمان.",
+  "vaultTakePhotoOrVideo": "التقاط صورة أو فيديو",
+  "vaultImportPhotosOrVideos": "استيراد صور/فيديو",
+  "vaultAlbums": "ألبومات",
+  "vaultNewAlbum": "ألبوم جديد",
+  "vaultAlbumNameHint": "اسم الألبوم",
+  "vaultCreate": "إنشاء",
+  "vaultSettings": "إعدادات الخزنة",
+  "vaultRemoveAfterImport": "إزالة بعد الاستيراد",
+  "vaultRemoveAfterImportSubtitle": "حذف الأصل بعد الاستيراد",
+  "vaultUseFaceIdFingerprint": "Face ID / البصمة",
+  "vaultSecurity": "الأمان",
+  "vaultLockNow": "قفل الخزنة",
+  "vaultChangePin": "تغيير PIN",
+  "vaultCreatePin": "إنشاء PIN",
+  "vaultConfirmPin": "تأكيد PIN",
+  "vaultCreatePinSubtitle": "PIN من 4 أرقام",
+  "vaultConfirmPinSubtitle": "أدخل نفس PIN",
+  "vaultEnableBiometric": "تفعيل البصمة",
+  "vaultUnlockTitle": "أدخل رمز المرور",
+  "vaultUnlockSubtitle": "PIN من 4 أرقام",
+  "vaultUnlockLocked": "حاول بعد {seconds} ث",
+  "@vaultUnlockLocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultPinMustBeFourDigits": "PIN من 4 أرقام",
+  "vaultEnterCurrentPin": "PIN الحالي",
+  "vaultEnterNewPin": "PIN جديد",
+  "vaultConfirmNewPin": "تأكيد PIN",
+  "vaultPinsDoNotMatch": "PIN غير متطابق.",
+  "vaultCurrentPinIncorrect": "PIN الحالي خاطئ",
+  "vaultPinsDoNotMatchShort": "غير متطابق",
+  "vaultPinChanged": "تم تغيير PIN",
+  "vaultIncorrectPin": "PIN خاطئ",
+  "vaultPermissionTitle": "إذن",
+  "vaultPhotoLibraryRequired": "مطلوب مكتبة الصور",
+  "vaultImportTitle": "استيراد",
+  "vaultImportedCount": "{count, plural, one{عنصر واحد} other{{count} عناصر}} مستورد",
+  "@vaultImportedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSnackbarTitle": "الخزنة",
+  "vaultBiometricReason": "فتح الخزنة الخاصة",
+  "permissionLimitedLibraryAccess": "وصول محدود للمكتبة",
+  "permissionAllowPhotosVideos": "السماح بالصور والفيديو",
+  "permissionLimitedBody": "يمكنك الإدارة أو منح وصول كامل.",
+  "permissionFullBody": "مطلوب للبحث عن المكررات.",
+  "permissionManageLibraryAccess": "إدارة الوصول",
+  "permissionRefreshAccess": "تحديث الوصول",
+  "permissionOpenSettings": "فتح الإعدادات"
+}

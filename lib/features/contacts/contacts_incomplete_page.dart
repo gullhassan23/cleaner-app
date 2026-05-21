@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/services/contacts/contacts_repository.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class ContactsIncompletePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final repo = Get.find<ContactsRepository>();
 
     return Scaffold(
@@ -18,10 +20,10 @@ class ContactsIncompletePage extends StatelessWidget {
           onPressed: () => Get.back<void>(
             id: AppRoutes.contactsNestedNavigatorId,
           ),
-          child: const Text('< Back'),
+          child: Text(l10n.commonBack),
         ),
         leadingWidth: 88,
-        title: const Text('Incomplete Contacts'),
+        title: Text(l10n.contactsIncompleteContacts),
       ),
       body: Obx(() {
         if (repo.isLoading.value) {
@@ -31,7 +33,7 @@ class ContactsIncompletePage extends StatelessWidget {
         if (list.isEmpty) {
           return Center(
             child: Text(
-              'Every contact has a name, at least one number, and at least one email.',
+              l10n.contactsIncompleteDescription,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
@@ -49,11 +51,13 @@ class ContactsIncompletePage extends StatelessWidget {
               ),
           itemBuilder: (context, index) {
             final c = list[index];
-            final missing = _missingParts(c);
+            final missing = _missingParts(context, c);
             return ListTile(
-              title: Text(c.displayName.isEmpty ? 'No name' : c.displayName),
+              title: Text(
+                c.displayName.isEmpty ? l10n.contactsNoName : c.displayName,
+              ),
               subtitle: Text(
-                'Missing: $missing',
+                l10n.contactsMissingPrefix(missing),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -67,16 +71,17 @@ class ContactsIncompletePage extends StatelessWidget {
     );
   }
 
-  static String _missingParts(Contact c) {
+  static String _missingParts(BuildContext context, Contact c) {
+    final l10n = context.l10n;
     final parts = <String>[];
     if (c.displayName.trim().isEmpty) {
-      parts.add('name');
+      parts.add(l10n.contactsMissingName);
     }
     if (c.phones.isEmpty) {
-      parts.add('number');
+      parts.add(l10n.contactsMissingNumber);
     }
     if (c.emails.isEmpty) {
-      parts.add('email');
+      parts.add(l10n.contactsMissingEmail);
     }
     return parts.join(', ');
   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -99,7 +100,7 @@ class VaultAuthService extends GetxService {
     required bool enableBiometric,
   }) async {
     if (!_isValidPin(pin)) {
-      return const VaultAuthResult.failure('PIN must be exactly 4 digits.');
+      return VaultAuthResult.failure(_localizedPinLengthError());
     }
     try {
       await _clearLockout();
@@ -114,7 +115,7 @@ class VaultAuthService extends GetxService {
       );
       return const VaultAuthResult.success(null);
     } catch (e) {
-      return VaultAuthResult.failure('Could not set up vault PIN: $e');
+      return VaultAuthResult.failure(_localizedSetupPinError(e));
     }
   }
 
@@ -123,10 +124,10 @@ class VaultAuthService extends GetxService {
     required String newPin,
   }) async {
     if (!await verifyPin(oldPin)) {
-      return const VaultAuthResult.failure('Current PIN is incorrect.');
+      return VaultAuthResult.failure(_localizedCurrentPinIncorrect());
     }
     if (!_isValidPin(newPin)) {
-      return const VaultAuthResult.failure('PIN must be exactly 4 digits.');
+      return VaultAuthResult.failure(_localizedPinLengthError());
     }
     try {
       final salt = _randomSaltB64();
@@ -135,7 +136,7 @@ class VaultAuthService extends GetxService {
       await _storage.write(key: _kPinHash, value: hashHex);
       return const VaultAuthResult.success(null);
     } catch (e) {
-      return VaultAuthResult.failure('Could not change PIN: $e');
+      return VaultAuthResult.failure(_localizedChangePinError(e));
     }
   }
 
@@ -189,8 +190,12 @@ class VaultAuthService extends GetxService {
       final supported = await _localAuth.isDeviceSupported();
       if (!can && !supported) return false;
 
+      final ctx = Get.context;
+      final reason = ctx != null
+          ? AppLocalizations.of(ctx).vaultBiometricReason
+          : 'Unlock your private vault';
       final ok = await _localAuth.authenticate(
-        localizedReason: 'Unlock your private vault',
+        localizedReason: reason,
         options: const AuthenticationOptions(
           stickyAuth: true,
           biometricOnly: true,
@@ -211,6 +216,38 @@ class VaultAuthService extends GetxService {
   }
 
   static bool _isValidPin(String pin) => RegExp(r'^\d{4}$').hasMatch(pin);
+
+  static String _localizedPinLengthError() {
+    final ctx = Get.context;
+    if (ctx != null) {
+      return AppLocalizations.of(ctx).vaultPinMustBeFourDigits;
+    }
+    return 'Vault PIN must be 4 digits';
+  }
+
+  static String _localizedCurrentPinIncorrect() {
+    final ctx = Get.context;
+    if (ctx != null) {
+      return AppLocalizations.of(ctx).vaultCurrentPinIncorrect;
+    }
+    return 'Current PIN is incorrect';
+  }
+
+  static String _localizedSetupPinError(Object e) {
+    final ctx = Get.context;
+    if (ctx != null) {
+      return '${AppLocalizations.of(ctx).vaultCreatePin}: $e';
+    }
+    return 'Could not set up vault PIN: $e';
+  }
+
+  static String _localizedChangePinError(Object e) {
+    final ctx = Get.context;
+    if (ctx != null) {
+      return '${AppLocalizations.of(ctx).vaultChangePin}: $e';
+    }
+    return 'Could not change PIN: $e';
+  }
 
   static String _randomSaltB64() {
     final bytes = List<int>.generate(16, (_) => Random.secure().nextInt(256));

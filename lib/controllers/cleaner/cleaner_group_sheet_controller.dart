@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_get.dart';
 import 'package:get/get.dart';
 
 import '../../models/cleaner/cleaner_media_cluster.dart';
@@ -94,23 +95,28 @@ class CleanerGroupSheetController extends GetxController {
       if (result.deletedCount > 0) {
         _onDeleted(confirmed);
         Get.back<void>();
+        final l10n = getL10n();
         Get.snackbar(
-          'Deleted',
-          '${result.deletedCount} item(s) · ${BytesFormatter.humanize(result.reclaimedBytes)} freed',
+          l10n.cleanerDeletedTitle,
+          l10n.cleanerDeletedMessage(
+            result.deletedCount,
+            BytesFormatter.humanize(result.reclaimedBytes),
+          ),
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 3),
         );
         if (result.hasPartialFailure) {
           Get.snackbar(
-            'Some items were not removed',
-            '${result.failedIds.length} failed',
+            l10n.cleanerSomeItemsNotRemoved,
+            l10n.cleanerSomeItemsFailed(result.failedIds.length),
             snackPosition: SnackPosition.BOTTOM,
           );
         }
       } else {
+        final l10n = getL10n();
         Get.snackbar(
-          'Nothing deleted',
-          'Try again or check photo permissions.',
+          l10n.cleanerNothingDeleted,
+          l10n.cleanerNothingDeletedHint,
           snackPosition: SnackPosition.BOTTOM,
         );
       }

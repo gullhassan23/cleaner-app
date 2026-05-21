@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/widgets/cleaner/category_grid.dart';
 
@@ -41,6 +42,7 @@ class ResultsScrollBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Obx(() {
       final similarBytes = controller.bytesForKind(
         CleanerDashboardKind.similarPhotos,
@@ -103,7 +105,7 @@ class ResultsScrollBody extends StatelessWidget {
                         children: [
                           CategoryGridCard(
                             height: tallHeight,
-                            title: 'Similar Photos',
+                            title: l10n.cleanerCategorySimilarPhotos,
                             sizeLabel: _sizeLabel(similarBytes),
                             preview: similarPreview,
                             placeholderIcon: similarPreview == null,
@@ -115,7 +117,7 @@ class ResultsScrollBody extends StatelessWidget {
                           const SizedBox(height: _cardGap),
                           CategoryGridCard(
                             height: tallHeight,
-                            title: 'Duplicate Photos',
+                            title: l10n.cleanerCategoryDuplicatePhotos,
                             sizeLabel: _sizeLabel(dupBytes),
                             preview: dupPreview,
                             placeholderIcon: dupPreview == null,
@@ -127,7 +129,7 @@ class ResultsScrollBody extends StatelessWidget {
                           const SizedBox(height: _cardGap),
                           CategoryGridCard(
                             height: tallHeight,
-                            title: 'Similar Videos',
+                            title: l10n.cleanerCategorySimilarVideos,
                             sizeLabel: '0 KB',
                             preview: null,
                             placeholderIcon: true,
@@ -151,7 +153,7 @@ class ResultsScrollBody extends StatelessWidget {
                         children: [
                           CategoryGridCard(
                             height: tallHeight,
-                            title: 'Videos',
+                            title: l10n.cleanerCategoryVideos,
                             sizeLabel: _sizeLabel(videoBytes),
                             preview: videoPreview,
                             solidBlack: videoPreview == null,
@@ -165,11 +167,11 @@ class ResultsScrollBody extends StatelessWidget {
                           const SizedBox(height: _cardGap),
                           CategoryGridCard(
                             height: tallHeight,
-                            title: 'Screenshots',
+                            title: l10n.cleanerCategoryScreenshots,
                             sizeLabel: _sizeLabel(shotBytes),
                             preview: shotPreview,
                             placeholderIcon: shotPreview == null,
-                            subtitleAboveTitle: 'Optimize Your Storage',
+                            subtitleAboveTitle: l10n.cleanerOptimizeYourStorage,
                             topInset: _screenshotsFakeRow(kDashBlue),
                             onTap:
                                 shotCount == 0
@@ -179,7 +181,7 @@ class ResultsScrollBody extends StatelessWidget {
                           const SizedBox(height: _cardGap),
                           CategoryGridCard(
                             height: tallHeight,
-                            title: 'Similar Live Photos',
+                            title: l10n.cleanerCategorySimilarLivePhotos,
                             sizeLabel: _sizeLabel(similarBytes),
                             preview: similarPreview,
                             placeholderIcon: similarPreview == null,
@@ -205,17 +207,17 @@ class ResultsScrollBody extends StatelessWidget {
                           id: AppRoutes.cleanerNestedNavigatorId,
                         ),
                     leading: const Icon(Icons.image, color: Colors.white),
-                    title: const Text(
-                      'AI Photo Editor',
-                      style: TextStyle(
+                    title: Text(
+                      l10n.cleanerAiPhotoEditor,
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    subtitle: const Text(
-                      'Improve photo quality',
-                      style: TextStyle(color: Colors.white70),
+                    subtitle: Text(
+                      l10n.cleanerImprovePhotoQuality,
+                      style: const TextStyle(color: Colors.white70),
                     ),
                     trailing: const Icon(
                       Icons.arrow_forward_ios,

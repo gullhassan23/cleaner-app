@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 import '../../services/applock/app_lock_service.dart';
@@ -55,7 +56,8 @@ class AppLockSetupController extends GetxController {
   Future<void> finishSetup() async {
     if (setupStep.value != 1 || buffer.length != 4) return;
     if (firstPin.value != secondPin.value) {
-      Get.snackbar('App Lock', 'PINs do not match. Start again.');
+      final l10n = AppLocalizations.of(Get.context!);
+      Get.snackbar(l10n.appLockSnackbarTitle, l10n.appLockPinsDoNotMatch);
       setupStep.value = 0;
       firstPin.value = '';
       secondPin.value = '';
@@ -70,7 +72,11 @@ class AppLockSetupController extends GetxController {
         enableBiometric: useBio,
       );
       if (!res.isSuccess) {
-        Get.snackbar('App Lock', res.errorMessage ?? 'Setup failed');
+        final l10n = AppLocalizations.of(Get.context!);
+        Get.snackbar(
+          l10n.appLockSnackbarTitle,
+          res.errorMessage ?? l10n.appLockSetupFailed,
+        );
         return;
       }
       await Get.find<AppLockController>().onSetupCompleted();

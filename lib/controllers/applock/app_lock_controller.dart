@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_routes.dart';
@@ -85,10 +86,11 @@ class AppLockController extends GetxController {
     }
     wrongAttempts.value++;
     unlockPinDigits.value = '';
+    final l10n = AppLocalizations.of(Get.context!);
     if (wrongAttempts.value >= _maxWrongAttempts) {
-      errorMessage.value = 'Too many attempts. Try again or use biometrics.';
+      errorMessage.value = l10n.appLockTooManyAttempts;
     } else {
-      errorMessage.value = 'Incorrect PIN. Try again.';
+      errorMessage.value = l10n.appLockIncorrectPin;
     }
     return false;
   }
@@ -115,7 +117,11 @@ class AppLockController extends GetxController {
 
     final result = await _service.disable();
     if (!result.isSuccess) {
-      Get.snackbar('App Lock', result.errorMessage ?? 'Could not disable');
+      final l10n = AppLocalizations.of(Get.context!);
+      Get.snackbar(
+        l10n.appLockSnackbarTitle,
+        result.errorMessage ?? l10n.appLockCouldNotDisable,
+      );
       return false;
     }
     isEnabled.value = false;

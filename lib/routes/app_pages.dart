@@ -1,6 +1,7 @@
 import 'package:cleaner_app/features/cleaner/ai_photo_editor_page.dart';
 import 'package:cleaner_app/features/cleaner/cleaner_dashboard_page.dart';
 import 'package:cleaner_app/features/compress/compress_main_screen.dart';
+import 'package:cleaner_app/features/settings/language_picker_page.dart';
 import 'package:cleaner_app/features/settings/settings.dart';
 import 'package:cleaner_app/bindings/app_lock_binding.dart';
 import 'package:cleaner_app/features/appLock/app_lock_setup_view.dart';
@@ -134,6 +135,11 @@ abstract final class AppPages {
       name: AppRoutes.settings,
       page: () => const SettingsPage(),
       binding: AppLockBinding(),
+    ),
+    GetPage<dynamic>(
+      transition: Transition.leftToRight,
+      name: AppRoutes.languagePicker,
+      page: () => const LanguagePickerPage(),
     ),
     GetPage<dynamic>(
       name: AppRoutes.appLockSetup,

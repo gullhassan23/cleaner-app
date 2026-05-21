@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,11 +10,16 @@ class VaultChangePinPage extends GetView<VaultChangePinController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Obx(() {
-      final titles = ['Enter current PIN', 'Enter new PIN', 'Confirm new PIN'];
+      final titles = [
+        l10n.vaultEnterCurrentPin,
+        l10n.vaultEnterNewPin,
+        l10n.vaultConfirmNewPin,
+      ];
       return VaultPinScaffold(
         title: titles[controller.step.value.clamp(0, 2)],
-        subtitle: 'Vault PIN must be 4 digits',
+        subtitle: l10n.vaultPinMustBeFourDigits,
         filledCount: controller.buffer.value.length,
         onDigit: controller.onDigit,
         onDelete: controller.deleteDigit,

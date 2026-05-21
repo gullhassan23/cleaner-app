@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +29,7 @@ class VaultAlbumsController extends GetxController {
 
   Future<void> createAlbum() async {
     final name = await Get.dialog<String>(
-      _CreateAlbumDialog(),
+      const _CreateAlbumDialog(),
     );
     if (name == null || name.trim().isEmpty) return;
     await _albums.createAlbum(name);
@@ -37,21 +38,27 @@ class VaultAlbumsController extends GetxController {
 }
 
 class _CreateAlbumDialog extends StatelessWidget {
+  const _CreateAlbumDialog();
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final controller = TextEditingController();
     return AlertDialog(
-      title: const Text('New Album'),
+      title: Text(l10n.vaultNewAlbum),
       content: TextField(
         controller: controller,
-        decoration: const InputDecoration(hintText: 'Album name'),
+        decoration: InputDecoration(hintText: l10n.vaultAlbumNameHint),
         autofocus: true,
       ),
       actions: [
-        TextButton(onPressed: () => Get.back(), child: const Text('Cancel')),
+        TextButton(
+          onPressed: () => Get.back(),
+          child: Text(l10n.commonCancel),
+        ),
         TextButton(
           onPressed: () => Get.back(result: controller.text),
-          child: const Text('Create'),
+          child: Text(l10n.vaultCreate),
         ),
       ],
     );

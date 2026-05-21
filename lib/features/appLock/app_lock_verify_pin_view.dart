@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,9 +12,10 @@ class AppLockVerifyPinView extends GetView<AppLockVerifyController> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Turn off App Lock'),
+        title: Text(l10n.appLockTurnOffTitle),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => Get.back(),
@@ -26,7 +28,7 @@ class AppLockVerifyPinView extends GetView<AppLockVerifyController> {
             children: [
               const SizedBox(height: 20),
               Text(
-                'Enter PIN to turn off App Lock',
+                l10n.appLockEnterPinToTurnOff,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: cs.onSurface,
@@ -36,7 +38,7 @@ class AppLockVerifyPinView extends GetView<AppLockVerifyController> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Verify your current PIN to disable app lock.',
+                l10n.appLockVerifyPinToDisable,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: cs.onSurfaceVariant, fontSize: 14),
               ),

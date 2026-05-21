@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cleaner_app/l10n/app_localizations.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,13 +25,14 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
 
     return Obx(() {
       final album = controller.albumById(_albumId);
       if (album == null) {
         return Scaffold(
-          appBar: const PhotoWidgetAppBar(title: 'Album'),
-          body: const Center(child: Text('Album not found')),
+          appBar: PhotoWidgetAppBar(title: l10n.photoWidgetAlbum),
+          body: Center(child: Text(l10n.photoWidgetAlbumNotFound)),
         );
       }
 
@@ -62,7 +65,7 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
                         onPressed: () =>
                             controller.setWidgetSourceAlbum(album.id),
                         icon: const Icon(Icons.widgets_outlined, size: 18),
-                        label: const Text('Use for home screen widget'),
+                        label: Text(l10n.photoWidgetUseForHomeScreen),
                       ),
                     )
                   else
@@ -74,7 +77,7 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
                           Icon(Icons.check_circle, color: scheme.primary, size: 18),
                           const SizedBox(width: 6),
                           Text(
-                            'Active widget album',
+                            l10n.photoWidgetActiveAlbum,
                             style: TextStyle(color: scheme.primary),
                           ),
                         ],
@@ -116,7 +119,7 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
                         borderRadius: BorderRadius.circular(24),
                       ),
                     ),
-                    child: const Text('Add New Photos'),
+                    child: Text(l10n.photoWidgetAddNewPhotos),
                   ),
                 ),
               )
@@ -126,9 +129,13 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
   }
 
   Future<void> _importPhotos(BuildContext context, String albumId) async {
+    final l10n = AppLocalizations.of(Get.context!);
     final ok = await controller.ensurePhotoPermission();
     if (!ok) {
-      Get.snackbar('Permission required', 'Allow photo access to import images.');
+      Get.snackbar(
+        l10n.photoWidgetPermissionRequired,
+        l10n.photoWidgetAllowPhotoAccess,
+      );
       return;
     }
 
@@ -138,7 +145,10 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
     final remaining = PhotoWidgetStorageService.maxPhotosPerAlbum -
         album.photos.length;
     if (remaining <= 0) {
-      Get.snackbar('Limit reached', 'This album is full (30 photos max).');
+      Get.snackbar(
+        l10n.photoWidgetLimitReached,
+        l10n.photoWidgetAlbumFull,
+      );
       return;
     }
 
@@ -150,14 +160,17 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
 
     final count = await controller.importPhotos(albumId, pickedRaw);
     if (count == 0) {
-      Get.snackbar('Import failed', 'Could not save selected photos.');
+      Get.snackbar(
+        l10n.photoWidgetImportFailed,
+        l10n.photoWidgetCouldNotSave,
+      );
       return;
     }
 
     if (count < pickedRaw.length) {
       Get.snackbar(
-        'Partial import',
-        'Imported $count of ${pickedRaw.length} photos (limits apply).',
+        l10n.photoWidgetPartialImport,
+        l10n.photoWidgetPartialImportMessage(count, pickedRaw.length),
       );
     }
 
@@ -165,19 +178,19 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
       final pinned = await PhotoWidgetNativeBridge.isWidgetPinned();
       if (!pinned && context.mounted) {
         Get.snackbar(
-          'Add widget to home screen',
-          'Long-press home screen → Widgets → Photo Widget, or tap help (?) to pin.',
+          l10n.photoWidgetAddToHomeTitle,
+          l10n.photoWidgetAddToHomeBody,
           duration: const Duration(seconds: 5),
           mainButton: TextButton(
             onPressed: () => showPhotoWidgetHelpSheet(context),
-            child: const Text('Help'),
+            child: Text(l10n.photoWidgetHelp),
           ),
         );
       }
     } else {
       Get.snackbar(
-        'Widget updated',
-        'Add or refresh the Photo Widget on your home screen to see photos.',
+        l10n.photoWidgetUpdated,
+        l10n.photoWidgetUpdatedBody,
         duration: const Duration(seconds: 4),
       );
     }
@@ -188,26 +201,30 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
     String albumId,
     String currentName,
   ) async {
+    final l10n = context.l10n;
     final nameController = TextEditingController(text: currentName);
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Rename album'),
-        content: TextField(
-          controller: nameController,
-          autofocus: true,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+      builder: (ctx) {
+        final dialogL10n = ctx.l10n;
+        return AlertDialog(
+          title: Text(dialogL10n.photoWidgetRenameAlbum),
+          content: TextField(
+            controller: nameController,
+            autofocus: true,
           ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Save'),
-          ),
-        ],
-      ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(dialogL10n.commonCancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(dialogL10n.commonSave),
+            ),
+          ],
+        );
+      },
     );
     if (confirmed == true) {
       await controller.renameAlbum(albumId, nameController.text);
@@ -215,25 +232,29 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
   }
 
   Future<void> _confirmDeleteAlbum(BuildContext context, String albumId) async {
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete album?'),
-        content: const Text('Photos in this album will be removed from the widget cache.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: FilledButton.styleFrom(
-              backgroundColor: Theme.of(ctx).colorScheme.error,
+      builder: (ctx) {
+        final dialogL10n = ctx.l10n;
+        return AlertDialog(
+          title: Text(dialogL10n.photoWidgetDeleteAlbumTitle),
+          content: Text(dialogL10n.photoWidgetDeleteAlbumBody),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(dialogL10n.commonCancel),
             ),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(ctx).colorScheme.error,
+              ),
+              child: Text(dialogL10n.commonDelete),
+            ),
+          ],
+        );
+      },
     );
     if (confirmed == true) {
       await controller.deleteAlbum(albumId);
@@ -250,6 +271,7 @@ class _EmptyAlbumBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
 
     return Center(
       child: Column(
@@ -269,7 +291,7 @@ class _EmptyAlbumBody extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
               ),
             ),
-            child: const Text('Import Photos'),
+            child: Text(l10n.photoWidgetImportPhotos),
           ),
         ],
       ),

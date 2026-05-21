@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,9 +9,10 @@ class VaultAlbumsPage extends GetView<VaultAlbumsController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Albums'),
+        title: Text(l10n.vaultAlbums),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),

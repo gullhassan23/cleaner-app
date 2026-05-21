@@ -12,15 +12,6 @@ abstract final class CleanupGuideConstants {
   static const cardRadius = 14.0;
   static const rowHeight = 58.0;
 
-  static const flowTitle = 'Offload Unused Apps';
-
-  static const offloadSubtitles = <String>[
-    'Open Settings',
-    'Click General',
-    'Tap iPhone Storage',
-    'Enable Offload Unused Apps',
-  ];
-
   static const offloadStepAssets = <String>[
     'assets/cleaning_guide/offload_step_1.png',
     'assets/cleaning_guide/offload_step_2.png',

@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
 import 'package:cleaner_app/widgets/compress/metric_card.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class PickerSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Card(
       child: Padding(
@@ -30,19 +32,22 @@ class PickerSummaryCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text('Select media to compress', style: theme.textTheme.titleLarge),
+                  child: Text(
+                    l10n.compressSelectMediaTitle,
+                    style: theme.textTheme.titleLarge,
+                  ),
                 ),
                 if (isLimited)
                   TextButton.icon(
                     onPressed: onManageAccess,
                     icon: const Icon(Icons.photo_library_outlined),
-                    label: const Text('Manage access'),
+                    label: Text(l10n.compressManageAccess),
                   ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              'Pick one or more images/videos, then continue to quality selection and compression.',
+              l10n.compressSelectMediaBody,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -52,10 +57,13 @@ class PickerSummaryCard extends StatelessWidget {
               spacing: 12,
               runSpacing: 12,
               children: [
-                MetricChip(label: 'Visible items', value: '$totalCount'),
-                MetricChip(label: 'Selected', value: '$selectedCount'),
                 MetricChip(
-                  label: 'Selected size',
+                  label: l10n.compressVisibleItems,
+                  value: '$totalCount',
+                ),
+                MetricChip(label: l10n.compressSelected, value: '$selectedCount'),
+                MetricChip(
+                  label: l10n.compressSelectedSize,
                   value: BytesFormatter.humanize(selectedBytes),
                 ),
               ],

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class ChargingHomeView extends GetView<ChargingController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -24,9 +26,9 @@ class ChargingHomeView extends GetView<ChargingController> {
           icon: const Icon(Icons.chevron_left, color: Colors.white, size: 32),
           onPressed: () => Get.back<void>(),
         ),
-        title: const Text(
-          'Charging Animation',
-          style: TextStyle(
+        title: Text(
+          l10n.chargingAnimationTitle,
+          style: const TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
             color: Colors.white,
@@ -53,7 +55,7 @@ class ChargingHomeView extends GetView<ChargingController> {
                           final config = controller.selectedConfig;
                           final snap = controller.snapshot.value;
                           if (config == null) {
-                            return const _EmptySelectionHint();
+                            return _EmptySelectionHint();
                           }
                           return ChargingAnimationHost(
                             config: config,
@@ -83,7 +85,7 @@ class ChargingHomeView extends GetView<ChargingController> {
                     return FilledButton.icon(
                       onPressed: controller.openDisplay,
                       icon: const Icon(Icons.play_circle_outline_rounded),
-                      label: const Text('View animation'),
+                      label: Text(l10n.chargingViewAnimation),
                     );
                   }),
                 ),
@@ -96,7 +98,7 @@ class ChargingHomeView extends GetView<ChargingController> {
                       side: const BorderSide(color: Colors.white54),
                     ),
                     icon: const Icon(Icons.grid_view_rounded),
-                    label: const Text('Browse animations'),
+                    label: Text(l10n.chargingBrowseAnimations),
                   ),
                 ),
                 if (Platform.isAndroid) ...[
@@ -116,7 +118,7 @@ class ChargingHomeView extends GetView<ChargingController> {
                         backgroundColor: Colors.white.withValues(alpha: 0.2),
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text('Allow lock screen on charge'),
+                      child: Text(l10n.chargingAllowLockScreenOnCharge),
                     ),
                   ),
                 ],
@@ -148,6 +150,7 @@ class _LockScreenSetupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final steps = controller.lockScreenSetupSteps();
     return Material(
       color: Colors.black.withValues(alpha: 0.25),
@@ -157,13 +160,13 @@ class _LockScreenSetupCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.lock_outline_rounded, color: Colors.white, size: 20),
-                SizedBox(width: 8),
+                const Icon(Icons.lock_outline_rounded, color: Colors.white, size: 20),
+                const SizedBox(width: 8),
                 Text(
-                  'Lock screen setup',
-                  style: TextStyle(
+                  l10n.chargingLockScreenSetup,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 15,
@@ -212,6 +215,7 @@ class _EmptySelectionHint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +227,7 @@ class _EmptySelectionHint extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Choose an animation',
+            l10n.chargingChooseAnimation,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.85),
               fontSize: 16,

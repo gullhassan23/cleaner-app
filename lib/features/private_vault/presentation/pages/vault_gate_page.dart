@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,7 @@ class VaultGatePage extends GetView<VaultGateController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Obx(() {
       if (controller.routeFailed.value) {
         return Scaffold(
@@ -17,19 +19,19 @@ class VaultGatePage extends GetView<VaultGateController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Could not open Private Photos',
+                  Text(
+                    l10n.vaultCouldNotOpen,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 20),
                   FilledButton(
                     onPressed: controller.retry,
-                    child: const Text('Try again'),
+                    child: Text(l10n.commonTryAgain),
                   ),
                   TextButton(
                     onPressed: Get.back,
-                    child: const Text('Go back'),
+                    child: Text(l10n.vaultGoBack),
                   ),
                 ],
               ),

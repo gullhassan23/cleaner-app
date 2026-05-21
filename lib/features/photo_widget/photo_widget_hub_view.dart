@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,12 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: scheme.surfaceContainerLow,
       appBar: PhotoWidgetAppBar(
-        title: 'Photo Widget',
+        title: l10n.photoWidgetTitle,
         actions: [
           IconButton(
             icon: Icon(
@@ -38,13 +40,13 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
           children: [
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Show on home screen'),
+              title: Text(l10n.photoWidgetShowOnHomeScreen),
               subtitle: Text(
                 controller.hasWidgetContent
                     ? (controller.isEnabled
-                        ? 'Widget is active'
-                        : 'Turn on after importing photos')
-                    : 'Import photos into an album first',
+                        ? l10n.photoWidgetActive
+                        : l10n.photoWidgetTurnOnAfterImport)
+                    : l10n.photoWidgetImportFirst,
                 style: TextStyle(color: scheme.onSurfaceVariant, fontSize: 12),
               ),
               value: controller.isEnabled,
@@ -56,7 +58,7 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
             Padding(
               padding: const EdgeInsets.only(left: 4, bottom: 8),
               child: Text(
-                'My albums',
+                l10n.photoWidgetMyAlbums,
                 style: TextStyle(
                   fontSize: 13,
                   color: scheme.onSurfaceVariant,
@@ -83,7 +85,7 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
             const SizedBox(height: 24),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Widget style'),
+              title: Text(l10n.photoWidgetWidgetStyle),
               trailing: const Icon(CupertinoIcons.chevron_forward, size: 18),
               onTap: () => Get.toNamed(AppRoutes.photoWidgetStyle),
             ),
@@ -94,22 +96,24 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
   }
 
   Future<void> _showCreateAlbumDialog(BuildContext context) async {
+    final l10n = context.l10n;
     final nameController = TextEditingController(
-      text: 'Album ${controller.albums.length + 1}',
+      text: l10n.photoWidgetDefaultAlbumName(controller.albums.length + 1),
     );
 
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) {
+        final dialogL10n = ctx.l10n;
         final scheme = Theme.of(ctx).colorScheme;
         return AlertDialog(
-          title: const Text('Create an Album'),
+          title: Text(dialogL10n.photoWidgetCreateAlbum),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Enter the name of album:',
+                dialogL10n.photoWidgetEnterAlbumName,
                 style: TextStyle(color: scheme.onSurfaceVariant),
               ),
               const SizedBox(height: 12),
@@ -134,11 +138,11 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('Cancel'),
+              child: Text(dialogL10n.commonCancel),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('Confirm'),
+              child: Text(dialogL10n.commonConfirm),
             ),
           ],
         );
@@ -170,6 +174,7 @@ class _AlbumTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
     const size = 108.0;
 
     return GestureDetector(
@@ -198,7 +203,7 @@ class _AlbumTile extends StatelessWidget {
             ),
             if (isWidgetSource)
               Text(
-                'Widget source',
+                l10n.photoWidgetWidgetSource,
                 style: TextStyle(fontSize: 11, color: scheme.primary),
               ),
           ],
@@ -216,6 +221,7 @@ class _CreateAlbumTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
     const size = 108.0;
 
     return GestureDetector(
@@ -248,10 +254,10 @@ class _CreateAlbumTile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Create an Album',
+            Text(
+              l10n.photoWidgetCreateAlbum,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13),
+              style: const TextStyle(fontSize: 13),
             ),
           ],
         ),

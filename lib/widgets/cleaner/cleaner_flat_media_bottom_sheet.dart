@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_selection_summary.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
 import 'package:cleaner_app/services/repositories/photo_library_repository.dart';
@@ -70,17 +71,26 @@ class _FlatMediaSheetController extends GetxController {
       if (result.deletedCount > 0) {
         onDeleted(confirmed);
         Get.back<void>();
-        Get.snackbar(
-          'Deleted',
-          '${result.deletedCount} item(s) · ${BytesFormatter.humanize(result.reclaimedBytes)} freed',
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        final l10n = Get.context?.l10n;
+        if (l10n != null) {
+          Get.snackbar(
+            l10n.cleanerDeletedTitle,
+            l10n.cleanerDeletedMessage(
+              result.deletedCount,
+              BytesFormatter.humanize(result.reclaimedBytes),
+            ),
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        }
       } else {
-        Get.snackbar(
-          'Nothing deleted',
-          'Try again or check photo permissions.',
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        final l10n = Get.context?.l10n;
+        if (l10n != null) {
+          Get.snackbar(
+            l10n.cleanerNothingDeleted,
+            l10n.cleanerNothingDeletedHint,
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        }
       }
     } finally {
       isDeleting.value = false;
@@ -122,6 +132,7 @@ class CleanerFlatMediaBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final c = Get.find<_FlatMediaSheetController>(tag: tag);
 
     return Material(
@@ -281,7 +292,10 @@ class CleanerFlatMediaBottomSheet extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            '${summary.selectedCount} selected · ${BytesFormatter.humanize(summary.selectedBytes)}',
+                            l10n.cleanerSelectedSummary(
+                              summary.selectedCount,
+                              BytesFormatter.humanize(summary.selectedBytes),
+                            ),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -304,7 +318,7 @@ class CleanerFlatMediaBottomSheet extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       )
-                                      : const Text('Delete selected'),
+                                      : Text(l10n.cleanerDeleteSelected),
                             ),
                           ),
                         ],

@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 import '../../domain/usecases/vault_auth_usecases.dart';
@@ -35,7 +36,7 @@ class VaultChangePinController extends GetxController {
     if (step.value == 0) {
       final ok = await Get.find<VaultAuthService>().verifyPin(pin);
       if (!ok) {
-        errorMessage.value = 'Current PIN is incorrect';
+        errorMessage.value = AppLocalizations.of(Get.context!).vaultCurrentPinIncorrect;
         return;
       }
       _oldPin = pin;
@@ -50,7 +51,7 @@ class VaultChangePinController extends GetxController {
     }
 
     if (pin != _newPin) {
-      errorMessage.value = 'PINs do not match';
+      errorMessage.value = AppLocalizations.of(Get.context!).vaultPinsDoNotMatch;
       step.value = 1;
       _newPin = null;
       return;
@@ -64,7 +65,8 @@ class VaultChangePinController extends GetxController {
         return;
       }
       Get.back();
-      Get.snackbar('Vault', 'PIN changed successfully');
+      final l10n = AppLocalizations.of(Get.context!);
+      Get.snackbar(l10n.vaultSnackbarTitle, l10n.vaultPinChanged);
     } finally {
       isBusy.value = false;
     }

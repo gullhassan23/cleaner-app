@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/services/contacts/contacts_repository.dart';
 import 'package:cleaner_app/widgets/state_message_card.dart';
@@ -10,6 +11,7 @@ class ContactsBackupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final repo = Get.find<ContactsRepository>();
 
     return Scaffold(
@@ -18,10 +20,10 @@ class ContactsBackupPage extends StatelessWidget {
           onPressed: () => Get.back<void>(
             id: AppRoutes.contactsNestedNavigatorId,
           ),
-          child: const Text('< Back'),
+          child: Text(l10n.commonBack),
         ),
         leadingWidth: 88,
-        title: const Text('Contacts Backup'),
+        title: Text(l10n.contactsBackup),
       ),
       body: Padding(
         padding: const EdgeInsets.all(24),
@@ -30,9 +32,8 @@ class ContactsBackupPage extends StatelessWidget {
           children: [
             StateMessageCard(
               icon: Icons.cloud_upload_outlined,
-              title: 'Export your contacts',
-              message:
-                  'Creates a single .vcf file with your contacts so you can save it to Files, AirDrop it, or open it in another app.',
+              title: l10n.contactsExportTitle,
+              message: l10n.contactsExportBody,
             ),
             const SizedBox(height: 24),
             Obx(() {
@@ -44,12 +45,14 @@ class ContactsBackupPage extends StatelessWidget {
                         : () async {
                           await repo.exportAllContactsBackup();
                         },
-                child: Text(busy ? 'Preparing…' : 'Export all & share'),
+                child: Text(
+                  busy ? l10n.contactsExportPreparing : l10n.contactsExportAllShare,
+                ),
               );
             }),
             const SizedBox(height: 12),
             Text(
-              'You can also pick contacts from the main list, tap Select, then share a subset.',
+              l10n.contactsExportSubsetHint,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),

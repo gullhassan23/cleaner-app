@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cleaner_app/controllers/bottomnav_controller.dart';
+import 'package:cleaner_app/controllers/locale_controller.dart';
+import 'package:cleaner_app/l10n/l10n_get.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -151,9 +153,43 @@ class CleanerController extends GetxController {
   }
 
   @override
+  void onInit() {
+    super.onInit();
+    if (Get.isRegistered<LocaleController>()) {
+      ever(Get.find<LocaleController>().locale, (_) => _syncScanStageLabel());
+    }
+  }
+
+  @override
   void onReady() {
     super.onReady();
     unawaited(_bootstrap());
+  }
+
+  void _syncScanStageLabel() {
+    if (!_scanRunning &&
+        phase.value != CleanerScanPhase.completed &&
+        phase.value != CleanerScanPhase.failed) {
+      return;
+    }
+    final l10n = getL10n();
+    switch (phase.value) {
+      case CleanerScanPhase.failed:
+        scanStageLabel.value = l10n.cleanerScanSomethingWentWrong;
+      case CleanerScanPhase.completed:
+        scanStageLabel.value = l10n.cleanerScanDone;
+      case CleanerScanPhase.loadingLibrary:
+        scanStageLabel.value = l10n.cleanerScanLoadingLibrary;
+      case CleanerScanPhase.detectingDuplicates:
+        scanStageLabel.value = l10n.cleanerScanFindingDuplicates;
+      case CleanerScanPhase.detectingSimilar:
+        scanStageLabel.value = l10n.cleanerScanFindingSimilar;
+      case CleanerScanPhase.requestingPermission:
+      case CleanerScanPhase.idle:
+        if (_scanRunning) {
+          scanStageLabel.value = l10n.cleanerScanPreparing;
+        }
+    }
   }
 
   @override
@@ -226,7 +262,7 @@ class CleanerController extends GetxController {
     _cancelScan = false;
     lastError.value = null;
     scanProgress.value = 0;
-    scanStageLabel.value = 'Preparing…';
+    scanStageLabel.value = getL10n().cleanerScanPreparing;
 
     try {
       final temp = await getTemporaryDirectory();
@@ -240,7 +276,7 @@ class CleanerController extends GetxController {
 
     try {
       phase.value = CleanerScanPhase.loadingLibrary;
-      scanStageLabel.value = 'Loading library…';
+      scanStageLabel.value = getL10n().cleanerScanLoadingLibrary;
 
       CleanerGalleryScanResult? scanResult;
       await _scanCoordinator.loadFullLibrary(
@@ -261,7 +297,7 @@ class CleanerController extends GetxController {
       scanProgress.value = 0.2;
 
       phase.value = CleanerScanPhase.detectingDuplicates;
-      scanStageLabel.value = 'Finding duplicate files…';
+      scanStageLabel.value = getL10n().cleanerScanFindingDuplicates;
 
       final dupResult = await _duplicateDetector.findDuplicates(
         scanResult!.imageAssets,
@@ -280,7 +316,7 @@ class CleanerController extends GetxController {
       duplicateClusters.assignAll(dupResult.clusters);
 
       phase.value = CleanerScanPhase.detectingSimilar;
-      scanStageLabel.value = 'Finding similar photos…';
+      scanStageLabel.value = getL10n().cleanerScanFindingSimilar;
 
       final similar = await _similarDetector.findSimilar(
         scanResult!.imageAssets,
@@ -372,7 +408,7 @@ class CleanerController extends GetxController {
       return;
     }
     CleanerFlatMediaBottomSheet.show(
-      title: 'Videos',
+      title: getL10n().cleanerCategoryVideos,
       assets: _sortedAssets(items),
       onDeleted: removeDeletedAssets,
     );
@@ -384,7 +420,7 @@ class CleanerController extends GetxController {
       return;
     }
     CleanerFlatMediaBottomSheet.show(
-      title: 'Screenshots',
+      title: getL10n().cleanerCategoryScreenshots,
       assets: _sortedAssets(items),
       onDeleted: removeDeletedAssets,
     );

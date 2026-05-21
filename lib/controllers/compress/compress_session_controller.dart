@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/l10n_get.dart';
 import 'package:get/get.dart';
 
 import '../../utils/bytes_formatter.dart';
@@ -101,7 +102,7 @@ class CompressSessionController extends GetxController {
           permissionState: const PermissionStateEntity(
             status: MediaPermissionStatus.denied,
           ),
-          errorMessage: 'Unable to check media permission state.',
+          errorMessage: getL10n().compressUnableCheckPermission,
         ),
       );
     }
@@ -131,7 +132,7 @@ class CompressSessionController extends GetxController {
       _applySession(
         (current) => current.copyWith(
           permissionState: denied,
-          errorMessage: 'Unable to request media permission.',
+          errorMessage: getL10n().compressUnableRequestPermission,
         ),
       );
       return denied;
@@ -191,7 +192,7 @@ class CompressSessionController extends GetxController {
       _applySession(
         (current) => current.copyWith(
           isLoadingInitial: false,
-          errorMessage: 'Unable to load gallery media.',
+          errorMessage: getL10n().compressUnableLoadGallery,
         ),
       );
     }
@@ -228,7 +229,7 @@ class CompressSessionController extends GetxController {
       _applySession(
         (current) => current.copyWith(
           isLoadingMore: false,
-          errorMessage: 'Unable to load more media.',
+          errorMessage: getL10n().compressUnableLoadMore,
         ),
       );
     }
@@ -281,6 +282,7 @@ class CompressSessionController extends GetxController {
       return results;
     }
 
+    final l10n = getL10n();
     _applySession(
       (current) => current.copyWith(
         isCompressing: true,
@@ -289,7 +291,7 @@ class CompressSessionController extends GetxController {
           phase: CompressionPhase.running,
           processedCount: 0,
           totalCount: assets.length,
-          label: 'Preparing compression',
+          label: l10n.compressPreparingCompression,
           currentFileProgress: 0,
         ),
         clearErrorMessage: true,
@@ -300,14 +302,15 @@ class CompressSessionController extends GetxController {
     final output = <CompressedMediaResultEntity>[];
     for (var index = 0; index < assets.length; index++) {
       final asset = assets[index];
+      final fileLabel = asset.title ?? '${index + 1}';
       _applySession(
         (current) => current.copyWith(
           progress: CompressionProgressEntity(
             phase: CompressionPhase.running,
             processedCount: index,
             totalCount: assets.length,
-            label: 'Compressing ${asset.title ?? 'item ${index + 1}'}',
-            currentFileLabel: asset.title ?? 'Item ${index + 1}',
+            label: getL10n().compressCompressingItem(fileLabel),
+            currentFileLabel: fileLabel,
             currentFileProgress: 0,
           ),
         ),
@@ -323,9 +326,8 @@ class CompressSessionController extends GetxController {
                 phase: CompressionPhase.running,
                 processedCount: index,
                 totalCount: assets.length,
-                label:
-                    'Compressing ${asset.title ?? 'item ${index + 1}'} • ${(progress * 100).round()}%',
-                currentFileLabel: asset.title ?? 'Item ${index + 1}',
+                label: getL10n().compressCompressingItem(fileLabel),
+                currentFileLabel: fileLabel,
                 currentFileProgress: progress,
               ),
             ),
@@ -343,9 +345,9 @@ class CompressSessionController extends GetxController {
             totalCount: assets.length,
             label:
                 index + 1 == assets.length
-                    ? 'Finalizing compression'
-                    : 'Compressed ${index + 1} of ${assets.length}',
-            currentFileLabel: asset.title ?? 'Item ${index + 1}',
+                    ? getL10n().compressFinalizingCompression
+                    : getL10n().compressCompressedCount(index + 1, assets.length),
+            currentFileLabel: fileLabel,
             currentFileProgress: 1,
           ),
         ),
@@ -367,6 +369,7 @@ class CompressSessionController extends GetxController {
       await _refreshVisibleMediaAfterCompression(preserveAssets: assets);
     }
 
+    final doneL10n = getL10n();
     _applySession(
       (current) => current.copyWith(
         isCompressing: false,
@@ -377,19 +380,20 @@ class CompressSessionController extends GetxController {
           totalCount: assets.length,
           label:
               successCount == output.length
-                  ? 'Compression complete'
-                  : 'Compressed $successCount of ${output.length} items',
+                  ? doneL10n.compressCompressionComplete
+                  : doneL10n.compressCompressedSummary(successCount, output.length),
           currentFileProgress: 1,
         ),
         errorMessage:
             successCount == 0
-                ? 'Unable to compress the selected media.'
-                : (failedCount > 0
-                    ? '$failedCount item(s) could not be compressed.'
-                    : null),
+                ? doneL10n.compressUnableCompressSelected
+                : (failedCount > 0 ? doneL10n.compressFailedCount(failedCount) : null),
         successMessage:
             successCount > 0
-                ? 'Saved compressed copies to gallery. Total saved: ${BytesFormatter.humanize(savedBytes)} across $successCount item(s).'
+                ? doneL10n.compressSuccessMessage(
+                    BytesFormatter.humanize(savedBytes),
+                    successCount,
+                  )
                 : null,
       ),
     );

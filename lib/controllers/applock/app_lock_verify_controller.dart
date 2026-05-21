@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 import 'app_lock_controller.dart';
@@ -35,7 +36,7 @@ class AppLockVerifyController extends GetxController {
         Get.back(result: true);
       } else {
         pinDigits.value = '';
-        errorMessage.value = 'Incorrect PIN. Try again.';
+        errorMessage.value = AppLocalizations.of(Get.context!).appLockIncorrectPin;
       }
     } finally {
       busy.value = false;

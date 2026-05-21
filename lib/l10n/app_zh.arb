@@ -1,0 +1,642 @@
+{
+  "@@locale": "zh",
+  "appTitle": "清理应用",
+  "commonBack": "返回",
+  "commonCancel": "取消",
+  "commonConfirm": "确认",
+  "commonOk": "确定",
+  "commonDone": "完成",
+  "commonDelete": "删除",
+  "commonShare": "分享",
+  "commonSave": "保存",
+  "commonTryAgain": "重试",
+  "commonContinue": "继续",
+  "commonSettings": "设置",
+  "navClean": "清理",
+  "navContacts": "联系人",
+  "navCompress": "压缩",
+  "navMore": "更多",
+  "settingsTitle": "设置",
+  "settingsSectionUpgrade": "升级",
+  "settingsRestorePurchases": "恢复购买",
+  "settingsSectionPrivatePhoto": "私密照片设置",
+  "settingsPrivateVault": "私密保险库",
+  "settingsUsePasscode": "使用密码",
+  "settingsRemoveAfterImport": "导入后删除",
+  "settingsSectionCustom": "自定义设置",
+  "settingsPhotoWidget": "照片小组件",
+  "settingsFaceId": "面容 ID",
+  "settingsLanguages": "语言",
+  "settingsSectionOthers": "其他",
+  "settingsGetHelp": "获取帮助",
+  "settingsRate5Stars": "五星好评",
+  "settingsShareWithFriends": "分享给朋友",
+  "settingsAboutUs": "关于我们",
+  "settingsThemeMode": "主题模式",
+  "settingsAppLock": "应用锁",
+  "languagePickerTitle": "语言",
+  "languageEnglish": "英语",
+  "languageUrdu": "乌尔都语",
+  "languageChinese": "中文",
+  "languageArabic": "阿拉伯语",
+  "languageSpanish": "西班牙语",
+  "cleanerAppTitle": "清理器",
+  "cleanerPro": "专业版",
+  "cleanerSortLargestFirst": "最大优先",
+  "cleanerSortSmallestFirst": "最小优先",
+  "cleanerSortNewestDateFirst": "最新日期",
+  "cleanerSortOldestDateFirst": "最早日期",
+  "cleanerAnalyzingLibrary": "正在分析您的图库",
+  "cleanerUnknownError": "未知错误",
+  "cleanerScanPreparing": "准备中…",
+  "cleanerScanLoadingLibrary": "正在加载图库…",
+  "cleanerScanFindingDuplicates": "正在查找重复文件…",
+  "cleanerScanFindingSimilar": "正在查找相似照片…",
+  "cleanerScanDone": "完成",
+  "cleanerScanSomethingWentWrong": "出了点问题",
+  "cleanerCategorySimilarPhotos": "相似照片",
+  "cleanerCategoryDuplicatePhotos": "重复照片",
+  "cleanerCategorySimilarVideos": "相似视频",
+  "cleanerCategoryVideos": "视频",
+  "cleanerCategoryScreenshots": "截图",
+  "cleanerCategorySimilarLivePhotos": "相似实况照片",
+  "cleanerOptimizeYourStorage": "优化您的存储",
+  "cleanerAiPhotoEditor": "AI 照片编辑",
+  "cleanerImprovePhotoQuality": "提升照片质量",
+  "cleanerPickPhotoToEnhance": "选择要增强的照片",
+  "cleanerPickOldPhotoToRestore": "选择要修复的旧照片",
+  "cleanerPhotosAccessTitle": "照片访问",
+  "cleanerPhotosAccessBlocked": "照片访问被阻止。请在设置中启用。",
+  "cleanerPhotosAccessRequest": "请允许访问照片库以选择图片。",
+  "cleanerCouldNotOpenImage": "无法打开该图片。",
+  "cleanerCrop": "裁剪",
+  "cleanerPhotoSavedToGallery": "照片已保存到图库。",
+  "cleanerCouldNotSaveToGallery": "无法保存到图库：{error}",
+  "@cleanerCouldNotSaveToGallery": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerAiPhotoEditorTitle": "AI 照片编辑",
+  "cleanerChooseFromLibrary": "从图库选择",
+  "cleanerPhotoEnhance": "照片增强",
+  "cleanerBoostQuality": "提升质量",
+  "cleanerFixOldPhoto": "修复旧照片",
+  "cleanerRestoreOldMemories": "恢复旧日回忆",
+  "cleanerNoPhotosFound": "未找到照片",
+  "cleanerStorageUsed": "已用:",
+  "cleanerStorageUnavailable": "—",
+  "cleanerBest": "最佳",
+  "cleanerDeleteSelected": "删除所选",
+  "cleanerGroupNumber": "组 {number}",
+  "@cleanerGroupNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerDeletedTitle": "已删除",
+  "cleanerDeletedMessage": "{count, plural, one{1 项 · 释放 {size}} other{{count} 项 · 释放 {size}}}",
+  "@cleanerDeletedMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerSomeItemsNotRemoved": "部分项目未删除",
+  "cleanerSomeItemsFailed": "{count} 失败",
+  "@cleanerSomeItemsFailed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerNothingDeleted": "未删除任何内容",
+  "cleanerNothingDeletedHint": "请重试或检查照片权限。",
+  "cleanerSelectedSummary": "已选 {count} · {size}",
+  "@cleanerSelectedSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsTitle": "联系人",
+  "contactsAccessNeeded": "需要联系人访问权限",
+  "contactsAccessBody": "允许访问以查看数量、列表和备份。",
+  "contactsOpenSettings": "打开设置",
+  "contactsBackup": "联系人备份",
+  "contactsDuplicateContacts": "重复联系人",
+  "contactsIncompleteContacts": "不完整联系人",
+  "contactsNamesNumbersEmails": "姓名。号码。邮箱。",
+  "contactsIncompleteDescription": "每个联系人需有姓名、号码和邮箱。",
+  "contactsNoName": "无姓名",
+  "contactsMissingPrefix": "缺少：{fields}",
+  "@contactsMissingPrefix": {
+    "placeholders": {
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsMissingName": "姓名",
+  "contactsMissingNumber": "号码",
+  "contactsMissingEmail": "邮箱",
+  "contactsSelect": "选择",
+  "contactsSearchHint": "按姓名、号码或邮箱搜索",
+  "contactsNoSearchResults": "没有匹配的联系人。",
+  "contactsNoDuplicates": "未找到重复组。",
+  "contactsSameNumber": "相同号码",
+  "contactsSameName": "相同姓名",
+  "contactsSharedNumber": "共享号码",
+  "contactsExportTitle": "导出联系人",
+  "contactsExportBody": "创建单个 .vcf 文件。",
+  "contactsExportPreparing": "准备中…",
+  "contactsExportAllShare": "全部导出并分享",
+  "contactsExportSubsetHint": "也可从列表选择后分享。",
+  "contactsShareCount": "{count, plural, one{分享 1 个联系人} other{分享 {count} 个联系人}}",
+  "@contactsShareCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactsGroupCount": "{count, plural, one{1 个联系人} other{{count} 个联系人}}",
+  "@contactsGroupCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressTitle": "压缩",
+  "compressVideoSaveUpTo": "压缩视频最多可节省",
+  "compressSort": "排序",
+  "compressRefresh": "刷新",
+  "compressClear": "清除",
+  "compressNext": "下一步",
+  "compressButton": "压缩",
+  "compressNoVideosFound": "未找到视频",
+  "compressNoVideosBody": "授权后视频将显示在此处。",
+  "compressReload": "重新加载",
+  "compressMediaAccessBlocked": "媒体访问被阻止",
+  "compressAllowMediaAccess": "允许媒体访问",
+  "compressMediaBlockedBody": "请在设置中启用图库访问。",
+  "compressMediaRequestBody": "压缩前需要图库访问权限。",
+  "compressAllowAccess": "允许访问",
+  "compressRetry": "重试",
+  "compressNoMediaSelected": "未选择媒体",
+  "compressNoMediaSelectedBody": "返回并至少选择一个视频。",
+  "compressQuality": "质量",
+  "compressCompressionResults": "压缩结果",
+  "compressQualityLow": "低",
+  "compressQualityMedium": "中",
+  "compressQualityHigh": "高",
+  "compressQualitySavings": "压缩 {percent}%",
+  "@compressQualitySavings": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSelectMediaTitle": "选择要压缩的媒体",
+  "compressSelectMediaBody": "选择一个或多个文件。",
+  "compressManageAccess": "管理访问",
+  "compressVisibleItems": "可见项目",
+  "compressSelected": "已选",
+  "compressSelectedSize": "已选大小",
+  "compressOriginal": "原始",
+  "compressCompressed": "已压缩",
+  "compressEstimatedSavings": "预计节省：{size}",
+  "@compressEstimatedSavings": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedVideo": "所选视频",
+  "compressSelectedImage": "所选图片",
+  "compressCompressedFile": "压缩文件",
+  "compressFromSize": "从 {size}",
+  "@compressFromSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressToSize": "到 {size}",
+  "@compressToSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSavedSize": "节省 {size}",
+  "@compressSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCompressionProgress": "压缩进度",
+  "compressCurrentFile": "当前文件：{label}",
+  "@compressCurrentFile": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCurrentFileProgress": "进度：{percent}%",
+  "@compressCurrentFileProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressProgressDone": "{processed}/{total} 完成 · 剩余 {remaining}",
+  "@compressProgressDone": {
+    "placeholders": {
+      "processed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressProgressButton": "{percent}% · 剩余 {remaining}",
+  "@compressProgressButton": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedCount": "{count, plural, one{已选 1 项} other{已选 {count} 项}}",
+  "@compressSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressItemsSelected": "{count, plural, one{1 项} other{{count} 项}}",
+  "@compressItemsSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCheckPermission": "无法检查权限。",
+  "compressUnableRequestPermission": "无法请求权限。",
+  "compressUnableLoadGallery": "无法加载图库。",
+  "compressUnableLoadMore": "无法加载更多。",
+  "compressReadyToCompress": "准备压缩",
+  "compressPreparingCompression": "准备压缩",
+  "compressCompressingItem": "正在压缩 {label}",
+  "@compressCompressingItem": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressFinalizingCompression": "完成压缩",
+  "compressCompressedCount": "{done}/{total}",
+  "@compressCompressedCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressCompressionComplete": "压缩完成",
+  "compressCompressedSummary": "已压缩 {success}/{total}",
+  "@compressCompressedSummary": {
+    "placeholders": {
+      "success": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCompressSelected": "无法压缩所选媒体。",
+  "compressFailedCount": "{count, plural, one{1 项失败} other{{count} 项失败}}",
+  "@compressFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSuccessMessage": "已保存。共节省 {size}，{count, plural, one{1 项} other{{count} 项}}",
+  "@compressSuccessMessage": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressOriginalUnavailable": "原文件不可用。",
+  "compressCompressionFailed": "压缩失败：{error}",
+  "@compressCompressionFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreToolsTitle": "更多工具",
+  "morePrivatePhotos": "私密照片",
+  "morePrivatePhotosSubtitle": "保护您的私密照片",
+  "moreChargingAnimation": "充电动画",
+  "moreChargingAnimationSubtitle": "自定义充电界面",
+  "moreCleaningGuide": "清理指南",
+  "moreCleaningGuideSubtitle": "学习安全清理",
+  "guideTitle": "清理指南",
+  "guideSectionApps": "应用",
+  "guideSectionCache": "应用缓存",
+  "guideOffloadUnusedApps": "卸载未用应用",
+  "guideDeleteUnusedApps": "删除未用应用",
+  "guideFlowTitle": "卸载未用应用",
+  "guideStepOpenSettings": "打开设置",
+  "guideStepClickGeneral": "点击通用",
+  "guideStepTapIphoneStorage": "轻点 iPhone 储存空间",
+  "guideStepEnableOffload": "启用卸载未用应用",
+  "guideFlowNext": "下一步",
+  "guideFlowClose": "关闭指南",
+  "guideClean": "清理",
+  "chargingAnimationTitle": "充电动画",
+  "chargingViewAnimation": "查看动画",
+  "chargingBrowseAnimations": "浏览动画",
+  "chargingAllowLockScreenOnCharge": "充电时允许锁屏",
+  "chargingLockScreenSetup": "锁屏设置",
+  "chargingChooseAnimation": "选择动画",
+  "chargingNoAnimationSelected": "未选择动画",
+  "chargingChooseAnimationAppBar": "选择动画",
+  "chargingApplyAnimation": "应用动画",
+  "chargingBatteryPercent": "{level}%",
+  "@chargingBatteryPercent": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "chargingHeadlineCharging": "正在充电",
+  "chargingHeadlineFullyCharged": "已充满",
+  "chargingHeadlineDisconnected": "未连接",
+  "chargingHeadlineBatteryStatus": "电池状态",
+  "chargingHeadlinePowerConnected": "已接通电源",
+  "chargingSubtitleCharging": "设备正在充电。",
+  "chargingSubtitleFullyCharged": "可随时拔掉电源。",
+  "chargingSubtitleDisconnected": "插入电源以查看动画。",
+  "chargingSubtitleUnknown": "此设备无法获取电池状态。",
+  "chargingSubtitleConnectedNotCharging": "已接通但未在充电。",
+  "chargingAppliedTitle": "已应用",
+  "chargingAppliedMessage": "{title} 现为充电动画。",
+  "@chargingAppliedMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "chargingAnimationSemantics": "充电动画",
+  "chargingMissingLottieAsset": "缺少 Lottie 资源",
+  "chargingStepApplyAnimation": "从浏览应用动画。",
+  "chargingStepOpenWhileCharging": "充电时打开应用。",
+  "chargingStepIosNoLockScreen": "iPhone 不支持锁屏自动显示。",
+  "chargingStepBrowsePreviewApply": "浏览 → 预览 → 应用",
+  "chargingStepAllowLockScreen": "点击下方“充电时允许锁屏”。",
+  "chargingStepLockAndPlugIn": "锁定手机并插入充电器。",
+  "chargingStepOemSettings": "三星/小米/OPPO：允许后台和锁屏显示。",
+  "chargingPlatformNoteIos": "iPhone 不支持锁屏动画。充电时打开应用查看。",
+  "chargingPlatformNoteAndroid": "Android 上插入充电器即可。可在设置中启用锁屏显示。",
+  "chargingAnimNeonBattery": "霓虹电池",
+  "chargingAnimCircularCharge": "环形充电",
+  "chargingAnimCyberpunk": "赛博朋克",
+  "chargingAnimGlowingEnergy": "发光能量",
+  "chargingAnimMinimalBattery": "极简电池",
+  "chargingAnimFuturisticPulse": "未来脉冲",
+  "chargingAnimLiquidWave": "液体波浪",
+  "chargingAnimAuroraRing": "极光环",
+  "appLockLocked": "应用已锁定",
+  "appLockEnterPinOrBiometrics": "输入 PIN 或使用生物识别。",
+  "appLockSetupTitle": "设置应用锁",
+  "appLockCreatePin": "创建 4 位 PIN",
+  "appLockConfirmPin": "确认 PIN",
+  "appLockCreatePinHint": "用于解锁应用。",
+  "appLockConfirmPinHint": "再次输入相同 PIN。",
+  "appLockEnableBiometric": "启用面容/指纹",
+  "appLockBiometricSubtitle": "无需输入 PIN 即可解锁",
+  "appLockContinue": "继续",
+  "appLockFinishSetup": "完成设置",
+  "appLockTurnOffTitle": "关闭应用锁",
+  "appLockEnterPinToTurnOff": "输入 PIN 以关闭",
+  "appLockVerifyPinToDisable": "验证当前 PIN。",
+  "appLockTooManyAttempts": "尝试次数过多。",
+  "appLockIncorrectPin": "PIN 不正确。",
+  "appLockPinsDoNotMatch": "PIN 不匹配。",
+  "appLockSetupFailed": "设置失败",
+  "appLockCouldNotDisable": "无法关闭",
+  "appLockSnackbarTitle": "应用锁",
+  "appLockBiometricReason": "解锁清理应用",
+  "photoWidgetTitle": "照片小组件",
+  "photoWidgetShowOnHomeScreen": "在主屏幕显示",
+  "photoWidgetActive": "小组件已启用",
+  "photoWidgetTurnOnAfterImport": "导入后开启",
+  "photoWidgetImportFirst": "请先导入照片",
+  "photoWidgetMyAlbums": "我的相册",
+  "photoWidgetWidgetStyle": "小组件样式",
+  "photoWidgetCreateAlbum": "创建相册",
+  "photoWidgetEnterAlbumName": "输入相册名称：",
+  "photoWidgetWidgetSource": "小组件来源",
+  "photoWidgetAlbum": "相册",
+  "photoWidgetAlbumNotFound": "未找到相册",
+  "photoWidgetUseForHomeScreen": "用于主屏幕小组件",
+  "photoWidgetActiveAlbum": "当前小组件相册",
+  "photoWidgetAddNewPhotos": "添加新照片",
+  "photoWidgetImportPhotos": "导入照片",
+  "photoWidgetImportPhotosTitle": "导入照片",
+  "photoWidgetDoneCount": "完成 ({count})",
+  "@photoWidgetDoneCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetSelectUpTo": "最多选择 {max} 张。",
+  "@photoWidgetSelectUpTo": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetGrid": "网格",
+  "photoWidgetSlideshow": "幻灯片",
+  "photoWidgetPreview": "预览",
+  "photoWidgetGridDescription": "主屏幕显示 2×2 网格。",
+  "photoWidgetSlideshowDescription": "定时轮播（至少 15 秒）。",
+  "photoWidgetRenameAlbum": "重命名相册",
+  "photoWidgetDeleteAlbumTitle": "删除相册？",
+  "photoWidgetDeleteAlbumBody": "将从小组件缓存中移除。",
+  "photoWidgetAddWidgetTitle": "添加照片小组件",
+  "photoWidgetHelpAndroid": "1. 在相册中导入照片\n2. 长按主屏幕 → 小组件\n3. 找到清理应用 → 照片小组件\n4. 拖到主屏幕\n\n或点击下方固定。",
+  "photoWidgetHelpIos": "1. 长按主屏幕\n2. 点 +\n3. 搜索清理应用\n4. 选择大小并添加\n\n注：iOS 按时间线刷新。",
+  "photoWidgetPinWidget": "固定小组件",
+  "photoWidgetPinWidgetButton": "固定到主屏幕",
+  "photoWidgetPinFollowPrompt": "按系统提示操作。",
+  "photoWidgetPinManualSteps": "若无法固定请按上方步骤。",
+  "photoWidgetHelp": "帮助",
+  "photoWidgetDefaultAlbumName": "相册 {number}",
+  "@photoWidgetDefaultAlbumName": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetPermissionRequired": "需要权限",
+  "photoWidgetAllowPhotoAccess": "允许照片访问以导入。",
+  "photoWidgetLimitReached": "已达上限",
+  "photoWidgetAlbumFull": "相册已满（最多 30 张）。",
+  "photoWidgetImportLimit": "一次最多导入 {max} 张。",
+  "@photoWidgetImportLimit": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetImportFailed": "导入失败",
+  "photoWidgetCouldNotSave": "无法保存所选照片。",
+  "photoWidgetPartialImport": "部分导入",
+  "photoWidgetPartialImportMessage": "已导入 {imported}/{total} 张。",
+  "@photoWidgetPartialImportMessage": {
+    "placeholders": {
+      "imported": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetAddToHomeTitle": "添加到主屏幕",
+  "photoWidgetAddToHomeBody": "长按主屏幕 → 小组件，或点帮助。",
+  "photoWidgetUpdated": "小组件已更新",
+  "photoWidgetUpdatedBody": "请刷新主屏幕小组件。",
+  "photoWidgetPinSnackbarTitle": "小组件",
+  "vaultPrivatePhotos": "私密照片",
+  "vaultMediaCount": "{photos, plural, one{1 张照片} other{{photos} 张照片}}, {videos, plural, one{1 个视频} other{{videos} 个视频}}",
+  "@vaultMediaCount": {
+    "placeholders": {
+      "photos": {
+        "type": "int"
+      },
+      "videos": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSelectAll": "全选",
+  "vaultDeleteSelected": "删除所选",
+  "vaultAddPhotos": "添加照片",
+  "vaultCouldNotOpen": "无法打开私密照片",
+  "vaultGoBack": "返回",
+  "vaultEmptyState": "选择照片开始导入。\n将安全锁定。",
+  "vaultTakePhotoOrVideo": "拍摄照片或视频",
+  "vaultImportPhotosOrVideos": "导入照片或视频",
+  "vaultAlbums": "相册",
+  "vaultNewAlbum": "新建相册",
+  "vaultAlbumNameHint": "相册名称",
+  "vaultCreate": "创建",
+  "vaultSettings": "保险库设置",
+  "vaultRemoveAfterImport": "导入后删除",
+  "vaultRemoveAfterImportSubtitle": "导入成功后从图库删除原文件",
+  "vaultUseFaceIdFingerprint": "使用面容/指纹",
+  "vaultSecurity": "安全",
+  "vaultLockNow": "立即锁定保险库",
+  "vaultChangePin": "更改 PIN",
+  "vaultCreatePin": "创建保险库 PIN",
+  "vaultConfirmPin": "确认保险库 PIN",
+  "vaultCreatePinSubtitle": "4 位 PIN 保护私密照片",
+  "vaultConfirmPinSubtitle": "再次输入相同 PIN",
+  "vaultEnableBiometric": "启用面容/指纹",
+  "vaultUnlockTitle": "输入密码解锁",
+  "vaultUnlockSubtitle": "输入 4 位保险库 PIN",
+  "vaultUnlockLocked": "{seconds} 秒后重试",
+  "@vaultUnlockLocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultPinMustBeFourDigits": "保险库 PIN 须为 4 位",
+  "vaultEnterCurrentPin": "输入当前 PIN",
+  "vaultEnterNewPin": "输入新 PIN",
+  "vaultConfirmNewPin": "确认新 PIN",
+  "vaultPinsDoNotMatch": "PIN 不匹配。",
+  "vaultCurrentPinIncorrect": "当前 PIN 错误",
+  "vaultPinsDoNotMatchShort": "PIN 不匹配",
+  "vaultPinChanged": "PIN 已更改",
+  "vaultIncorrectPin": "PIN 错误",
+  "vaultPermissionTitle": "权限",
+  "vaultPhotoLibraryRequired": "需要照片库访问",
+  "vaultImportTitle": "导入",
+  "vaultImportedCount": "{count, plural, one{已导入 1 项} other{已导入 {count} 项}}",
+  "@vaultImportedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSnackbarTitle": "保险库",
+  "vaultBiometricReason": "解锁私密保险库",
+  "permissionLimitedLibraryAccess": "有限图库访问",
+  "permissionAllowPhotosVideos": "允许照片和视频",
+  "permissionLimitedBody": "可管理可见项或在设置中授予完全访问。",
+  "permissionFullBody": "需要访问以扫描重复项和视频。",
+  "permissionManageLibraryAccess": "管理图库访问",
+  "permissionRefreshAccess": "刷新访问",
+  "permissionOpenSettings": "打开设置"
+}

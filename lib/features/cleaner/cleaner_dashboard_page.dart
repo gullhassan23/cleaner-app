@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cleaner_app/controllers/cleaner/cleaner_controller.dart';
 import 'package:cleaner_app/features/cleaner/DashboardAppbar.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 
 import 'package:cleaner_app/features/cleaner/result_scroll.dart';
 
@@ -45,7 +46,9 @@ class CleanerDashboardPage extends GetView<CleanerController> {
           if (controller.phase.value == CleanerScanPhase.failed) {
             return DashboardAppbar(
               child: _ErrorBody(
-                message: controller.lastError.value ?? 'Unknown error',
+                message:
+                    controller.lastError.value ??
+                    context.l10n.cleanerUnknownError,
                 onRetry: controller.startFullScan,
               ),
               onSettings: () => Get.toNamed<void>(AppRoutes.settings),
@@ -77,6 +80,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
       context: context,
       showDragHandle: true,
       builder: (ctx) {
+        final l10n = ctx.l10n;
         final current = controller.dashboardSort.value;
         return SafeArea(
           child: Column(
@@ -84,7 +88,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ListTile(
-                title: const Text('Largest first'),
+                title: Text(l10n.cleanerSortLargestFirst),
                 trailing:
                     current == CleanerDashboardSort.largestFirst
                         ? const Icon(Icons.check_rounded, color: kDashBlue)
@@ -93,7 +97,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                     () => Navigator.pop(ctx, CleanerDashboardSort.largestFirst),
               ),
               ListTile(
-                title: const Text('Smallest first'),
+                title: Text(l10n.cleanerSortSmallestFirst),
                 trailing:
                     current == CleanerDashboardSort.smallestFirst
                         ? const Icon(Icons.check_rounded, color: kDashBlue)
@@ -103,7 +107,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                         Navigator.pop(ctx, CleanerDashboardSort.smallestFirst),
               ),
               ListTile(
-                title: const Text('Newest date first'),
+                title: Text(l10n.cleanerSortNewestDateFirst),
                 trailing:
                     current == CleanerDashboardSort.newestDateFirst
                         ? const Icon(Icons.check_rounded, color: kDashBlue)
@@ -115,7 +119,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                     ),
               ),
               ListTile(
-                title: const Text('Oldest date first'),
+                title: Text(l10n.cleanerSortOldestDateFirst),
                 trailing:
                     current == CleanerDashboardSort.oldestDateFirst
                         ? const Icon(Icons.check_rounded, color: kDashBlue)
@@ -157,7 +161,7 @@ class _ScanningBody extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Analyzing your library',
+                context.l10n.cleanerAnalyzingLibrary,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
@@ -234,7 +238,7 @@ class _ErrorBody extends StatelessWidget {
                 foregroundColor: Colors.white,
               ),
               onPressed: onRetry,
-              child: const Text('Try again'),
+              child: Text(context.l10n.commonTryAgain),
             ),
           ],
         ),

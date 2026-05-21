@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/compress/compress_entities.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class CompressionProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(18),
@@ -18,7 +20,7 @@ class CompressionProgressCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Compression progress',
+                    l10n.compressCompressionProgress,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -32,7 +34,10 @@ class CompressionProgressCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              progress.label,
+              progress.label.isEmpty &&
+                      progress.phase == CompressionPhase.idle
+                  ? l10n.compressReadyToCompress
+                  : progress.label,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
@@ -50,7 +55,7 @@ class CompressionProgressCard extends StatelessWidget {
             const SizedBox(height: 10),
             if (progress.currentFileLabel != null) ...[
               Text(
-                'Current file: ${progress.currentFileLabel}',
+                l10n.compressCurrentFile(progress.currentFileLabel!),
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 6),
@@ -65,7 +70,7 @@ class CompressionProgressCard extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                'Current file progress: ${progress.currentFilePercent}%',
+                l10n.compressCurrentFileProgress(progress.currentFilePercent),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
@@ -73,7 +78,11 @@ class CompressionProgressCard extends StatelessWidget {
               const SizedBox(height: 8),
             ],
             Text(
-              '${progress.processedCount} of ${progress.totalCount} done • ${progress.remainingCount} remaining',
+              l10n.compressProgressDone(
+                progress.processedCount,
+                progress.totalCount,
+                '${progress.remainingCount}',
+              ),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

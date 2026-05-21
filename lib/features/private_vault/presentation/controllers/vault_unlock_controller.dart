@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 import '../../data/datasources/vault_auth_service.dart';
@@ -63,7 +64,7 @@ class VaultUnlockController extends GetxController {
       final ok = await _verify(pin);
       if (!ok) {
         await _refreshState();
-        errorMessage.value = 'Incorrect PIN';
+        errorMessage.value = AppLocalizations.of(Get.context!).vaultIncorrectPin;
         return;
       }
       _session.unlock();

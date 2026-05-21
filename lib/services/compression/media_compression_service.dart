@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cleaner_app/l10n/l10n_get.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
@@ -31,7 +32,7 @@ class MediaCompressionService {
           originalBytes: asset.fileSize,
           compressedBytes: 0,
           outputPath: '',
-          errorMessage: 'Original file is no longer available.',
+          errorMessage: getL10n().compressOriginalUnavailable,
         );
       }
 
@@ -59,7 +60,7 @@ class MediaCompressionService {
         originalBytes: asset.fileSize,
         compressedBytes: 0,
         outputPath: '',
-        errorMessage: 'Compression failed: $error',
+        errorMessage: getL10n().compressCompressionFailed('$error'),
       );
     }
   }
@@ -104,7 +105,7 @@ class MediaCompressionService {
         originalBytes: asset.fileSize,
         compressedBytes: 0,
         outputPath: '',
-        errorMessage: 'Image compression returned no file.',
+        errorMessage: getL10n().compressUnableCompressSelected,
       );
     }
 
@@ -164,7 +165,7 @@ class MediaCompressionService {
           originalBytes: asset.fileSize,
           compressedBytes: 0,
           outputPath: '',
-          errorMessage: 'Video compression returned no file.',
+          errorMessage: getL10n().compressUnableCompressSelected,
         );
       }
 
@@ -198,7 +199,7 @@ class MediaCompressionService {
         originalBytes: asset.fileSize,
         compressedBytes: 0,
         outputPath: '',
-        errorMessage: 'Video compression failed: $error',
+        errorMessage: getL10n().compressCompressionFailed('$error'),
       );
     } finally {
       progressSubscription?.unsubscribe();

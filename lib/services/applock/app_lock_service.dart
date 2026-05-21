@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
@@ -81,8 +82,12 @@ class AppLockService extends GetxService {
       final supported = await _localAuth.isDeviceSupported();
       if (!can && !supported) return false;
 
+      final ctx = Get.context;
+      final reason = ctx != null
+          ? AppLocalizations.of(ctx).appLockBiometricReason
+          : 'Unlock Cleaner App';
       return await _localAuth.authenticate(
-        localizedReason: 'Unlock Cleaner App',
+        localizedReason: reason,
         options: const AuthenticationOptions(
           stickyAuth: true,
           biometricOnly: true,

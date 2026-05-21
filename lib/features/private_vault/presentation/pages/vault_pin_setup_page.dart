@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,14 +10,15 @@ class VaultPinSetupPage extends GetView<VaultPinSetupController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Obx(
       () => VaultPinScaffold(
         title: controller.setupStep.value == 0
-            ? 'Create Vault PIN'
-            : 'Confirm Vault PIN',
+            ? l10n.vaultCreatePin
+            : l10n.vaultConfirmPin,
         subtitle: controller.setupStep.value == 0
-            ? 'Choose a 4-digit PIN to protect your private photos'
-            : 'Enter the same PIN again',
+            ? l10n.vaultCreatePinSubtitle
+            : l10n.vaultConfirmPinSubtitle,
         filledCount: controller.buffer.value.length,
         onDigit: controller.onDigit,
         onDelete: controller.deleteDigit,
@@ -24,7 +26,7 @@ class VaultPinSetupPage extends GetView<VaultPinSetupController> {
         trailing: controller.setupStep.value == 1
             ? SwitchListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Enable Face ID / fingerprint'),
+                title: Text(l10n.vaultEnableBiometric),
                 value: controller.enableBiometric.value,
                 onChanged: (v) => controller.enableBiometric.value = v,
               )

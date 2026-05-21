@@ -1,4 +1,5 @@
 import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_constants.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,18 +20,18 @@ class CleanPillButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Text(
-                'Clean',
-                style: TextStyle(
+                context.l10n.guideClean,
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: CleanupGuideConstants.iosBlue,
                   letterSpacing: -0.3,
                 ),
               ),
-              SizedBox(width: 2),
-              Icon(
+              const SizedBox(width: 2),
+              const Icon(
                 CupertinoIcons.chevron_forward,
                 size: 14,
                 color: CleanupGuideConstants.iosBlue,

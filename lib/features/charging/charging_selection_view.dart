@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,10 @@ class ChargingSelectionView extends GetView<ChargingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Choose animation'), centerTitle: true),
+      appBar: AppBar(
+        title: Text(context.l10n.chargingChooseAnimationAppBar),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Obx(() {
           final items = controller.catalog;

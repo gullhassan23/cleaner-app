@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,11 +32,21 @@ class PhotoWidgetRepository extends GetxService {
   Future<void> saveConfig(PhotoWidgetConfig config) =>
       _storage.writeConfig(config);
 
+  String _defaultAlbumName(int number) {
+    final ctx = Get.context;
+    if (ctx != null) {
+      return AppLocalizations.of(ctx).photoWidgetDefaultAlbumName(number);
+    }
+    return 'Album $number';
+  }
+
   Future<PhotoWidgetAlbum> createAlbum(String name) async {
     final albums = await loadAlbums();
     final album = PhotoWidgetAlbum(
       id: PhotoWidgetStorageService.newId(),
-      name: name.trim().isEmpty ? 'Album ${albums.length + 1}' : name.trim(),
+      name: name.trim().isEmpty
+          ? _defaultAlbumName(albums.length + 1)
+          : name.trim(),
       createdAtMs: DateTime.now().millisecondsSinceEpoch,
       photos: const [],
       isWidgetSource: albums.isEmpty,

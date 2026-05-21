@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class VaultImportBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
       decoration: BoxDecoration(
@@ -25,19 +27,19 @@ class VaultImportBottomSheet extends StatelessWidget {
         children: [
           _OptionTile(
             icon: Icons.camera_alt_rounded,
-            label: 'Take photo or video',
+            label: l10n.vaultTakePhotoOrVideo,
             onTap: onCamera,
           ),
           const SizedBox(height: 12),
           _OptionTile(
             icon: Icons.photo_library_rounded,
-            label: 'Import photos or videos',
+            label: l10n.vaultImportPhotosOrVideos,
             onTap: onGallery,
           ),
           const SizedBox(height: 16),
           TextButton(
             onPressed: () => Get.back(),
-            child: const Text('Cancel'),
+            child: Text(l10n.commonCancel),
           ),
         ],
       ),

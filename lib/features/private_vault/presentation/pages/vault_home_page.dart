@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +46,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
       child: Row(
@@ -58,16 +60,19 @@ class _Header extends StatelessWidget {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Private Photos',
-                    style: TextStyle(
+                  Text(
+                    l10n.vaultPrivatePhotos,
+                    style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
                       letterSpacing: -0.5,
                     ),
                   ),
                   Text(
-                    '${controller.photoCount.value} Photos, ${controller.videoCount.value} Videos',
+                    l10n.vaultMediaCount(
+                      controller.photoCount.value,
+                      controller.videoCount.value,
+                    ),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontSize: 14,
@@ -99,7 +104,9 @@ class _Header extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      controller.selectionMode.value ? 'Cancel' : 'Select All',
+                      controller.selectionMode.value
+                          ? l10n.commonCancel
+                          : l10n.vaultSelectAll,
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -174,6 +181,7 @@ class _BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Obx(() {
       if (controller.selectionMode.value && controller.selectedIds.isNotEmpty) {
         return Padding(
@@ -184,7 +192,7 @@ class _BottomBar extends StatelessWidget {
               backgroundColor: Colors.red,
               minimumSize: const Size.fromHeight(52),
             ),
-            child: const Text('Delete Selected'),
+            child: Text(l10n.vaultDeleteSelected),
           ),
         );
       }
@@ -201,9 +209,9 @@ class _BottomBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
             ),
           ),
-          child: const Text(
-            'Add Photos',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+          child: Text(
+            l10n.vaultAddPhotos,
+            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
           ),
         ),
       );

@@ -1,4 +1,5 @@
 import 'package:cleaner_app/controllers/cleaner/cleaner_group_sheet_controller.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_sheet_mode.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,11 @@ class CleanerGroupBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final c = Get.find<CleanerGroupSheetController>(tag: tag);
+    final l10n = context.l10n;
     final title =
         c.mode == CleanerSheetMode.duplicates
-            ? 'Duplicate Photos'
-            : 'Similar Photos';
+            ? l10n.cleanerCategoryDuplicatePhotos
+            : l10n.cleanerCategorySimilarPhotos;
 
     return Material(
       color: theme.colorScheme.surface,
@@ -73,7 +75,7 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
                               child: Text(
-                                'Group ${gi + 1}',
+                                l10n.cleanerGroupNumber(gi + 1),
                                 style: theme.textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.w700,
                                   color: theme.colorScheme.onSurfaceVariant,
@@ -143,7 +145,7 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                                                                 vertical: 4,
                                                               ),
                                                           child: Text(
-                                                            'Best',
+                                                            l10n.cleanerBest,
                                                             style: theme
                                                                 .textTheme
                                                                 .labelSmall
@@ -264,7 +266,12 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  '${summary.selectedCount} selected · ${BytesFormatter.humanize(summary.selectedBytes)}',
+                                  l10n.cleanerSelectedSummary(
+                                    summary.selectedCount,
+                                    BytesFormatter.humanize(
+                                      summary.selectedBytes,
+                                    ),
+                                  ),
                                   style: theme.textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -290,7 +297,7 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       )
-                                      : const Text('Delete selected'),
+                                      : Text(l10n.cleanerDeleteSelected),
                             ),
                           ),
                         ],

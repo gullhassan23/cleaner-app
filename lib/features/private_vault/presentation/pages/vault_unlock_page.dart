@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,14 +10,15 @@ class VaultUnlockPage extends GetView<VaultUnlockController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Obx(() {
       final state = controller.authState.value;
       final locked = state?.isLockedOut == true;
       return VaultPinScaffold(
-        title: 'Enter Passcode to unlock',
+        title: l10n.vaultUnlockTitle,
         subtitle: locked
-            ? 'Try again in ${controller.lockCountdown.value}s'
-            : 'Enter your 4-digit vault PIN',
+            ? l10n.vaultUnlockLocked(controller.lockCountdown.value)
+            : l10n.vaultUnlockSubtitle,
         filledCount: controller.buffer.value.length,
         onDigit: controller.onDigit,
         onDelete: controller.deleteDigit,

@@ -1,0 +1,642 @@
+{
+  "@@locale": "ur",
+  "appTitle": "کلینر ایپ",
+  "commonBack": "واپس",
+  "commonCancel": "منسوخ",
+  "commonConfirm": "تصدیق",
+  "commonOk": "ٹھیک",
+  "commonDone": "مکمل",
+  "commonDelete": "حذف",
+  "commonShare": "شیئر",
+  "commonSave": "محفوظ",
+  "commonTryAgain": "دوبارہ کوشش کریں",
+  "commonContinue": "جاری رکھیں",
+  "commonSettings": "ترتیبات",
+  "navClean": "صفائی",
+  "navContacts": "رابطے",
+  "navCompress": "کمپریس",
+  "navMore": "مزید",
+  "settingsTitle": "ترتیبات",
+  "settingsSectionUpgrade": "اپ گریڈ",
+  "settingsRestorePurchases": "خریداریاں بحال کریں",
+  "settingsSectionPrivatePhoto": "نجی فوٹو ترتیبات",
+  "settingsPrivateVault": "نجی والٹ",
+  "settingsUsePasscode": "پاس کوڈ استعمال کریں",
+  "settingsRemoveAfterImport": "درآمد کے بعد ہٹائیں",
+  "settingsSectionCustom": "حسب ضرورت ترتیبات",
+  "settingsPhotoWidget": "فوٹو ویجٹ",
+  "settingsFaceId": "فیس آئی ڈی",
+  "settingsLanguages": "زبانیں",
+  "settingsSectionOthers": "دیگر",
+  "settingsGetHelp": "مدد حاصل کریں",
+  "settingsRate5Stars": "5 ستارے دیں",
+  "settingsShareWithFriends": "دوستوں کے ساتھ شیئر",
+  "settingsAboutUs": "ہمارے بارے میں",
+  "settingsThemeMode": "تھیم موڈ",
+  "settingsAppLock": "ایپ لاک",
+  "languagePickerTitle": "زبانیں",
+  "languageEnglish": "انگریزی",
+  "languageUrdu": "اردو",
+  "languageChinese": "چینی",
+  "languageArabic": "عربی",
+  "languageSpanish": "ہسپانوی",
+  "cleanerAppTitle": "کلینر",
+  "cleanerPro": "پرو",
+  "cleanerSortLargestFirst": "سب سے بڑا پہلے",
+  "cleanerSortSmallestFirst": "سب سے چھوٹا پہلے",
+  "cleanerSortNewestDateFirst": "تازہ ترین تاریخ",
+  "cleanerSortOldestDateFirst": "پرانی تاریخ",
+  "cleanerAnalyzingLibrary": "آپ کی لائبریری کا تجزیہ",
+  "cleanerUnknownError": "نامعلوم خرابی",
+  "cleanerScanPreparing": "تیاری…",
+  "cleanerScanLoadingLibrary": "لائبریری لوڈ ہو رہی ہے…",
+  "cleanerScanFindingDuplicates": "ڈپلیکیٹ فائلیں تلاش…",
+  "cleanerScanFindingSimilar": "مشابہ فوٹوز تلاش…",
+  "cleanerScanDone": "مکمل",
+  "cleanerScanSomethingWentWrong": "کچھ غلط ہو گیا",
+  "cleanerCategorySimilarPhotos": "مشابہ فوٹوز",
+  "cleanerCategoryDuplicatePhotos": "ڈپلیکیٹ فوٹوز",
+  "cleanerCategorySimilarVideos": "مشابہ ویڈیوز",
+  "cleanerCategoryVideos": "ویڈیوز",
+  "cleanerCategoryScreenshots": "اسکرین شاٹس",
+  "cleanerCategorySimilarLivePhotos": "مشابہ لائیو فوٹوز",
+  "cleanerOptimizeYourStorage": "اپنی اسٹوریج بہتر بنائیں",
+  "cleanerAiPhotoEditor": "اے آئی فوٹو ایڈیٹر",
+  "cleanerImprovePhotoQuality": "فوٹو کوالٹی بہتر کریں",
+  "cleanerPickPhotoToEnhance": "بہتر بنانے کے لیے فوٹو منتخب کریں",
+  "cleanerPickOldPhotoToRestore": "بحال کرنے کے لیے پرانی فوٹو",
+  "cleanerPhotosAccessTitle": "فوٹوز تک رسائی",
+  "cleanerPhotosAccessBlocked": "فوٹو رسائی بلاک ہے۔ ترتیبات میں فعال کریں۔",
+  "cleanerPhotosAccessRequest": "تصویر منتخب کرنے کے لیے لائبریری رسائی دیں۔",
+  "cleanerCouldNotOpenImage": "تصویر نہیں کھل سکی۔",
+  "cleanerCrop": "کراپ",
+  "cleanerPhotoSavedToGallery": "فوٹو گیلری میں محفوظ۔",
+  "cleanerCouldNotSaveToGallery": "گیلری میں محفوظ نہیں: {error}",
+  "@cleanerCouldNotSaveToGallery": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerAiPhotoEditorTitle": "اے آئی فوٹو ایڈیٹر",
+  "cleanerChooseFromLibrary": "لائبریری سے منتخب",
+  "cleanerPhotoEnhance": "فوٹو بہتر بنائیں",
+  "cleanerBoostQuality": "کوالٹی بڑھائیں",
+  "cleanerFixOldPhoto": "پرانی فوٹو ٹھیک کریں",
+  "cleanerRestoreOldMemories": "پرانی یادیں بحال کریں",
+  "cleanerNoPhotosFound": "کوئی فوٹو نہیں ملی",
+  "cleanerStorageUsed": "استعمال:",
+  "cleanerStorageUnavailable": "—",
+  "cleanerBest": "بہترین",
+  "cleanerDeleteSelected": "منتخب حذف کریں",
+  "cleanerGroupNumber": "گروپ {number}",
+  "@cleanerGroupNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerDeletedTitle": "حذف ہو گیا",
+  "cleanerDeletedMessage": "{count, plural, one{1 آئٹم · {size} خالی} other{{count} آئٹمز · {size} خالی}}",
+  "@cleanerDeletedMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerSomeItemsNotRemoved": "کچھ آئٹمز نہیں ہٹے",
+  "cleanerSomeItemsFailed": "{count} ناکام",
+  "@cleanerSomeItemsFailed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerNothingDeleted": "کچھ حذف نہیں ہوا",
+  "cleanerNothingDeletedHint": "دوبارہ کوشش کریں یا اجازت چیک کریں۔",
+  "cleanerSelectedSummary": "{count} منتخب · {size}",
+  "@cleanerSelectedSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsTitle": "رابطے",
+  "contactsAccessNeeded": "رابطوں تک رسائی درکار",
+  "contactsAccessBody": "گنتی، فہرستیں اور بیک اپ کے لیے رسائی دیں۔",
+  "contactsOpenSettings": "ترتیبات کھولیں",
+  "contactsBackup": "رابطوں کا بیک اپ",
+  "contactsDuplicateContacts": "ڈپلیکیٹ رابطے",
+  "contactsIncompleteContacts": "نامکمل رابطے",
+  "contactsNamesNumbersEmails": "نام۔ نمبر۔ ای میل۔",
+  "contactsIncompleteDescription": "ہر رابطے میں نام، نمبر اور ای میل ہونا چاہیے۔",
+  "contactsNoName": "بلا نام",
+  "contactsMissingPrefix": "غائب: {fields}",
+  "@contactsMissingPrefix": {
+    "placeholders": {
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsMissingName": "نام",
+  "contactsMissingNumber": "نمبر",
+  "contactsMissingEmail": "ای میل",
+  "contactsSelect": "منتخب",
+  "contactsSearchHint": "نام، نمبر یا ای میل سے تلاش",
+  "contactsNoSearchResults": "کوئی رابطہ نہیں ملا۔",
+  "contactsNoDuplicates": "کوئی ڈپلیکیٹ گروپ نہیں۔",
+  "contactsSameNumber": "ایک ہی نمبر",
+  "contactsSameName": "ایک ہی نام",
+  "contactsSharedNumber": "مشترک نمبر",
+  "contactsExportTitle": "رابطے برآمد کریں",
+  "contactsExportBody": "ایک .vcf فائل بناتا ہے۔",
+  "contactsExportPreparing": "تیاری…",
+  "contactsExportAllShare": "سب برآمد اور شیئر",
+  "contactsExportSubsetHint": "فہرست سے منتخب کر کے بھی شیئر کر سکتے ہیں۔",
+  "contactsShareCount": "{count, plural, one{1 رابطہ شیئر} other{{count} رابطے شیئر}}",
+  "@contactsShareCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactsGroupCount": "{count, plural, one{1 رابطہ} other{{count} رابطے}}",
+  "@contactsGroupCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressTitle": "کمپریس",
+  "compressVideoSaveUpTo": "ویڈیو کمپریس کر کے بچائیں",
+  "compressSort": "ترتیب",
+  "compressRefresh": "تازہ کریں",
+  "compressClear": "صاف",
+  "compressNext": "اگلا",
+  "compressButton": "کمپریس",
+  "compressNoVideosFound": "کوئی ویڈیو نہیں",
+  "compressNoVideosBody": "گیلری رسائی کے بعد ویڈیوز یہاں ظاہر ہوں گی۔",
+  "compressReload": "دوبارہ لوڈ",
+  "compressMediaAccessBlocked": "میڈیا رسائی بلاک",
+  "compressAllowMediaAccess": "میڈیا رسائی دیں",
+  "compressMediaBlockedBody": "ترتیبات میں گیلری رسائی فعال کریں۔",
+  "compressMediaRequestBody": "کمپریس کے لیے گیلری رسائی درکار۔",
+  "compressAllowAccess": "رسائی دیں",
+  "compressRetry": "دوبارہ",
+  "compressNoMediaSelected": "کوئی میڈیا منتخب نہیں",
+  "compressNoMediaSelectedBody": "واپس جائیں اور کم از کم ایک ویڈیو منتخب کریں۔",
+  "compressQuality": "کوالٹی",
+  "compressCompressionResults": "کمپریشن نتائج",
+  "compressQualityLow": "کم",
+  "compressQualityMedium": "درمیانی",
+  "compressQualityHigh": "زیادہ",
+  "compressQualitySavings": "{percent}% کمپریس",
+  "@compressQualitySavings": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSelectMediaTitle": "کمپریس کے لیے میڈیا",
+  "compressSelectMediaBody": "تصاویر/ویڈیوز منتخب کریں۔",
+  "compressManageAccess": "رسائی منظم",
+  "compressVisibleItems": "ظاہر آئٹمز",
+  "compressSelected": "منتخب",
+  "compressSelectedSize": "منتخب سائز",
+  "compressOriginal": "اصل",
+  "compressCompressed": "کمپریسڈ",
+  "compressEstimatedSavings": "تخمینی بچت: {size}",
+  "@compressEstimatedSavings": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedVideo": "منتخب ویڈیو",
+  "compressSelectedImage": "منتخب تصویر",
+  "compressCompressedFile": "کمپریسڈ فائل",
+  "compressFromSize": "{size} سے",
+  "@compressFromSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressToSize": "{size} تک",
+  "@compressToSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSavedSize": "{size} بچایا",
+  "@compressSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCompressionProgress": "کمپریشن پیش رفت",
+  "compressCurrentFile": "موجودہ فائل: {label}",
+  "@compressCurrentFile": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCurrentFileProgress": "پیش رفت: {percent}%",
+  "@compressCurrentFileProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressProgressDone": "{processed} میں سے {total} · {remaining} باقی",
+  "@compressProgressDone": {
+    "placeholders": {
+      "processed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressProgressButton": "{percent}% · {remaining} باقی",
+  "@compressProgressButton": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedCount": "{count, plural, one{1 منتخب} other{{count} منتخب}}",
+  "@compressSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressItemsSelected": "{count, plural, one{1 آئٹم} other{{count} آئٹمز}}",
+  "@compressItemsSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCheckPermission": "اجازت چیک نہیں ہو سکی۔",
+  "compressUnableRequestPermission": "اجازت نہیں مل سکی۔",
+  "compressUnableLoadGallery": "گیلری لوڈ نہیں ہو سکی۔",
+  "compressUnableLoadMore": "مزید لوڈ نہیں ہو سکا۔",
+  "compressReadyToCompress": "کمپریس کے لیے تیار",
+  "compressPreparingCompression": "کمپریشن تیاری",
+  "compressCompressingItem": "کمپریس {label}",
+  "@compressCompressingItem": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressFinalizingCompression": "حتمی کمپریشن",
+  "compressCompressedCount": "{done} میں سے {total}",
+  "@compressCompressedCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressCompressionComplete": "کمپریشن مکمل",
+  "compressCompressedSummary": "{success} میں سے {total} کمپریس",
+  "@compressCompressedSummary": {
+    "placeholders": {
+      "success": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCompressSelected": "منتخب میڈیا کمپریس نہیں ہو سکا۔",
+  "compressFailedCount": "{count, plural, one{1 ناکام} other{{count} ناکام}}",
+  "@compressFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSuccessMessage": "گیلری میں محفوظ۔ کل {size}، {count, plural, one{1 آئٹم} other{{count} آئٹمز}}",
+  "@compressSuccessMessage": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressOriginalUnavailable": "اصل فائل دستیاب نہیں۔",
+  "compressCompressionFailed": "کمپریشن ناکام: {error}",
+  "@compressCompressionFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreToolsTitle": "مزید ٹولز",
+  "morePrivatePhotos": "نجی فوٹوز",
+  "morePrivatePhotosSubtitle": "خفیہ فوٹوز محفوظ کریں",
+  "moreChargingAnimation": "چارجنگ اینیمیشن",
+  "moreChargingAnimationSubtitle": "چارجنگ اسکرین حسب ضرورت",
+  "moreCleaningGuide": "صفائی گائیڈ",
+  "moreCleaningGuideSubtitle": "محفوظ صفائی سیکھیں",
+  "guideTitle": "صفائی گائیڈ",
+  "guideSectionApps": "ایپس",
+  "guideSectionCache": "ایپ کیشے",
+  "guideOffloadUnusedApps": "غیر استعمال ایپس آف لوڈ",
+  "guideDeleteUnusedApps": "غیر استعمال ایپس حذف",
+  "guideFlowTitle": "غیر استعمال ایپس آف لوڈ",
+  "guideStepOpenSettings": "ترتیبات کھولیں",
+  "guideStepClickGeneral": "عام پر کلک",
+  "guideStepTapIphoneStorage": "آئی فون اسٹوریج",
+  "guideStepEnableOffload": "آف لوڈ فعال کریں",
+  "guideFlowNext": "اگلا",
+  "guideFlowClose": "گائیڈ بند کریں",
+  "guideClean": "صفائی",
+  "chargingAnimationTitle": "چارجنگ اینیمیشن",
+  "chargingViewAnimation": "انیمیشن دیکھیں",
+  "chargingBrowseAnimations": "انیمیشنز براؤز",
+  "chargingAllowLockScreenOnCharge": "چارج پر لاک اسکرین",
+  "chargingLockScreenSetup": "لاک اسکرین سیٹ اپ",
+  "chargingChooseAnimation": "انیمیشن منتخب",
+  "chargingNoAnimationSelected": "کوئی اینیمیشن نہیں",
+  "chargingChooseAnimationAppBar": "انیمیشن منتخب",
+  "chargingApplyAnimation": "انیمیشن لاگو",
+  "chargingBatteryPercent": "{level}%",
+  "@chargingBatteryPercent": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "chargingHeadlineCharging": "چارج ہو رہا",
+  "chargingHeadlineFullyCharged": "مکمل چارج",
+  "chargingHeadlineDisconnected": "منقطع",
+  "chargingHeadlineBatteryStatus": "بیٹری کی حالت",
+  "chargingHeadlinePowerConnected": "بجلی منسلک",
+  "chargingSubtitleCharging": "آپ کا آلہ بجلی لے رہا ہے۔",
+  "chargingSubtitleFullyCharged": "جب چاہیں ان پلگ کریں۔",
+  "chargingSubtitleDisconnected": "چارجنگ اینیمیشن کے لیے پلگ ان کریں۔",
+  "chargingSubtitleUnknown": "اس آلہ پر بیٹری دستیاب نہیں۔",
+  "chargingSubtitleConnectedNotCharging": "بجلی منسلک؛ چارج نہیں۔",
+  "chargingAppliedTitle": "لاگو",
+  "chargingAppliedMessage": "{title} اب چارجنگ اینیمیشن ہے۔",
+  "@chargingAppliedMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "chargingAnimationSemantics": "چارجنگ اینیمیشن",
+  "chargingMissingLottieAsset": "Lottie فائل غائب",
+  "chargingStepApplyAnimation": "براؤز سے اینیمیشن لاگو کریں۔",
+  "chargingStepOpenWhileCharging": "چارج کے دوران ایپ کھولیں۔",
+  "chargingStepIosNoLockScreen": "آئی فون پر لاک اسکرین سپورٹ نہیں۔",
+  "chargingStepBrowsePreviewApply": "براؤز → پیش نظارہ → لاگو",
+  "chargingStepAllowLockScreen": "نیچے \"چارج پر لاک اسکرین\" ٹیپ کریں۔",
+  "chargingStepLockAndPlugIn": "فون لاک کریں، چارجر لگائیں۔",
+  "chargingStepOemSettings": "Samsung/Xiaomi/Oppo: پس منظر اجازت دیں۔",
+  "chargingPlatformNoteIos": "آئی فون پر لاک اسکرین اینیمیشن نہیں۔ چارج کے دوران ایپ کھولیں۔",
+  "chargingPlatformNoteAndroid": "اینڈرائیڈ پر چارجر لگائیں۔ ضرورت ہو تو لاک اسکرین فعال کریں۔",
+  "chargingAnimNeonBattery": "نیون بیٹری",
+  "chargingAnimCircularCharge": "سرکلر چارج",
+  "chargingAnimCyberpunk": "سائبرپنک",
+  "chargingAnimGlowingEnergy": "چمکتی توانائی",
+  "chargingAnimMinimalBattery": "کم از کم بیٹری",
+  "chargingAnimFuturisticPulse": "مستقبل کی دھڑکن",
+  "chargingAnimLiquidWave": "مائع لہر",
+  "chargingAnimAuroraRing": "اورورا رنگ",
+  "appLockLocked": "ایپ لاک",
+  "appLockEnterPinOrBiometrics": "PIN یا بایومیٹرکس درج کریں۔",
+  "appLockSetupTitle": "ایپ لاک سیٹ اپ",
+  "appLockCreatePin": "4 ہندسوں کا PIN",
+  "appLockConfirmPin": "PIN تصدیق",
+  "appLockCreatePinHint": "ایپ ان لاک کے لیے استعمال ہوگا۔",
+  "appLockConfirmPinHint": "وہی PIN دوبارہ درج کریں۔",
+  "appLockEnableBiometric": "فیس آئی ڈی / فنگر پرنٹ",
+  "appLockBiometricSubtitle": "بغیر PIN ان لاک",
+  "appLockContinue": "جاری",
+  "appLockFinishSetup": "سیٹ اپ مکمل",
+  "appLockTurnOffTitle": "ایپ لاک بند",
+  "appLockEnterPinToTurnOff": "بند کرنے کے لیے PIN",
+  "appLockVerifyPinToDisable": "موجودہ PIN تصدیق کریں۔",
+  "appLockTooManyAttempts": "بہت زیادہ کوششیں۔",
+  "appLockIncorrectPin": "غلط PIN۔",
+  "appLockPinsDoNotMatch": "PIN مماثل نہیں۔",
+  "appLockSetupFailed": "سیٹ اپ ناکام",
+  "appLockCouldNotDisable": "بند نہیں ہو سکا",
+  "appLockSnackbarTitle": "ایپ لاک",
+  "appLockBiometricReason": "کلینر ایپ ان لاک",
+  "photoWidgetTitle": "فوٹو ویجٹ",
+  "photoWidgetShowOnHomeScreen": "ہوم اسکرین پر دکھائیں",
+  "photoWidgetActive": "ویجٹ فعال",
+  "photoWidgetTurnOnAfterImport": "درآمد کے بعد آن",
+  "photoWidgetImportFirst": "پہلے فوٹوز درآمد کریں",
+  "photoWidgetMyAlbums": "میرے البمز",
+  "photoWidgetWidgetStyle": "ویجٹ سٹائل",
+  "photoWidgetCreateAlbum": "البم بنائیں",
+  "photoWidgetEnterAlbumName": "البم کا نام:",
+  "photoWidgetWidgetSource": "ویجٹ ماخذ",
+  "photoWidgetAlbum": "البم",
+  "photoWidgetAlbumNotFound": "البم نہیں ملا",
+  "photoWidgetUseForHomeScreen": "ہوم اسکرین ویجٹ",
+  "photoWidgetActiveAlbum": "فعال ویجٹ البم",
+  "photoWidgetAddNewPhotos": "نئی فوٹوز",
+  "photoWidgetImportPhotos": "فوٹوز درآمد",
+  "photoWidgetImportPhotosTitle": "فوٹوز درآمد",
+  "photoWidgetDoneCount": "مکمل ({count})",
+  "@photoWidgetDoneCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetSelectUpTo": "زیادہ سے زیادہ {max} فوٹوز۔",
+  "@photoWidgetSelectUpTo": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetGrid": "گرڈ",
+  "photoWidgetSlideshow": "سلائیڈ شو",
+  "photoWidgetPreview": "پیش نظارہ",
+  "photoWidgetGridDescription": "ہوم اسکرین پر 2×2 گرڈ۔",
+  "photoWidgetSlideshowDescription": "ٹائمر پر گھمتا ہے (کم از کم 15 سیکنڈ)۔",
+  "photoWidgetRenameAlbum": "البم کا نام بدلیں",
+  "photoWidgetDeleteAlbumTitle": "البم حذف؟",
+  "photoWidgetDeleteAlbumBody": "ویجٹ کیش سے ہٹ جائیں گی۔",
+  "photoWidgetAddWidgetTitle": "فوٹو ویجٹ شامل",
+  "photoWidgetHelpAndroid": "1. البم میں فوٹوز درآمد\n2. ہوم اسکرین دبائیں → ویجٹس\n3. کلینر ایپ → فوٹو ویجٹ\n4. گھسیٹیں\n\nیا نیچے پن کریں۔",
+  "photoWidgetHelpIos": "1. ہوم اسکرین دبائیں\n2. + بٹن\n3. کلینر ایپ تلاش\n4. سائز اور Add Widget\n\nنوٹ: iOS ٹائم لائن پر ریفریش۔",
+  "photoWidgetPinWidget": "ویجٹ پن",
+  "photoWidgetPinWidgetButton": "ہوم اسکرین پر پن",
+  "photoWidgetPinFollowPrompt": "سسٹم پرامپٹ پر عمل کریں۔",
+  "photoWidgetPinManualSteps": "پن نہ ہو تو اوپر کے مراحل۔",
+  "photoWidgetHelp": "مدد",
+  "photoWidgetDefaultAlbumName": "البم {number}",
+  "@photoWidgetDefaultAlbumName": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetPermissionRequired": "اجازت درکار",
+  "photoWidgetAllowPhotoAccess": "درآمد کے لیے فوٹو رسائی۔",
+  "photoWidgetLimitReached": "حد پہنچی",
+  "photoWidgetAlbumFull": "البم بھرا (زیادہ سے 30)۔",
+  "photoWidgetImportLimit": "ایک وقت میں {max} فوٹوز۔",
+  "@photoWidgetImportLimit": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetImportFailed": "درآمد ناکام",
+  "photoWidgetCouldNotSave": "فوٹوز محفوظ نہیں ہو سکیں۔",
+  "photoWidgetPartialImport": "جزوی درآمد",
+  "photoWidgetPartialImportMessage": "{imported} میں سے {total} درآمد۔",
+  "@photoWidgetPartialImportMessage": {
+    "placeholders": {
+      "imported": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetAddToHomeTitle": "ہوم اسکرین پر ویجٹ",
+  "photoWidgetAddToHomeBody": "ہوم دبائیں → ویجٹس، یا مدد (?)۔",
+  "photoWidgetUpdated": "ویجٹ اپ ڈیٹ",
+  "photoWidgetUpdatedBody": "ہوم اسکرین پر ویجٹ ریفریش کریں۔",
+  "photoWidgetPinSnackbarTitle": "ویجٹ",
+  "vaultPrivatePhotos": "نجی فوٹوز",
+  "vaultMediaCount": "{photos, plural, one{1 فوٹو} other{{photos} فوٹوز}}, {videos, plural, one{1 ویڈیو} other{{videos} ویڈیوز}}",
+  "@vaultMediaCount": {
+    "placeholders": {
+      "photos": {
+        "type": "int"
+      },
+      "videos": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSelectAll": "سب منتخب",
+  "vaultDeleteSelected": "منتخب حذف",
+  "vaultAddPhotos": "فوٹوز شامل",
+  "vaultCouldNotOpen": "نجی فوٹوز نہیں کھلیں",
+  "vaultGoBack": "واپس",
+  "vaultEmptyState": "درآمد شروع کرنے کے لیے فوٹوز منتخب کریں۔\nمحفوظ لاک ہوں گی۔",
+  "vaultTakePhotoOrVideo": "فوٹو یا ویڈیو لیں",
+  "vaultImportPhotosOrVideos": "فوٹوز/ویڈیوز درآمد",
+  "vaultAlbums": "البمز",
+  "vaultNewAlbum": "نیا البم",
+  "vaultAlbumNameHint": "البم کا نام",
+  "vaultCreate": "بنائیں",
+  "vaultSettings": "والٹ ترتیبات",
+  "vaultRemoveAfterImport": "درآمد کے بعد ہٹائیں",
+  "vaultRemoveAfterImportSubtitle": "کامیاب درآمد کے بعد اصل حذف",
+  "vaultUseFaceIdFingerprint": "فیس آئی ڈی / فنگر پرنٹ",
+  "vaultSecurity": "سیکیورٹی",
+  "vaultLockNow": "والٹ لاک",
+  "vaultChangePin": "PIN بدلیں",
+  "vaultCreatePin": "والٹ PIN بنائیں",
+  "vaultConfirmPin": "والٹ PIN تصدیق",
+  "vaultCreatePinSubtitle": "نجی فوٹوز کے لیے 4 ہندسے",
+  "vaultConfirmPinSubtitle": "وہی PIN دوبارہ",
+  "vaultEnableBiometric": "فیس آئی ڈی / فنگر پرنٹ",
+  "vaultUnlockTitle": "ان لاک پاس کوڈ",
+  "vaultUnlockSubtitle": "4 ہندسوں کا والٹ PIN",
+  "vaultUnlockLocked": "{seconds} سیکنڈ بعد",
+  "@vaultUnlockLocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultPinMustBeFourDigits": "والٹ PIN 4 ہندسوں کا",
+  "vaultEnterCurrentPin": "موجودہ PIN",
+  "vaultEnterNewPin": "نیا PIN",
+  "vaultConfirmNewPin": "نیا PIN تصدیق",
+  "vaultPinsDoNotMatch": "PIN مماثل نہیں۔",
+  "vaultCurrentPinIncorrect": "موجودہ PIN غلط",
+  "vaultPinsDoNotMatchShort": "PIN مماثل نہیں",
+  "vaultPinChanged": "PIN تبدیل ہو گیا",
+  "vaultIncorrectPin": "غلط PIN",
+  "vaultPermissionTitle": "اجازت",
+  "vaultPhotoLibraryRequired": "فوٹو لائبریری درکار",
+  "vaultImportTitle": "درآمد",
+  "vaultImportedCount": "{count, plural, one{1 آئٹم} other{{count} آئٹمز}} درآمد",
+  "@vaultImportedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSnackbarTitle": "والٹ",
+  "vaultBiometricReason": "نجی والٹ ان لاک",
+  "permissionLimitedLibraryAccess": "محدود لائبریری رسائی",
+  "permissionAllowPhotosVideos": "فوٹوز اور ویڈیوز",
+  "permissionLimitedBody": "آپ انتظام کر سکتے ہیں یا مکمل رسائی دیں۔",
+  "permissionFullBody": "ڈپلیکیٹ اور ویڈیوز کے لیے رسائی۔",
+  "permissionManageLibraryAccess": "لائبریری رسائی",
+  "permissionRefreshAccess": "رسائی تازہ",
+  "permissionOpenSettings": "ترتیبات کھولیں"
+}

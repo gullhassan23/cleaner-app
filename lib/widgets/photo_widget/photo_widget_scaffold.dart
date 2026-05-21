@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class PhotoWidgetBackButton extends StatelessWidget {
             Icon(CupertinoIcons.back, size: 22, color: primary),
             const SizedBox(width: 2),
             Text(
-              'Back',
+              context.l10n.commonBack,
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w400,

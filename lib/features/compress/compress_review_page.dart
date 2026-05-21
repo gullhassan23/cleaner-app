@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/widgets/compress/compression_progress_card.dart';
 import 'package:cleaner_app/widgets/compress/preview_card.dart';
 import 'package:cleaner_app/widgets/compress/quality_card.dart';
@@ -19,9 +20,10 @@ class CompressReviewPage extends GetView<CompressReviewController> {
   @override
   Widget build(BuildContext context) {
     final repository = Get.find<PhotoLibraryRepository>();
+    final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Compress')),
+      appBar: AppBar(title: Text(l10n.compressTitle)),
       bottomNavigationBar: Obx(() {
         final session = controller.session.state.value;
         final canCompress = session.hasSelection && !session.isCompressing;
@@ -49,13 +51,16 @@ class CompressReviewPage extends GetView<CompressReviewController> {
                         const SizedBox(width: 12),
                         Flexible(
                           child: Text(
-                            '${session.progress.overallPercent}% • ${session.progress.remainingCount} left',
+                            l10n.compressProgressButton(
+                              session.progress.overallPercent,
+                              '${session.progress.remainingCount}',
+                            ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
                     )
-                    : const Text('COMPRESS'),
+                    : Text(l10n.compressButton),
           ),
         );
       }),
@@ -66,11 +71,11 @@ class CompressReviewPage extends GetView<CompressReviewController> {
           if (selectedAssets.isEmpty) {
             return ListView(
               padding: const EdgeInsets.all(24),
-              children: const [
+              children: [
                 StateMessageCard(
                   icon: Icons.photo_library_outlined,
-                  title: 'No media selected',
-                  message: 'Go back and select at least one video.',
+                  title: l10n.compressNoMediaSelected,
+                  message: l10n.compressNoMediaSelectedBody,
                 ),
               ],
             );
@@ -86,7 +91,9 @@ class CompressReviewPage extends GetView<CompressReviewController> {
                 Center(
                   child: Chip(
                     avatar: const Icon(Icons.collections_outlined, size: 18),
-                    label: Text('${selectedAssets.length} items selected'),
+                    label: Text(
+                      l10n.compressItemsSelected(selectedAssets.length),
+                    ),
                   ),
                 ),
               ],
@@ -97,7 +104,10 @@ class CompressReviewPage extends GetView<CompressReviewController> {
                 savedBytes: controller.session.estimatedSavedBytes,
               ),
               const SizedBox(height: 20),
-              Text('Quality', style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                l10n.compressQuality,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 10,
@@ -135,7 +145,7 @@ class CompressReviewPage extends GetView<CompressReviewController> {
               if (session.results.isNotEmpty) ...[
                 const SizedBox(height: 20),
                 Text(
-                  'Compression results',
+                  l10n.compressCompressionResults,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 12),

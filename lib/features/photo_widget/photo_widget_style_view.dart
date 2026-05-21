@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,10 +12,11 @@ class PhotoWidgetStyleView extends GetView<PhotoWidgetController> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: scheme.surfaceContainerLow,
-      appBar: const PhotoWidgetAppBar(title: 'Widget style'),
+      appBar: PhotoWidgetAppBar(title: l10n.photoWidgetWidgetStyle),
       body: Obx(() {
         final style = controller.style;
 
@@ -22,16 +24,16 @@ class PhotoWidgetStyleView extends GetView<PhotoWidgetController> {
           padding: const EdgeInsets.all(16),
           children: [
             SegmentedButton<PhotoWidgetStyle>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: PhotoWidgetStyle.grid,
-                  label: Text('Grid'),
-                  icon: Icon(Icons.grid_view, size: 18),
+                  label: Text(l10n.photoWidgetGrid),
+                  icon: const Icon(Icons.grid_view, size: 18),
                 ),
                 ButtonSegment(
                   value: PhotoWidgetStyle.slideshow,
-                  label: Text('Slideshow'),
-                  icon: Icon(Icons.slideshow, size: 18),
+                  label: Text(l10n.photoWidgetSlideshow),
+                  icon: const Icon(Icons.slideshow, size: 18),
                 ),
               ],
               selected: {style},
@@ -42,7 +44,7 @@ class PhotoWidgetStyleView extends GetView<PhotoWidgetController> {
             ),
             const SizedBox(height: 24),
             Text(
-              'Preview',
+              l10n.photoWidgetPreview,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
@@ -60,8 +62,8 @@ class PhotoWidgetStyleView extends GetView<PhotoWidgetController> {
             const SizedBox(height: 16),
             Text(
               style == PhotoWidgetStyle.grid
-                  ? 'Shows a 2×2 grid of your photos on the home screen widget.'
-                  : 'Rotates through photos on a timer (minimum 15 seconds).',
+                  ? l10n.photoWidgetGridDescription
+                  : l10n.photoWidgetSlideshowDescription,
               style: TextStyle(color: scheme.onSurfaceVariant),
             ),
           ],

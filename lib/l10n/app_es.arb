@@ -1,0 +1,642 @@
+{
+  "@@locale": "es",
+  "appTitle": "App Limpiador",
+  "commonBack": "Atrás",
+  "commonCancel": "Cancelar",
+  "commonConfirm": "Confirmar",
+  "commonOk": "OK",
+  "commonDone": "Listo",
+  "commonDelete": "Eliminar",
+  "commonShare": "Compartir",
+  "commonSave": "Guardar",
+  "commonTryAgain": "Reintentar",
+  "commonContinue": "Continuar",
+  "commonSettings": "Ajustes",
+  "navClean": "Limpiar",
+  "navContacts": "Contactos",
+  "navCompress": "Comprimir",
+  "navMore": "Más",
+  "settingsTitle": "Ajustes",
+  "settingsSectionUpgrade": "ACTUALIZAR",
+  "settingsRestorePurchases": "Restaurar compras",
+  "settingsSectionPrivatePhoto": "AJUSTES DE FOTOS PRIVADAS",
+  "settingsPrivateVault": "Bóveda privada",
+  "settingsUsePasscode": "Usar código",
+  "settingsRemoveAfterImport": "Eliminar tras importar",
+  "settingsSectionCustom": "AJUSTES PERSONALIZADOS",
+  "settingsPhotoWidget": "Widget de fotos",
+  "settingsFaceId": "Face ID",
+  "settingsLanguages": "Idiomas",
+  "settingsSectionOthers": "OTROS",
+  "settingsGetHelp": "Obtener ayuda",
+  "settingsRate5Stars": "Calificar 5 estrellas",
+  "settingsShareWithFriends": "Compartir con amigos",
+  "settingsAboutUs": "Sobre nosotros",
+  "settingsThemeMode": "Modo de tema",
+  "settingsAppLock": "Bloqueo de app",
+  "languagePickerTitle": "Idiomas",
+  "languageEnglish": "Inglés",
+  "languageUrdu": "Urdu",
+  "languageChinese": "Chino",
+  "languageArabic": "Árabe",
+  "languageSpanish": "Español",
+  "cleanerAppTitle": "Limpiador",
+  "cleanerPro": "PRO",
+  "cleanerSortLargestFirst": "Mayor primero",
+  "cleanerSortSmallestFirst": "Menor primero",
+  "cleanerSortNewestDateFirst": "Fecha más reciente",
+  "cleanerSortOldestDateFirst": "Fecha más antigua",
+  "cleanerAnalyzingLibrary": "Analizando tu biblioteca",
+  "cleanerUnknownError": "Error desconocido",
+  "cleanerScanPreparing": "Preparando…",
+  "cleanerScanLoadingLibrary": "Cargando biblioteca…",
+  "cleanerScanFindingDuplicates": "Buscando duplicados…",
+  "cleanerScanFindingSimilar": "Buscando fotos similares…",
+  "cleanerScanDone": "Listo",
+  "cleanerScanSomethingWentWrong": "Algo salió mal",
+  "cleanerCategorySimilarPhotos": "Fotos similares",
+  "cleanerCategoryDuplicatePhotos": "Fotos duplicadas",
+  "cleanerCategorySimilarVideos": "Videos similares",
+  "cleanerCategoryVideos": "Videos",
+  "cleanerCategoryScreenshots": "Capturas",
+  "cleanerCategorySimilarLivePhotos": "Live Photos similares",
+  "cleanerOptimizeYourStorage": "Optimiza tu almacenamiento",
+  "cleanerAiPhotoEditor": "Editor de fotos IA",
+  "cleanerImprovePhotoQuality": "Mejorar calidad de foto",
+  "cleanerPickPhotoToEnhance": "Elige una foto para mejorar",
+  "cleanerPickOldPhotoToRestore": "Elige una foto antigua para restaurar",
+  "cleanerPhotosAccessTitle": "Acceso a fotos",
+  "cleanerPhotosAccessBlocked": "Acceso bloqueado. Actívalo en Ajustes.",
+  "cleanerPhotosAccessRequest": "Permite acceso a la biblioteca.",
+  "cleanerCouldNotOpenImage": "No se pudo abrir la imagen.",
+  "cleanerCrop": "Recortar",
+  "cleanerPhotoSavedToGallery": "Foto guardada en la galería.",
+  "cleanerCouldNotSaveToGallery": "No se pudo guardar: {error}",
+  "@cleanerCouldNotSaveToGallery": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerAiPhotoEditorTitle": "Editor de fotos IA",
+  "cleanerChooseFromLibrary": "Elegir de biblioteca",
+  "cleanerPhotoEnhance": "Mejorar foto",
+  "cleanerBoostQuality": "Mejorar calidad",
+  "cleanerFixOldPhoto": "Reparar foto antigua",
+  "cleanerRestoreOldMemories": "Restaurar recuerdos",
+  "cleanerNoPhotosFound": "No se encontraron fotos",
+  "cleanerStorageUsed": "Usado:",
+  "cleanerStorageUnavailable": "—",
+  "cleanerBest": "Mejor",
+  "cleanerDeleteSelected": "Eliminar seleccionados",
+  "cleanerGroupNumber": "Grupo {number}",
+  "@cleanerGroupNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerDeletedTitle": "Eliminado",
+  "cleanerDeletedMessage": "{count, plural, one{1 elemento · {size} liberados} other{{count} elementos · {size} liberados}}",
+  "@cleanerDeletedMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "cleanerSomeItemsNotRemoved": "Algunos elementos no se eliminaron",
+  "cleanerSomeItemsFailed": "{count} fallaron",
+  "@cleanerSomeItemsFailed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cleanerNothingDeleted": "No se eliminó nada",
+  "cleanerNothingDeletedHint": "Reintenta o revisa permisos.",
+  "cleanerSelectedSummary": "{count} seleccionados · {size}",
+  "@cleanerSelectedSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsTitle": "Contactos",
+  "contactsAccessNeeded": "Se necesita acceso a contactos",
+  "contactsAccessBody": "Permite acceso para ver listas y copias.",
+  "contactsOpenSettings": "Abrir ajustes",
+  "contactsBackup": "Copia de contactos",
+  "contactsDuplicateContacts": "Contactos duplicados",
+  "contactsIncompleteContacts": "Contactos incompletos",
+  "contactsNamesNumbersEmails": "Nombres. Números. Correos.",
+  "contactsIncompleteDescription": "Cada contacto debe tener nombre, número y correo.",
+  "contactsNoName": "Sin nombre",
+  "contactsMissingPrefix": "Falta: {fields}",
+  "@contactsMissingPrefix": {
+    "placeholders": {
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
+  "contactsMissingName": "nombre",
+  "contactsMissingNumber": "número",
+  "contactsMissingEmail": "correo",
+  "contactsSelect": "Seleccionar",
+  "contactsSearchHint": "Buscar por nombre, número o correo",
+  "contactsNoSearchResults": "No hay contactos coincidentes.",
+  "contactsNoDuplicates": "No se encontraron duplicados.",
+  "contactsSameNumber": "Mismo número",
+  "contactsSameName": "Mismo nombre",
+  "contactsSharedNumber": "Número compartido",
+  "contactsExportTitle": "Exportar contactos",
+  "contactsExportBody": "Crea un archivo .vcf.",
+  "contactsExportPreparing": "Preparando…",
+  "contactsExportAllShare": "Exportar todo y compartir",
+  "contactsExportSubsetHint": "También puedes seleccionar desde la lista.",
+  "contactsShareCount": "{count, plural, one{Compartir 1 contacto} other{Compartir {count} contactos}}",
+  "@contactsShareCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactsGroupCount": "{count, plural, one{1 contacto} other{{count} contactos}}",
+  "@contactsGroupCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressTitle": "Comprimir",
+  "compressVideoSaveUpTo": "Comprime video y ahorra hasta",
+  "compressSort": "Ordenar",
+  "compressRefresh": "Actualizar",
+  "compressClear": "Limpiar",
+  "compressNext": "Siguiente",
+  "compressButton": "COMPRIMIR",
+  "compressNoVideosFound": "No se encontraron videos",
+  "compressNoVideosBody": "Los videos aparecerán tras dar acceso.",
+  "compressReload": "Recargar",
+  "compressMediaAccessBlocked": "Acceso a medios bloqueado",
+  "compressAllowMediaAccess": "Permitir acceso",
+  "compressMediaBlockedBody": "Activa acceso en Ajustes.",
+  "compressMediaRequestBody": "Se necesita acceso a la galería.",
+  "compressAllowAccess": "Permitir acceso",
+  "compressRetry": "Reintentar",
+  "compressNoMediaSelected": "Sin medios seleccionados",
+  "compressNoMediaSelectedBody": "Vuelve y selecciona al menos un video.",
+  "compressQuality": "Calidad",
+  "compressCompressionResults": "Resultados",
+  "compressQualityLow": "Baja",
+  "compressQualityMedium": "Media",
+  "compressQualityHigh": "Alta",
+  "compressQualitySavings": "Comprimir {percent}%",
+  "@compressQualitySavings": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSelectMediaTitle": "Selecciona medios",
+  "compressSelectMediaBody": "Elige archivos y continúa.",
+  "compressManageAccess": "Gestionar acceso",
+  "compressVisibleItems": "Elementos visibles",
+  "compressSelected": "Seleccionado",
+  "compressSelectedSize": "Tamaño seleccionado",
+  "compressOriginal": "Original",
+  "compressCompressed": "Comprimido",
+  "compressEstimatedSavings": "Ahorro estimado: {size}",
+  "@compressEstimatedSavings": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedVideo": "Video seleccionado",
+  "compressSelectedImage": "Imagen seleccionada",
+  "compressCompressedFile": "Archivo comprimido",
+  "compressFromSize": "De {size}",
+  "@compressFromSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressToSize": "A {size}",
+  "@compressToSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSavedSize": "Ahorrado {size}",
+  "@compressSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCompressionProgress": "Progreso",
+  "compressCurrentFile": "Archivo: {label}",
+  "@compressCurrentFile": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressCurrentFileProgress": "Progreso: {percent}%",
+  "@compressCurrentFileProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "compressProgressDone": "{processed} de {total} · {remaining} restante",
+  "@compressProgressDone": {
+    "placeholders": {
+      "processed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressProgressButton": "{percent}% · {remaining}",
+  "@compressProgressButton": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "compressSelectedCount": "{count, plural, one{1 seleccionado} other{{count} seleccionados}}",
+  "@compressSelectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressItemsSelected": "{count, plural, one{1 elemento} other{{count} elementos}}",
+  "@compressItemsSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCheckPermission": "No se pudo verificar permiso.",
+  "compressUnableRequestPermission": "No se pudo solicitar permiso.",
+  "compressUnableLoadGallery": "No se pudo cargar galería.",
+  "compressUnableLoadMore": "No se pudo cargar más.",
+  "compressReadyToCompress": "Listo para comprimir",
+  "compressPreparingCompression": "Preparando",
+  "compressCompressingItem": "Comprimiendo {label}",
+  "@compressCompressingItem": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "compressFinalizingCompression": "Finalizando",
+  "compressCompressedCount": "{done} de {total}",
+  "@compressCompressedCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressCompressionComplete": "Compresión completa",
+  "compressCompressedSummary": "Comprimidos {success} de {total}",
+  "@compressCompressedSummary": {
+    "placeholders": {
+      "success": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "compressUnableCompressSelected": "No se pudo comprimir.",
+  "compressFailedCount": "{count, plural, one{1 falló} other{{count} fallaron}}",
+  "@compressFailedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressSuccessMessage": "Guardado. Ahorro {size}, {count, plural, one{1} other{{count}}} elementos",
+  "@compressSuccessMessage": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "compressOriginalUnavailable": "Archivo original no disponible.",
+  "compressCompressionFailed": "Error: {error}",
+  "@compressCompressionFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "moreToolsTitle": "Más herramientas",
+  "morePrivatePhotos": "Fotos privadas",
+  "morePrivatePhotosSubtitle": "Protege tus fotos secretas",
+  "moreChargingAnimation": "Animación de carga",
+  "moreChargingAnimationSubtitle": "Personaliza pantalla de carga",
+  "moreCleaningGuide": "Guía de limpieza",
+  "moreCleaningGuideSubtitle": "Aprende a limpiar con seguridad",
+  "guideTitle": "Guía de limpieza",
+  "guideSectionApps": "Apps",
+  "guideSectionCache": "Caché de apps",
+  "guideOffloadUnusedApps": "Descargar apps no usadas",
+  "guideDeleteUnusedApps": "Eliminar apps no usadas",
+  "guideFlowTitle": "Descargar apps no usadas",
+  "guideStepOpenSettings": "Abrir Ajustes",
+  "guideStepClickGeneral": "Toca General",
+  "guideStepTapIphoneStorage": "Toca Almacenamiento",
+  "guideStepEnableOffload": "Activa descarga",
+  "guideFlowNext": "Siguiente",
+  "guideFlowClose": "Cerrar guía",
+  "guideClean": "Limpiar",
+  "chargingAnimationTitle": "Animación de carga",
+  "chargingViewAnimation": "Ver animación",
+  "chargingBrowseAnimations": "Explorar animaciones",
+  "chargingAllowLockScreenOnCharge": "Pantalla de bloqueo al cargar",
+  "chargingLockScreenSetup": "Configuración de bloqueo",
+  "chargingChooseAnimation": "Elige animación",
+  "chargingNoAnimationSelected": "Sin animación",
+  "chargingChooseAnimationAppBar": "Elegir animación",
+  "chargingApplyAnimation": "Aplicar animación",
+  "chargingBatteryPercent": "{level}%",
+  "@chargingBatteryPercent": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "chargingHeadlineCharging": "Cargando",
+  "chargingHeadlineFullyCharged": "Completamente cargado",
+  "chargingHeadlineDisconnected": "Desconectado",
+  "chargingHeadlineBatteryStatus": "Estado de batería",
+  "chargingHeadlinePowerConnected": "Energía conectada",
+  "chargingSubtitleCharging": "Tu dispositivo está cargando.",
+  "chargingSubtitleFullyCharged": "Puedes desenchufar cuando quieras.",
+  "chargingSubtitleDisconnected": "Conecta para ver la animación.",
+  "chargingSubtitleUnknown": "Estado no disponible.",
+  "chargingSubtitleConnectedNotCharging": "Conectado pero no carga.",
+  "chargingAppliedTitle": "Aplicado",
+  "chargingAppliedMessage": "{title} es tu animación.",
+  "@chargingAppliedMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "chargingAnimationSemantics": "Animación de carga",
+  "chargingMissingLottieAsset": "Falta recurso Lottie",
+  "chargingStepApplyAnimation": "Aplica desde Explorar.",
+  "chargingStepOpenWhileCharging": "Abre la app al cargar.",
+  "chargingStepIosNoLockScreen": "No soportado en iPhone.",
+  "chargingStepBrowsePreviewApply": "Explorar → Vista previa → Aplicar",
+  "chargingStepAllowLockScreen": "Toca permitir pantalla de bloqueo.",
+  "chargingStepLockAndPlugIn": "Bloquea y conecta el cargador.",
+  "chargingStepOemSettings": "Samsung/Xiaomi/Oppo: permite fondo.",
+  "chargingPlatformNoteIos": "En iPhone abre la app al cargar.",
+  "chargingPlatformNoteAndroid": "En Android conecta el cargador.",
+  "chargingAnimNeonBattery": "Batería neón",
+  "chargingAnimCircularCharge": "Carga circular",
+  "chargingAnimCyberpunk": "Cyberpunk",
+  "chargingAnimGlowingEnergy": "Energía brillante",
+  "chargingAnimMinimalBattery": "Batería minimal",
+  "chargingAnimFuturisticPulse": "Pulso futurista",
+  "chargingAnimLiquidWave": "Onda líquida",
+  "chargingAnimAuroraRing": "Anillo aurora",
+  "appLockLocked": "App bloqueada",
+  "appLockEnterPinOrBiometrics": "Introduce PIN o biometría.",
+  "appLockSetupTitle": "Configurar bloqueo",
+  "appLockCreatePin": "Crea un PIN de 4 dígitos",
+  "appLockConfirmPin": "Confirma PIN",
+  "appLockCreatePinHint": "Lo usarás para desbloquear.",
+  "appLockConfirmPinHint": "Introduce el mismo PIN.",
+  "appLockEnableBiometric": "Activar Face ID / huella",
+  "appLockBiometricSubtitle": "Desbloquea sin escribir PIN",
+  "appLockContinue": "Continuar",
+  "appLockFinishSetup": "Finalizar",
+  "appLockTurnOffTitle": "Desactivar bloqueo",
+  "appLockEnterPinToTurnOff": "PIN para desactivar",
+  "appLockVerifyPinToDisable": "Verifica PIN actual.",
+  "appLockTooManyAttempts": "Demasiados intentos.",
+  "appLockIncorrectPin": "PIN incorrecto.",
+  "appLockPinsDoNotMatch": "Los PIN no coinciden.",
+  "appLockSetupFailed": "Error de configuración",
+  "appLockCouldNotDisable": "No se pudo desactivar",
+  "appLockSnackbarTitle": "Bloqueo",
+  "appLockBiometricReason": "Desbloquear app",
+  "photoWidgetTitle": "Widget de fotos",
+  "photoWidgetShowOnHomeScreen": "Mostrar en inicio",
+  "photoWidgetActive": "Widget activo",
+  "photoWidgetTurnOnAfterImport": "Activar tras importar",
+  "photoWidgetImportFirst": "Importa fotos primero",
+  "photoWidgetMyAlbums": "Mis álbumes",
+  "photoWidgetWidgetStyle": "Estilo del widget",
+  "photoWidgetCreateAlbum": "Crear álbum",
+  "photoWidgetEnterAlbumName": "Nombre del álbum:",
+  "photoWidgetWidgetSource": "Origen del widget",
+  "photoWidgetAlbum": "Álbum",
+  "photoWidgetAlbumNotFound": "Álbum no encontrado",
+  "photoWidgetUseForHomeScreen": "Para widget de inicio",
+  "photoWidgetActiveAlbum": "Álbum activo",
+  "photoWidgetAddNewPhotos": "Añadir fotos",
+  "photoWidgetImportPhotos": "Importar fotos",
+  "photoWidgetImportPhotosTitle": "Importar fotos",
+  "photoWidgetDoneCount": "Listo ({count})",
+  "@photoWidgetDoneCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetSelectUpTo": "Selecciona hasta {max} fotos.",
+  "@photoWidgetSelectUpTo": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetGrid": "Cuadrícula",
+  "photoWidgetSlideshow": "Presentación",
+  "photoWidgetPreview": "Vista previa",
+  "photoWidgetGridDescription": "Cuadrícula 2×2 en inicio.",
+  "photoWidgetSlideshowDescription": "Rota con temporizador (mín. 15 s).",
+  "photoWidgetRenameAlbum": "Renombrar álbum",
+  "photoWidgetDeleteAlbumTitle": "¿Eliminar álbum?",
+  "photoWidgetDeleteAlbumBody": "Se quitarán del caché.",
+  "photoWidgetAddWidgetTitle": "Añadir widget",
+  "photoWidgetHelpAndroid": "1. Importa en un álbum\n2. Mantén inicio → Widgets\n3. Cleaner App → Photo Widget\n4. Arrastra\n\nO fija abajo.",
+  "photoWidgetHelpIos": "1. Mantén inicio\n2. Toca +\n3. Busca Cleaner App\n4. Add Widget\n\nNota: iOS actualiza por línea de tiempo.",
+  "photoWidgetPinWidget": "Fijar widget",
+  "photoWidgetPinWidgetButton": "Fijar en inicio",
+  "photoWidgetPinFollowPrompt": "Sigue el aviso del sistema.",
+  "photoWidgetPinManualSteps": "Usa los pasos manuales.",
+  "photoWidgetHelp": "Ayuda",
+  "photoWidgetDefaultAlbumName": "Álbum {number}",
+  "@photoWidgetDefaultAlbumName": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetPermissionRequired": "Permiso requerido",
+  "photoWidgetAllowPhotoAccess": "Permite acceso a fotos.",
+  "photoWidgetLimitReached": "Límite alcanzado",
+  "photoWidgetAlbumFull": "Álbum lleno (máx. 30).",
+  "photoWidgetImportLimit": "Hasta {max} fotos a la vez.",
+  "@photoWidgetImportLimit": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetImportFailed": "Error al importar",
+  "photoWidgetCouldNotSave": "No se pudieron guardar.",
+  "photoWidgetPartialImport": "Importación parcial",
+  "photoWidgetPartialImportMessage": "Importadas {imported} de {total}.",
+  "@photoWidgetPartialImportMessage": {
+    "placeholders": {
+      "imported": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photoWidgetAddToHomeTitle": "Añadir a inicio",
+  "photoWidgetAddToHomeBody": "Mantén inicio → Widgets o ayuda.",
+  "photoWidgetUpdated": "Widget actualizado",
+  "photoWidgetUpdatedBody": "Actualiza el widget en inicio.",
+  "photoWidgetPinSnackbarTitle": "Widget",
+  "vaultPrivatePhotos": "Fotos privadas",
+  "vaultMediaCount": "{photos, plural, one{1 foto} other{{photos} fotos}}, {videos, plural, one{1 video} other{{videos} videos}}",
+  "@vaultMediaCount": {
+    "placeholders": {
+      "photos": {
+        "type": "int"
+      },
+      "videos": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSelectAll": "Seleccionar todo",
+  "vaultDeleteSelected": "Eliminar seleccionados",
+  "vaultAddPhotos": "Añadir fotos",
+  "vaultCouldNotOpen": "No se pudo abrir",
+  "vaultGoBack": "Volver",
+  "vaultEmptyState": "Selecciona fotos.\nQuedarán bloqueadas.",
+  "vaultTakePhotoOrVideo": "Tomar foto o video",
+  "vaultImportPhotosOrVideos": "Importar fotos/videos",
+  "vaultAlbums": "Álbumes",
+  "vaultNewAlbum": "Nuevo álbum",
+  "vaultAlbumNameHint": "Nombre del álbum",
+  "vaultCreate": "Crear",
+  "vaultSettings": "Ajustes de bóveda",
+  "vaultRemoveAfterImport": "Eliminar tras importar",
+  "vaultRemoveAfterImportSubtitle": "Eliminar original tras importar",
+  "vaultUseFaceIdFingerprint": "Face ID / huella",
+  "vaultSecurity": "Seguridad",
+  "vaultLockNow": "Bloquear bóveda",
+  "vaultChangePin": "Cambiar PIN",
+  "vaultCreatePin": "Crear PIN",
+  "vaultConfirmPin": "Confirmar PIN",
+  "vaultCreatePinSubtitle": "PIN de 4 dígitos",
+  "vaultConfirmPinSubtitle": "Mismo PIN otra vez",
+  "vaultEnableBiometric": "Activar biometría",
+  "vaultUnlockTitle": "Código para desbloquear",
+  "vaultUnlockSubtitle": "PIN de 4 dígitos",
+  "vaultUnlockLocked": "Reintenta en {seconds} s",
+  "@vaultUnlockLocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultPinMustBeFourDigits": "PIN de 4 dígitos",
+  "vaultEnterCurrentPin": "PIN actual",
+  "vaultEnterNewPin": "PIN nuevo",
+  "vaultConfirmNewPin": "Confirmar PIN",
+  "vaultPinsDoNotMatch": "PIN no coinciden.",
+  "vaultCurrentPinIncorrect": "PIN actual incorrecto",
+  "vaultPinsDoNotMatchShort": "No coinciden",
+  "vaultPinChanged": "PIN cambiado",
+  "vaultIncorrectPin": "PIN incorrecto",
+  "vaultPermissionTitle": "Permiso",
+  "vaultPhotoLibraryRequired": "Se necesita galería",
+  "vaultImportTitle": "Importar",
+  "vaultImportedCount": "{count, plural, one{1 importado} other{{count} importados}}",
+  "@vaultImportedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaultSnackbarTitle": "Bóveda",
+  "vaultBiometricReason": "Desbloquear bóveda",
+  "permissionLimitedLibraryAccess": "Acceso limitado",
+  "permissionAllowPhotosVideos": "Permitir fotos y videos",
+  "permissionLimitedBody": "Gestiona visibles o da acceso completo.",
+  "permissionFullBody": "Necesita acceso para escanear.",
+  "permissionManageLibraryAccess": "Gestionar acceso",
+  "permissionRefreshAccess": "Actualizar acceso",
+  "permissionOpenSettings": "Abrir ajustes"
+}

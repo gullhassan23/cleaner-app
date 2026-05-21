@@ -1,4 +1,5 @@
 import 'package:cleaner_app/controllers/contacts/contacts_hub_controller.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/widgets/state_message_card.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class ContactsHubPage extends GetView<ContactsHubController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surfaceContainerHighest.withValues(
@@ -17,7 +19,7 @@ class ContactsHubPage extends GetView<ContactsHubController> {
       ),
 
       appBar: AppBar(
-        title: Text('Contacts'),
+        title: Text(l10n.contactsTitle),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -35,16 +37,15 @@ class ContactsHubPage extends GetView<ContactsHubController> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: StateMessageCard(
                 icon: Icons.contact_page_outlined,
-                title: 'Contacts access needed',
-                message:
-                    'Allow access to your contacts to see counts, lists, backups, and to open the system editor.',
+                title: l10n.contactsAccessNeeded,
+                message: l10n.contactsAccessBody,
                 primaryAction: FilledButton(
                   onPressed: () => repo.loadContacts(),
-                  child: const Text('Try again'),
+                  child: Text(l10n.commonTryAgain),
                 ),
                 secondaryAction: OutlinedButton(
                   onPressed: () => repo.openAppSettingsForContacts(),
-                  child: const Text('Open settings'),
+                  child: Text(l10n.contactsOpenSettings),
                 ),
               ),
             ),
@@ -56,7 +57,7 @@ class ContactsHubPage extends GetView<ContactsHubController> {
           children: [
             _HubRow(
               icon: Icons.person,
-              title: 'Contacts',
+              title: l10n.contactsTitle,
               trailingCount: repo.totalCount,
               onTap:
                   () => Get.toNamed<void>(
@@ -66,7 +67,7 @@ class ContactsHubPage extends GetView<ContactsHubController> {
             ),
             _HubRow(
               icon: Icons.cloud_upload_outlined,
-              title: 'Contacts Backup',
+              title: l10n.contactsBackup,
               onTap:
                   () => Get.toNamed<void>(
                     AppRoutes.contactsBackup,
@@ -75,8 +76,8 @@ class ContactsHubPage extends GetView<ContactsHubController> {
             ),
             _HubRow(
               icon: Icons.people_outline,
-              title: 'Duplicate Contacts',
-              subtitle: 'Names. Numbers. Emails.',
+              title: l10n.contactsDuplicateContacts,
+              subtitle: l10n.contactsNamesNumbersEmails,
               trailingCount: repo.duplicateInvolvedCount,
               onTap:
                   () => Get.toNamed<void>(
@@ -86,8 +87,8 @@ class ContactsHubPage extends GetView<ContactsHubController> {
             ),
             _HubRow(
               icon: Icons.person_off_outlined,
-              title: 'Incomplete Contacts',
-              subtitle: 'Names. Numbers. Emails.',
+              title: l10n.contactsIncompleteContacts,
+              subtitle: l10n.contactsNamesNumbersEmails,
               trailingCount: repo.incompleteCount,
               onTap:
                   () => Get.toNamed<void>(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class ChargingDisplayView extends GetView<ChargingController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return PopScope(
       canPop: true,
       onPopInvokedWithResult: (didPop, _) async {
@@ -60,7 +62,7 @@ class ChargingDisplayView extends GetView<ChargingController> {
                         if (config == null) {
                           return Center(
                             child: Text(
-                              'No animation selected',
+                              l10n.chargingNoAnimationSelected,
                               style: TextStyle(
                                 color: Colors.white.withValues(alpha: 0.8),
                               ),
@@ -81,7 +83,7 @@ class ChargingDisplayView extends GetView<ChargingController> {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 32),
                         child: Text(
-                          '${snap.level}%',
+                          l10n.chargingBatteryPercent(snap.level),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 48,

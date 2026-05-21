@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
 import 'package:cleaner_app/utils/size_metric.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class SizeSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Card(
       child: Padding(
@@ -26,14 +28,14 @@ class SizeSummaryCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: SizeMetric(
-                    label: 'Original',
+                    label: l10n.compressOriginal,
                     value: BytesFormatter.humanize(originalBytes),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: SizeMetric(
-                    label: 'Compressed',
+                    label: l10n.compressCompressed,
                     value: BytesFormatter.humanize(estimatedBytes),
                     valueColor: const Color(0xFFD14A4A),
                     alignEnd: true,
@@ -50,7 +52,9 @@ class SizeSummaryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
-                'Estimated savings: ${BytesFormatter.humanize(savedBytes)}',
+                l10n.compressEstimatedSavings(
+                  BytesFormatter.humanize(savedBytes),
+                ),
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: theme.colorScheme.primary,
                   fontWeight: FontWeight.w700,

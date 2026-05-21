@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,9 +14,10 @@ class AppLockSetupView extends GetView<AppLockSetupController> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Set up App Lock'),
+        title: Text(l10n.appLockSetupTitle),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => Get.back(),
@@ -31,8 +33,8 @@ class AppLockSetupView extends GetView<AppLockSetupController> {
               Obx(
                 () => Text(
                   controller.setupStep.value == 0
-                      ? 'Create a 4-digit PIN'
-                      : 'Confirm your PIN',
+                      ? l10n.appLockCreatePin
+                      : l10n.appLockConfirmPin,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: cs.onSurface,
@@ -45,8 +47,8 @@ class AppLockSetupView extends GetView<AppLockSetupController> {
               Obx(
                 () => Text(
                   controller.setupStep.value == 0
-                      ? 'You will use this PIN to unlock the app.'
-                      : 'Enter the same PIN again.',
+                      ? l10n.appLockCreatePinHint
+                      : l10n.appLockConfirmPinHint,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: cs.onSurfaceVariant, fontSize: 14),
                 ),
@@ -66,14 +68,14 @@ class AppLockSetupView extends GetView<AppLockSetupController> {
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        'Enable Face ID / fingerprint',
+                        l10n.appLockEnableBiometric,
                         style: TextStyle(
                           color: cs.onSurface,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       subtitle: Text(
-                        'Unlock the app without typing your PIN.',
+                        l10n.appLockBiometricSubtitle,
                         style: TextStyle(
                           color: cs.onSurfaceVariant,
                           fontSize: 12,
@@ -122,7 +124,7 @@ class AppLockSetupView extends GetView<AppLockSetupController> {
                           ),
                         )
                       : Text(
-                          step == 0 ? 'Continue' : 'Finish setup',
+                          step == 0 ? l10n.appLockContinue : l10n.appLockFinishSetup,
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 16,

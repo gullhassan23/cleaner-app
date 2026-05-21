@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_dashboard_kind.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
@@ -21,16 +22,17 @@ class CleanerDashboardCard extends StatelessWidget {
   final PhotoAssetEntity? preview;
   final VoidCallback onTap;
 
-  String get _title {
+  String _title(BuildContext context) {
+    final l10n = context.l10n;
     switch (type) {
       case CleanerDashboardKind.similarPhotos:
-        return 'Similar Photos';
+        return l10n.cleanerCategorySimilarPhotos;
       case CleanerDashboardKind.duplicatePhotos:
-        return 'Duplicate Photos';
+        return l10n.cleanerCategoryDuplicatePhotos;
       case CleanerDashboardKind.videos:
-        return 'Videos';
+        return l10n.cleanerCategoryVideos;
       case CleanerDashboardKind.screenshots:
-        return 'Screenshots';
+        return l10n.cleanerCategoryScreenshots;
     }
   }
 
@@ -74,14 +76,14 @@ class CleanerDashboardCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _title,
+                      _title(context),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '$count items',
+                      '$count',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),

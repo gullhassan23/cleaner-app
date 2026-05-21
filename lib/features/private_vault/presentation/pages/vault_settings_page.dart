@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,11 +10,12 @@ class VaultSettingsPage extends GetView<VaultSettingsController> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final groupedBg = Theme.of(context).colorScheme.surfaceContainerLow;
     return Scaffold(
       backgroundColor: groupedBg,
       appBar: AppBar(
-        title: const Text('Vault Settings'),
+        title: Text(l10n.vaultSettings),
         backgroundColor: groupedBg,
       ),
       body: Obx(() {
@@ -24,21 +26,19 @@ class VaultSettingsPage extends GetView<VaultSettingsController> {
           padding: const EdgeInsets.all(16),
           children: [
             SwitchListTile(
-              title: const Text('Remove After Import'),
-              subtitle: const Text(
-                'Delete originals from gallery after successful import',
-              ),
+              title: Text(l10n.vaultRemoveAfterImport),
+              subtitle: Text(l10n.vaultRemoveAfterImportSubtitle),
               value: controller.removeAfterImport.value,
               onChanged: controller.setRemoveAfterImport,
             ),
             if (controller.canUseBiometrics.value)
               SwitchListTile(
-                title: const Text('Use Face ID / Fingerprint'),
+                title: Text(l10n.vaultUseFaceIdFingerprint),
                 value: controller.biometricEnabled.value,
                 onChanged: controller.setBiometric,
               ),
             ListTile(
-              title: const Text('Albums'),
+              title: Text(l10n.vaultAlbums),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Get.toNamed(
                 AppRoutes.privateVaultAlbums,
@@ -46,12 +46,12 @@ class VaultSettingsPage extends GetView<VaultSettingsController> {
               ),
             ),
             ListTile(
-              title: const Text('Security'),
+              title: Text(l10n.vaultSecurity),
               trailing: const Icon(Icons.chevron_right),
               onTap: controller.openSecurity,
             ),
             ListTile(
-              title: const Text('Lock Vault Now'),
+              title: Text(l10n.vaultLockNow),
               onTap: controller.lockNow,
             ),
           ],

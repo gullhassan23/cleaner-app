@@ -1,4 +1,5 @@
 import 'package:cleaner_app/controllers/contacts/contacts_list_controller.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/services/contacts/contacts_repository.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class ContactsListPage extends GetView<ContactsListController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final repo = Get.find<ContactsRepository>();
 
     return Scaffold(
@@ -19,15 +21,19 @@ class ContactsListPage extends GetView<ContactsListController> {
         leading: TextButton(
           onPressed:
               () => Get.back<void>(id: AppRoutes.contactsNestedNavigatorId),
-          child: const Text('Back'),
+          child: Text(l10n.commonBack),
         ),
 
-        title: const Text('Contacts'),
+        title: Text(l10n.contactsTitle),
         actions: [
           Obx(
             () => TextButton(
               onPressed: () => controller.toggleSelectionMode(),
-              child: Text(controller.selectionMode.value ? 'Cancel' : 'Select'),
+              child: Text(
+                controller.selectionMode.value
+                    ? l10n.commonCancel
+                    : l10n.contactsSelect,
+              ),
             ),
           ),
         ],
@@ -44,7 +50,7 @@ class ContactsListPage extends GetView<ContactsListController> {
             child: FilledButton.icon(
               onPressed: () => controller.shareSelectedAsBackup(),
               icon: const Icon(Icons.ios_share_outlined),
-              label: Text('Share $count contact(s)'),
+              label: Text(l10n.contactsShareCount(count)),
             ),
           ),
         );
@@ -57,7 +63,7 @@ class ContactsListPage extends GetView<ContactsListController> {
             child: TextField(
               onChanged: controller.setSearch,
               decoration: InputDecoration(
-                hintText: 'Search via name, number or email',
+                hintText: l10n.contactsSearchHint,
                 prefixIcon: const Icon(Icons.search),
                 filled: true,
                 fillColor: theme.colorScheme.surfaceContainerHighest.withValues(
@@ -87,7 +93,7 @@ class ContactsListPage extends GetView<ContactsListController> {
               if (filtered.isEmpty) {
                 return Center(
                   child: Text(
-                    'No contacts match your search.',
+                    l10n.contactsNoSearchResults,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -186,6 +192,7 @@ class _ContactTile extends GetView<ContactsListController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final thumb = contact.photoOrThumbnail;
 
     return Obx(() {
@@ -235,7 +242,7 @@ class _ContactTile extends GetView<ContactsListController> {
                     Expanded(
                       child: Text(
                         contact.displayName.isEmpty
-                            ? 'No name'
+                            ? l10n.contactsNoName
                             : contact.displayName,
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w500,

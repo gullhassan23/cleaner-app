@@ -1,3 +1,4 @@
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final surface = theme.colorScheme.surfaceContainerLowest;
 
     return Scaffold(
@@ -48,12 +50,11 @@ class CompressMainScreen extends GetView<CompressPickerController> {
               children: [
                 StateMessageCard(
                   icon: Icons.perm_media_outlined,
-                  title: 'No videos found',
-                  message:
-                      'Videos will appear here after gallery access is granted.',
+                  title: l10n.compressNoVideosFound,
+                  message: l10n.compressNoVideosBody,
                   primaryAction: FilledButton(
                     onPressed: controller.refreshMedia,
-                    child: const Text('Reload'),
+                    child: Text(l10n.compressReload),
                   ),
                 ),
               ],
@@ -126,7 +127,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                   _headerPad,
                                   0,
                                   _headerPad,
-                                  120,
+                                  100,
                                 ),
                                 sliver: SliverGrid(
                                   delegate: SliverChildBuilderDelegate((
@@ -196,7 +197,9 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      '${session.selectedAssetIds.length} selected',
+                                      l10n.compressSelectedCount(
+                                        session.selectedAssetIds.length,
+                                      ),
                                       style: theme.textTheme.titleSmall
                                           ?.copyWith(
                                             fontWeight: FontWeight.w600,
@@ -205,15 +208,15 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                   ),
                                   TextButton(
                                     onPressed: controller.clearSelection,
-                                    child: const Text('Clear'),
+                                    child: Text(l10n.compressClear),
                                   ),
                                   const SizedBox(width: 4),
                                   FilledButton(
                                     onPressed: controller.openReview,
-                                    child: const Row(
+                                    child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text('Next'),
+                                        Text(l10n.compressNext),
                                         SizedBox(width: 4),
                                         Icon(
                                           Icons.chevron_right_rounded,
@@ -245,6 +248,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
       context: context,
       showDragHandle: true,
       builder: (ctx) {
+        final l10n = ctx.l10n;
         final current = controller.pickerSort.value;
         return SafeArea(
           child: Column(
@@ -252,7 +256,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ListTile(
-                title: const Text('Largest first'),
+                title: Text(l10n.cleanerSortLargestFirst),
                 trailing:
                     current == CleanerDashboardSort.largestFirst
                         ? Icon(Icons.check_rounded, color: primary)
@@ -261,7 +265,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                     () => Navigator.pop(ctx, CleanerDashboardSort.largestFirst),
               ),
               ListTile(
-                title: const Text('Smallest first'),
+                title: Text(l10n.cleanerSortSmallestFirst),
                 trailing:
                     current == CleanerDashboardSort.smallestFirst
                         ? Icon(Icons.check_rounded, color: primary)
@@ -271,7 +275,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                         Navigator.pop(ctx, CleanerDashboardSort.smallestFirst),
               ),
               ListTile(
-                title: const Text('Newest date first'),
+                title: Text(l10n.cleanerSortNewestDateFirst),
                 trailing:
                     current == CleanerDashboardSort.newestDateFirst
                         ? Icon(Icons.check_rounded, color: primary)
@@ -283,7 +287,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                     ),
               ),
               ListTile(
-                title: const Text('Oldest date first'),
+                title: Text(l10n.cleanerSortOldestDateFirst),
                 trailing:
                     current == CleanerDashboardSort.oldestDateFirst
                         ? Icon(Icons.check_rounded, color: primary)
@@ -340,6 +344,7 @@ class _CompressHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final onSurface = theme.colorScheme.onSurface;
     const savingsColor = Color(0xFFE53935);
 
@@ -350,7 +355,7 @@ class _CompressHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Compress',
+              l10n.compressTitle,
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: onSurface,
@@ -363,7 +368,8 @@ class _CompressHeader extends StatelessWidget {
                 onPressed: onSortOrRefresh,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                tooltip: showSortIcon ? 'Sort' : 'Refresh',
+                tooltip:
+                    showSortIcon ? l10n.compressSort : l10n.compressRefresh,
                 icon: Icon(
                   showSortIcon
                       ? Icons.swap_vert_rounded
@@ -382,7 +388,7 @@ class _CompressHeader extends StatelessWidget {
               height: 1.35,
             ),
             children: [
-              const TextSpan(text: 'Compress video to save up to '),
+              TextSpan(text: '${l10n.compressVideoSaveUpTo} '),
               TextSpan(
                 text: savingsLabel,
                 style: const TextStyle(
@@ -414,6 +420,7 @@ class _CompressGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final sizeLabel = BytesFormatter.humanize(asset.fileSize);
 
     return ClipRRect(
@@ -457,7 +464,7 @@ class _CompressGridTile extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Save',
+                              l10n.commonSave,
                               style: theme.textTheme.titleSmall?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -562,6 +569,7 @@ class _PermissionBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final permission = controller.session.permissionState;
     final needsSettings = permission.needsSettings;
 
@@ -573,23 +581,30 @@ class _PermissionBody extends StatelessWidget {
               needsSettings
                   ? Icons.lock_outline_rounded
                   : Icons.photo_library_outlined,
-          title: needsSettings ? 'Media access blocked' : 'Allow media access',
+          title:
+              needsSettings
+                  ? l10n.compressMediaAccessBlocked
+                  : l10n.compressAllowMediaAccess,
           message:
               needsSettings
-                  ? 'Open system settings and enable gallery access to compress videos.'
-                  : 'Cleaner needs access to your gallery before it can show videos for compression.',
+                  ? l10n.compressMediaBlockedBody
+                  : l10n.compressMediaRequestBody,
           primaryAction: FilledButton(
             onPressed:
                 needsSettings
                     ? controller.openSettings
                     : controller.requestAccess,
-            child: Text(needsSettings ? 'Open settings' : 'Allow access'),
+            child: Text(
+              needsSettings
+                  ? l10n.permissionOpenSettings
+                  : l10n.compressAllowAccess,
+            ),
           ),
           secondaryAction:
               needsSettings
                   ? OutlinedButton(
                     onPressed: controller.requestAccess,
-                    child: const Text('Retry'),
+                    child: Text(l10n.compressRetry),
                   )
                   : null,
         ),

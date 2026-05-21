@@ -1,47 +1,71 @@
 import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
+import 'package:cleaner_app/controllers/locale_controller.dart';
 import 'package:cleaner_app/features/appLock/app_lock_unlock_view.dart';
+import 'package:cleaner_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bindings/app_binding.dart';
 import 'controllers/theme_controller.dart';
-
 import 'utils/app_theme.dart';
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';
+import 'widgets/theme/app_theme_animated_builder.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const _ReactiveThemeApp();
+    return const _StableAppShell();
   }
 }
 
-/// Rebuilds [GetMaterialApp] only when [ThemeController.themeMode] changes.
-class _ReactiveThemeApp extends StatelessWidget {
-  const _ReactiveThemeApp();
+/// [GetMaterialApp] is built once — navigation, bindings, and routes stay alive.
+/// Theme changes are applied only inside [AppThemeAnimatedBuilder].
+class _StableAppShell extends StatelessWidget {
+  const _StableAppShell();
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
+    final localeController = Get.find<LocaleController>();
+
     return Obx(() {
-      final themeController = Get.find<ThemeController>();
+      final locale = localeController.locale.value;
+      final themeMode = themeController.themeMode.value;
+      final direction = localeController.textDirection;
+      final appTitle = lookupAppLocalizations(locale).appTitle;
+
       return GetMaterialApp(
-        title: 'Cleaner App',
+        title: appTitle,
         debugShowCheckedModeBanner: false,
         initialBinding: AppBinding(),
         initialRoute: AppRoutes.main,
         getPages: AppPages.pages,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
-        themeMode: themeController.themeMode.value,
+        themeMode: themeMode,
+        locale: locale,
+        fallbackLocale: const Locale('en'),
+        supportedLocales: LocaleController.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localeResolutionCallback: (deviceLocale, supported) {
+          for (final s in supported) {
+            if (s.languageCode == locale.languageCode) return s;
+          }
+          return supported.first;
+        },
         defaultTransition: Transition.cupertino,
-        builder: (context, child) => AnimatedTheme(
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.easeInOut,
-          data: Theme.of(context),
-          child: _AppShell(child: child),
+        builder: (context, child) => Localizations.override(
+          context: context,
+          locale: locale,
+          child: Directionality(
+            textDirection: direction,
+            child: AppThemeAnimatedBuilder(
+              child: _AppShell(child: child),
+            ),
+          ),
         ),
       );
     });

@@ -1,3 +1,5 @@
+import 'package:cleaner_app/l10n/app_localizations.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/compress/compress_entities.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,7 @@ class QualityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final borderColor =
         isSelected ? theme.colorScheme.primary : theme.colorScheme.outlineVariant;
 
@@ -36,7 +39,7 @@ class QualityCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              preset.label,
+              _presetLabel(l10n, preset),
               style: theme.textTheme.titleMedium?.copyWith(
                 color: isSelected ? theme.colorScheme.primary : null,
                 fontWeight: FontWeight.w700,
@@ -44,7 +47,7 @@ class QualityCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              'Compress ${preset.savingsPercent}%',
+              l10n.compressQualitySavings(preset.savingsPercent),
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -53,5 +56,16 @@ class QualityCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String _presetLabel(AppLocalizations l10n, CompressionQualityPreset preset) {
+  switch (preset) {
+    case CompressionQualityPreset.low:
+      return l10n.compressQualityLow;
+    case CompressionQualityPreset.medium:
+      return l10n.compressQualityMedium;
+    case CompressionQualityPreset.high:
+      return l10n.compressQualityHigh;
   }
 }

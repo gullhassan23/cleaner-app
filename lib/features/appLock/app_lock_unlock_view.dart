@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
@@ -39,6 +40,7 @@ class _AppLockUnlockViewState extends State<AppLockUnlockView> {
   Widget build(BuildContext context) {
     final c = Get.find<AppLockController>();
     final cs = Theme.of(context).colorScheme;
+    final l10n = context.l10n;
 
     return Material(
       color: cs.surface,
@@ -51,7 +53,7 @@ class _AppLockUnlockViewState extends State<AppLockUnlockView> {
               Icon(Icons.lock_rounded, size: 52, color: cs.primary),
               const SizedBox(height: 16),
               Text(
-                'App locked',
+                l10n.appLockLocked,
                 style: TextStyle(
                   color: cs.onSurface,
                   fontSize: 24,
@@ -60,7 +62,7 @@ class _AppLockUnlockViewState extends State<AppLockUnlockView> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Enter your PIN or use biometrics.',
+                l10n.appLockEnterPinOrBiometrics,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: cs.onSurfaceVariant, fontSize: 14),
               ),
