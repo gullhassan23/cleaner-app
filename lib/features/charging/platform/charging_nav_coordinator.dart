@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -152,14 +153,23 @@ class ChargingNavCoordinator extends GetxService with WidgetsBindingObserver {
     });
   }
 
-  Future<void> _closeDisplay() async {
+  /// Closes the charging display without leaving a blank route or activity.
+  ///
+  /// In-app stack: [Get.back]. Overlay / root-only route: finish overlay then
+  /// [SystemNavigator.pop] so the Flutter activity exits cleanly.
+  Future<void> closeDisplay() async {
     if (Get.currentRoute == AppRoutes.chargingDisplay) {
-      if (Get.key.currentState?.canPop() ?? false) {
+      final navigator = Get.key.currentState;
+      if (navigator != null && navigator.canPop()) {
         Get.back<void>();
+        return;
       }
     }
     if (Platform.isAndroid) {
       await ChargingNativeBridge.finishOverlay();
     }
+    await SystemNavigator.pop();
   }
+
+  Future<void> _closeDisplay() => closeDisplay();
 }

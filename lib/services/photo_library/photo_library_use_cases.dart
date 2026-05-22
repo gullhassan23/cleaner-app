@@ -2,7 +2,7 @@ import 'dart:io';
 
 import '../../models/photo_library/photo_asset_entity.dart';
 import '../../models/photo_library/scan_state_entity.dart';
-import '../repositories/photo_library_repository.dart';
+import '../repositories/photo_library/photo_library_repository.dart';
 
 class GetPhotoPermissionStateUseCase {
   const GetPhotoPermissionStateUseCase(this._repository);

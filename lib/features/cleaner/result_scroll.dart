@@ -3,7 +3,6 @@ import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/widgets/cleaner/category_grid.dart';
 
-import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,6 +42,7 @@ class ResultsScrollBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final primary = Theme.of(context).colorScheme.primary;
     return Obx(() {
       final similarBytes = controller.bytesForKind(
         CleanerDashboardKind.similarPhotos,
@@ -172,7 +172,7 @@ class ResultsScrollBody extends StatelessWidget {
                             preview: shotPreview,
                             placeholderIcon: shotPreview == null,
                             subtitleAboveTitle: l10n.cleanerOptimizeYourStorage,
-                            topInset: _screenshotsFakeRow(kDashBlue),
+                         
                             onTap:
                                 shotCount == 0
                                     ? null
@@ -196,35 +196,42 @@ class ResultsScrollBody extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: _cardGap),
-                Material(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(20),
-                  clipBehavior: Clip.antiAlias,
-                  child: ListTile(
-                    onTap:
-                        () => Get.toNamed<void>(
-                          AppRoutes.aiPhotoEditor,
-                          id: AppRoutes.cleanerNestedNavigatorId,
+                Builder(
+                  builder: (ctx) {
+                    final cs = Theme.of(ctx).colorScheme;
+                    return Material(
+                      color: cs.primary,
+                      borderRadius: BorderRadius.circular(20),
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        onTap:
+                            () => Get.toNamed<void>(
+                              AppRoutes.aiPhotoEditor,
+                              id: AppRoutes.cleanerNestedNavigatorId,
+                            ),
+                        leading: Icon(Icons.image, color: cs.onPrimary),
+                        title: Text(
+                          l10n.cleanerAiPhotoEditor,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: cs.onPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                    leading: const Icon(Icons.image, color: Colors.white),
-                    title: Text(
-                      l10n.cleanerAiPhotoEditor,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                        subtitle: Text(
+                          l10n.cleanerImprovePhotoQuality,
+                          style: TextStyle(
+                            color: cs.onPrimary.withValues(alpha: 0.72),
+                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: cs.onPrimary.withValues(alpha: 0.72),
+                        ),
                       ),
-                    ),
-                    subtitle: Text(
-                      l10n.cleanerImprovePhotoQuality,
-                      style: const TextStyle(color: Colors.white70),
-                    ),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: Colors.white70,
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -234,38 +241,5 @@ class ResultsScrollBody extends StatelessWidget {
     });
   }
 
-  Widget _screenshotsFakeRow(Color kDashBlue) {
-    return Row(
-      children: [
-        Container(
-          width: 28,
-          height: 28,
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.9),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(Icons.contacts_rounded, size: 18, color: kDashBlue),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Container(
-            height: 6,
-            decoration: BoxDecoration(
-              color: const Color(0xFFFF3B30),
-              borderRadius: BorderRadius.circular(3),
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        const Text(
-          '3.0 GB',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 12,
-          ),
-        ),
-      ],
-    );
-  }
+  
 }

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cleaner_app/l10n/l10n_extension.dart';
-import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cleaner_app/models/photo_library/scan_state_entity.dart';
@@ -23,6 +22,7 @@ class PermissionBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final isLimited = permission.isLimited;
 
     return Center(
@@ -33,7 +33,7 @@ class PermissionBody extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.photo_library_outlined, size: 56, color: kDashBlue),
+              Icon(Icons.photo_library_outlined, size: 56, color: cs.primary),
               const SizedBox(height: 16),
               Text(
                 isLimited
@@ -43,7 +43,7 @@ class PermissionBody extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
-                  color: theme.colorScheme.onSurface,
+                  color: cs.onSurface,
                 ),
               ),
               const SizedBox(height: 10),
@@ -54,27 +54,19 @@ class PermissionBody extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: cs.onSurfaceVariant,
                   height: 1.45,
                 ),
               ),
               const SizedBox(height: 22),
               if (isLimited) ...[
                 FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: kDashBlue,
-                    foregroundColor: Colors.white,
-                  ),
                   onPressed: onManageLimited,
                   child: Text(context.l10n.permissionManageLibraryAccess),
                 ),
                 const SizedBox(height: 10),
               ],
               FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: kDashBlue,
-                  foregroundColor: Colors.white,
-                ),
                 onPressed: onRequest,
                 child: Text(
                   isLimited

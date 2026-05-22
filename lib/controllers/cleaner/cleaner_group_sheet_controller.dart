@@ -5,7 +5,7 @@ import '../../models/cleaner/cleaner_media_cluster.dart';
 import '../../models/cleaner/cleaner_sheet_mode.dart';
 import '../../models/cleaner/cleaner_selection_summary.dart';
 import '../../models/photo_library/photo_asset_entity.dart';
-import '../../services/repositories/photo_library_repository.dart';
+import '../../services/repositories/photo_library/photo_library_repository.dart';
 import '../../utils/bytes_formatter.dart';
 
 class CleanerGroupSheetController extends GetxController {

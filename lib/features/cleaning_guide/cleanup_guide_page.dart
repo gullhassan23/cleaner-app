@@ -1,7 +1,8 @@
-import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_constants.dart';
-import 'package:cleaner_app/features/cleaning_guide/widgets/clean_pill_button.dart';
-import 'package:cleaner_app/features/cleaning_guide/widgets/guide_back_button.dart';
-import 'package:cleaner_app/features/cleaning_guide/widgets/guide_section_header.dart';
+
+import 'package:cleaner_app/utils/colors.dart';
+import 'package:cleaner_app/widgets/clean_guide/clean_pill_button.dart';
+import 'package:cleaner_app/widgets/clean_guide/guide_back_button.dart';
+import 'package:cleaner_app/widgets/clean_guide/guide_section_header.dart';
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,12 @@ class CleanupGuidePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final cs = Theme.of(context).colorScheme;
+    final groupedBg = cs.groupedBackground;
     return Scaffold(
-      backgroundColor: CleanupGuideConstants.guideBackground,
+      backgroundColor: groupedBg,
       appBar: AppBar(
-        backgroundColor: CleanupGuideConstants.guideBackground,
+        backgroundColor: groupedBg,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -27,10 +30,10 @@ class CleanupGuidePage extends StatelessWidget {
         leading: GuideHubBackButton(onPressed: () => Get.back<void>()),
         title: Text(
           l10n.guideTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: cs.onSurface,
             letterSpacing: -0.3,
           ),
         ),
@@ -91,9 +94,10 @@ class _AppsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final cardColor = Theme.of(context).colorScheme.groupedCard;
     return Material(
-      color: CleanupGuideConstants.cardBackground,
-      borderRadius: BorderRadius.circular(CleanupGuideConstants.cardRadius),
+      color: cardColor,
+      borderRadius: BorderRadius.circular(cardRadius),
       clipBehavior: Clip.antiAlias,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -107,7 +111,9 @@ class _AppsGroup extends StatelessWidget {
             height: 0.5,
             thickness: 0.5,
             indent: 16,
-            color: Colors.black.withValues(alpha: 0.08),
+            color: Theme.of(context).colorScheme.outlineVariant.withValues(
+              alpha: 0.5,
+            ),
           ),
           _AppsRow(
             title: l10n.guideDeleteUnusedApps,
@@ -133,8 +139,9 @@ class _AppsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return SizedBox(
-      height: CleanupGuideConstants.rowHeight,
+      height: rowHeight,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Row(
@@ -143,20 +150,20 @@ class _AppsRow extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: CleanupGuideConstants.iconTileBackground,
+                color: cs.accentTile,
                 borderRadius: BorderRadius.circular(8),
               ),
               alignment: Alignment.center,
-              child: Icon(icon, size: 22, color: const Color(0xFF8E8E93)),
+              child: Icon(icon, size: 22, color: cs.mutedLabel),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
-                  color: Colors.black,
+                  color: cs.onSurface,
                   letterSpacing: -0.3,
                 ),
               ),
@@ -186,12 +193,13 @@ class _CacheAppRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Material(
-      color: CleanupGuideConstants.cardBackground,
-      borderRadius: BorderRadius.circular(CleanupGuideConstants.cardRadius),
+      color: cs.groupedCard,
+      borderRadius: BorderRadius.circular(cardRadius),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        height: CleanupGuideConstants.rowHeight,
+        height: rowHeight,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: Row(
@@ -217,10 +225,10 @@ class _CacheAppRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: cs.onSurface,
                     letterSpacing: -0.3,
                   ),
                 ),

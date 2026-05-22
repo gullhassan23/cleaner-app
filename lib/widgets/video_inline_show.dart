@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:cleaner_app/widgets/cleaner/cleaner_thumbnail.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
-import 'package:cleaner_app/services/repositories/photo_library_repository.dart';
+import 'package:cleaner_app/services/repositories/photo_library/photo_library_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';

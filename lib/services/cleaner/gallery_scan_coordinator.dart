@@ -1,6 +1,6 @@
 import '../../models/cleaner/cleaner_gallery_scan_result.dart';
 import '../../models/photo_library/photo_asset_entity.dart';
-import '../repositories/photo_library_repository.dart';
+import '../repositories/photo_library/photo_library_repository.dart';
 
 /// Loads and classifies all gallery media for the cleaner pipeline.
 class GalleryScanCoordinator {

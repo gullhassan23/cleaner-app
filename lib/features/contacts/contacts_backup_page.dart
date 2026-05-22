@@ -37,17 +37,27 @@ class ContactsBackupPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Obx(() {
-              final busy = repo.isLoading.value;
+              final busy = repo.isExporting.value;
+              if (busy) {
+                return Column(
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 16),
+                    Text(
+                      l10n.contactsExportPreparing,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                );
+              }
               return FilledButton(
-                onPressed:
-                    busy
-                        ? null
-                        : () async {
-                          await repo.exportAllContactsBackup();
-                        },
-                child: Text(
-                  busy ? l10n.contactsExportPreparing : l10n.contactsExportAllShare,
-                ),
+                onPressed: () async {
+                  await repo.exportAllContactsBackup();
+                },
+                child: Text(l10n.contactsExportAllShare),
               );
             }),
             const SizedBox(height: 12),

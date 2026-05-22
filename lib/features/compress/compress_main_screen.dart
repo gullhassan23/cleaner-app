@@ -152,7 +152,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                         crossAxisCount: 2,
                                         mainAxisSpacing: _gridGap,
                                         crossAxisSpacing: _gridGap,
-                                        childAspectRatio: 0.8,
+                                        childAspectRatio: 0.85,
                                       ),
                                 ),
                               ),

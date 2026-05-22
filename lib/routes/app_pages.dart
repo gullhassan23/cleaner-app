@@ -19,18 +19,18 @@ import 'package:cleaner_app/features/charging/charging_selection_view.dart';
 import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_flow_page.dart';
 import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_page.dart';
 import 'package:cleaner_app/features/more/more_tools.dart';
-import 'package:cleaner_app/features/private_vault/presentation/bindings/private_vault_binding.dart';
-import 'package:cleaner_app/features/private_vault/presentation/bindings/vault_route_bindings.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/private_vault_root_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_albums_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_change_pin_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_gate_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_home_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_pin_setup_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_preview_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_security_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_settings_page.dart';
-import 'package:cleaner_app/features/private_vault/presentation/pages/vault_unlock_page.dart';
+import 'package:cleaner_app/bindings/private_vault_binding.dart';
+import 'package:cleaner_app/bindings/vault_route_bindings.dart';
+import 'package:cleaner_app/features/private_vault/private_vault_root_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_albums_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_change_pin_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_gate_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_home_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_pin_setup_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_preview_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_security_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_settings_page.dart';
+import 'package:cleaner_app/features/private_vault/vault_unlock_page.dart';
 import 'package:cleaner_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -113,12 +113,12 @@ abstract final class AppPages {
       page: () => const MoreToolsPage(),
     ),
     GetPage<dynamic>(
-      transition: Transition.upToDown,
+      transition: Transition.rightToLeft,
       name: AppRoutes.cleanupGuide,
       page: () => const CleanupGuidePage(),
     ),
     GetPage<dynamic>(
-      transition: Transition.upToDown,
+      transition: Transition.downToUp,
       name: AppRoutes.cleanupGuideFlow,
       page: () => const CleanupGuideFlowPage(),
     ),

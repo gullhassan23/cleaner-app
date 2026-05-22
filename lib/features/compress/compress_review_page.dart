@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import '../../widgets/state_message_card.dart';
 import '../../models/compress/compress_entities.dart';
 
-import '../../services/repositories/photo_library_repository.dart';
+import '../../services/repositories/photo_library/photo_library_repository.dart';
 import '../../controllers/compress/compress_review_controller.dart';
 
 class CompressReviewPage extends GetView<CompressReviewController> {
@@ -23,7 +23,7 @@ class CompressReviewPage extends GetView<CompressReviewController> {
     final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.compressTitle)),
+      appBar: AppBar(centerTitle: true, title: Text(l10n.compressTitle)),
       bottomNavigationBar: Obx(() {
         final session = controller.session.state.value;
         final canCompress = session.hasSelection && !session.isCompressing;
@@ -33,7 +33,7 @@ class CompressReviewPage extends GetView<CompressReviewController> {
           child: FilledButton(
             onPressed: canCompress ? controller.compressSelected : null,
             style: FilledButton.styleFrom(
-              minimumSize: const Size.fromHeight(56),
+              minimumSize: Size.fromHeight(56),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),
               ),
@@ -81,11 +81,13 @@ class CompressReviewPage extends GetView<CompressReviewController> {
             );
           }
 
-          final previewAsset = selectedAssets.first;
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
             children: [
-              PreviewCard(asset: previewAsset, repository: repository),
+              CompressPreviewPager(
+                assets: selectedAssets,
+                repository: repository,
+              ),
               if (selectedAssets.length > 1) ...[
                 const SizedBox(height: 10),
                 Center(

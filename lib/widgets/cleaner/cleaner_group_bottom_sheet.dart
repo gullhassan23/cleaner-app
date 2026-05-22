@@ -48,21 +48,13 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 16, 12, 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
+                    child: Expanded(
+                      child: Text(
+                        title,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
                         ),
-                        IconButton(
-                          onPressed: Get.back<void>,
-                          icon: const Icon(Icons.close_rounded),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -71,33 +63,43 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                       return CustomScrollView(
                         slivers: [
                           for (var gi = 0; gi < c.clusters.length; gi++) ...[
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
-                              child: Text(
-                                l10n.cleanerGroupNumber(gi + 1),
-                                style: theme.textTheme.titleSmall?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: theme.colorScheme.onSurfaceVariant,
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  20,
+                                  12,
+                                  20,
+                                  8,
+                                ),
+                                child: Text(
+                                  l10n.cleanerGroupNumber(gi + 1),
+                                  style: theme.textTheme.titleSmall?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: theme.colorScheme.onSurfaceVariant,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SliverPadding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            sliver: SliverGrid(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10,
-                                    childAspectRatio: 0.72,
-                                  ),
-                              delegate: SliverChildBuilderDelegate(
-                                (context, mi) {
+                            SliverPadding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              sliver: SliverGrid(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      mainAxisSpacing: 10,
+                                      crossAxisSpacing: 10,
+                                      childAspectRatio: 0.72,
+                                    ),
+                                delegate: SliverChildBuilderDelegate((
+                                  context,
+                                  mi,
+                                ) {
                                   final cluster = c.clusters[gi];
                                   final asset = cluster.members[mi];
-                                  final isKeeper = asset.id == cluster.keeper.id;
+                                  final isKeeper =
+                                      asset.id == cluster.keeper.id;
                                   final selected = c.isSelected(asset.id);
                                   return GestureDetector(
                                     onTap: () => c.toggleSelection(asset.id),
@@ -123,16 +125,19 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                                           overlay:
                                               isKeeper
                                                   ? Align(
-                                                    alignment: Alignment.topLeft,
+                                                    alignment:
+                                                        Alignment.topLeft,
                                                     child: Padding(
-                                                      padding: const EdgeInsets.all(
-                                                        6,
-                                                      ),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                            6,
+                                                          ),
                                                       child: DecoratedBox(
                                                         decoration: BoxDecoration(
-                                                          color: theme
-                                                              .colorScheme
-                                                              .primary,
+                                                          color:
+                                                              theme
+                                                                  .colorScheme
+                                                                  .primary,
                                                           borderRadius:
                                                               BorderRadius.circular(
                                                                 8,
@@ -150,9 +155,10 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                                                                 .textTheme
                                                                 .labelSmall
                                                                 ?.copyWith(
-                                                                  color: theme
-                                                                      .colorScheme
-                                                                      .onPrimary,
+                                                                  color:
+                                                                      theme
+                                                                          .colorScheme
+                                                                          .onPrimary,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w800,
@@ -180,9 +186,10 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                                                         ? theme
                                                             .colorScheme
                                                             .primary
-                                                        : Colors.white.withValues(
-                                                          alpha: 0.92,
-                                                        ),
+                                                        : Colors.white
+                                                            .withValues(
+                                                              alpha: 0.92,
+                                                            ),
                                                 borderRadius:
                                                     BorderRadius.circular(999),
                                                 border: Border.all(
@@ -215,13 +222,13 @@ class CleanerGroupBottomSheet extends StatelessWidget {
                                       ],
                                     ),
                                   );
-                                },
-                                childCount: c.clusters[gi].members.length,
+                                }, childCount: c.clusters[gi].members.length),
                               ),
                             ),
+                          ],
+                          const SliverToBoxAdapter(
+                            child: SizedBox(height: 120),
                           ),
-                        ],
-                          const SliverToBoxAdapter(child: SizedBox(height: 120)),
                         ],
                       );
                     }),

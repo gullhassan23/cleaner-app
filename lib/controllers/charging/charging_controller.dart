@@ -152,6 +152,8 @@ class ChargingController extends GetxController with WidgetsBindingObserver {
     Get.toNamed<void>(AppRoutes.chargingDisplay);
   }
 
+  Future<void> closeDisplay() => _navCoordinator.closeDisplay();
+
   Future<void> openBatteryOptimizationSettings() async {
     await ChargingNativeBridge.openBatteryOptimizationSettings();
   }

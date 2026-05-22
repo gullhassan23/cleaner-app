@@ -1,5 +1,6 @@
-import 'package:cleaner_app/features/cleaning_guide/cleanup_guide_constants.dart';
-import 'package:cleaner_app/features/cleaning_guide/widgets/guide_back_button.dart';
+
+import 'package:cleaner_app/utils/colors.dart';
+import 'package:cleaner_app/widgets/clean_guide/guide_back_button.dart';
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,11 +54,12 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final cs = Theme.of(context).colorScheme;
     final isLast = _currentPage >= _stepCount - 1;
     final subtitles = _stepSubtitles(context);
 
     return Scaffold(
-      backgroundColor: CleanupGuideConstants.flowBackground,
+      backgroundColor: cs.groupedBackground,
       body: SafeArea(
         child: Column(
           children: [
@@ -75,10 +77,10 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
             Text(
               l10n.guideFlowTitle,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1C1C1E),
+                color: cs.onSurface,
                 letterSpacing: -0.4,
               ),
             ),
@@ -89,10 +91,10 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
                 subtitles[_currentPage],
                 key: ValueKey<int>(_currentPage),
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1C1C1E),
+                  color: cs.onSurface,
                   letterSpacing: -0.3,
                 ),
               ),
@@ -108,7 +110,7 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Center(
                       child: Image.asset(
-                        CleanupGuideConstants.offloadStepAssets[index],
+                        offloadStepAssets[index],
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -126,8 +128,8 @@ class _CleanupGuideFlowPageState extends State<CleanupGuideFlowPage> {
                 child: FilledButton(
                   onPressed: _onNext,
                   style: FilledButton.styleFrom(
-                    backgroundColor: CleanupGuideConstants.iosBlue,
-                    foregroundColor: Colors.white,
+                    backgroundColor: cs.primary,
+                    foregroundColor: cs.onPrimary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
@@ -159,6 +161,7 @@ class _PageDots extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(count, (index) {
@@ -169,9 +172,7 @@ class _PageDots extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: active
-                ? CleanupGuideConstants.iosBlue
-                : const Color(0xFFD1D1D6),
+            color: active ? cs.primary : cs.outlineVariant,
           ),
         );
       }),

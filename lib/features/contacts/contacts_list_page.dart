@@ -18,12 +18,16 @@ class ContactsListPage extends GetView<ContactsListController> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        leading: TextButton(
+        // leading: TextButton(
+        //   onPressed:
+        //       () => Get.back<void>(id: AppRoutes.contactsNestedNavigatorId),
+        //   child: Text(l10n.commonBack),
+        // ),
+        leading: IconButton(
           onPressed:
               () => Get.back<void>(id: AppRoutes.contactsNestedNavigatorId),
-          child: Text(l10n.commonBack),
+          icon: Icon(Icons.adaptive.arrow_back),
         ),
-
         title: Text(l10n.contactsTitle),
         actions: [
           Obx(

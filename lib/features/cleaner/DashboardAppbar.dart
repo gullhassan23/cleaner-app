@@ -1,5 +1,4 @@
 import 'package:cleaner_app/l10n/l10n_extension.dart';
-import 'package:cleaner_app/utils/colors.dart';
 import 'package:cleaner_app/widgets/storage_strip.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +37,7 @@ class DashboardAppbar extends StatelessWidget {
                   ),
                   const Spacer(),
                   Material(
-                    color: kDashBlue,
+                    color: theme.colorScheme.primary,
                     borderRadius: BorderRadius.circular(20),
                     child: InkWell(
                       onTap:
@@ -56,16 +55,16 @@ class DashboardAppbar extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.thumb_up_alt_rounded,
                               size: 16,
-                              color: Colors.white,
+                              color: theme.colorScheme.onPrimary,
                             ),
                             const SizedBox(width: 6),
                             Text(
                               context.l10n.cleanerPro,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: theme.colorScheme.onPrimary,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 13,
                               ),
@@ -80,7 +79,7 @@ class DashboardAppbar extends StatelessWidget {
                       onPressed: onSort,
                       icon: Icon(
                         Icons.sort_rounded,
-                        color: kDashGrey,
+                        color: theme.colorScheme.onSurfaceVariant,
                         size: 26,
                       ),
                     ),
@@ -88,7 +87,7 @@ class DashboardAppbar extends StatelessWidget {
                     onPressed: onSettings,
                     icon: Icon(
                       Icons.settings_outlined,
-                      color: kDashGrey,
+                      color: theme.colorScheme.onSurfaceVariant,
                       size: 26,
                     ),
                   ),

@@ -1,8 +1,8 @@
 import 'package:cleaner_app/controllers/theme_controller.dart';
 import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
 import 'package:cleaner_app/bindings/photo_widget_binding.dart';
-import 'package:cleaner_app/features/private_vault/data/datasources/vault_auth_service.dart';
-import 'package:cleaner_app/features/private_vault/presentation/bindings/private_vault_binding.dart';
+import 'package:cleaner_app/services/private_vault/vault_auth_service.dart';
+import 'package:cleaner_app/bindings/private_vault_binding.dart';
 
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
@@ -21,7 +21,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   bool _usePasscode = false;
   bool _removeAfterImport = false;
-  bool _faceId = false;
 
   @override
   void initState() {
@@ -127,11 +126,11 @@ class _SettingsPageState extends State<SettingsPage> {
                   Get.toNamed(AppRoutes.photoWidgetHub);
                 },
               ),
-              _SettingsToggleRow(
-                label: l10n.settingsFaceId,
-                value: _faceId,
-                onChanged: (v) => setState(() => _faceId = v),
-              ),
+              // _SettingsToggleRow(
+              //   label: l10n.settingsFaceId,
+              //   value: _faceId,
+              //   onChanged: (v) => setState(() => _faceId = v),
+              // ),
               const _DarkModeToggleRow(),
               const _AppLockToggleRow(),
               _SettingsNavRow(
@@ -291,7 +290,7 @@ class _SettingsNavRow extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  CupertinoIcons.chevron_forward,
+                  Icons.chevron_right,
                   size: 18,
                   color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
                 ),
@@ -374,7 +373,7 @@ class _SettingsToggleRow extends StatelessWidget {
             ),
             CupertinoSwitch(
               value: value,
-              activeTrackColor: const Color(0xFF34C759),
+              activeTrackColor: scheme.primary,
               onChanged: onChanged,
             ),
           ],

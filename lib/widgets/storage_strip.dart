@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:disk_usage/disk_usage.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +30,8 @@ class _StorageStripState extends State<StorageStrip> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final cs = Theme.of(context).colorScheme;
     return FutureBuilder<({int? total, int? free})>(
       future: _future,
       builder: (context, snap) {
@@ -55,28 +57,28 @@ class _StorageStripState extends State<StorageStrip> {
           children: [
             Text.rich(
               TextSpan(
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
-                  color: kDashGrey,
+                  color: cs.dashMuted,
                   fontWeight: FontWeight.w500,
                 ),
                 children: [
-                  const TextSpan(
-                    text: 'Used: ',
+                  TextSpan(
+                    text: l10n.cleanerStorageUsed,
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
                   ),
                   TextSpan(
                     text: used != null ? _gb(used) : '—',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 17,
-                      color: kDashBlue,
+                      color: cs.dashPrimary,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   TextSpan(
                     text: total != null ? ' / ${_gb(total)}' : '',
-                    style: const TextStyle(
-                      color: kDashGrey,
+                    style: TextStyle(
+                      color: cs.dashMuted,
                       fontSize: 17,
                       fontWeight: FontWeight.w400,
                     ),
@@ -90,8 +92,8 @@ class _StorageStripState extends State<StorageStrip> {
               child: LinearProgressIndicator(
                 value: progressValue,
                 minHeight: 10,
-                backgroundColor: const Color(0xFFE9E9EE),
-                color: kDashBlue,
+                backgroundColor: cs.progressTrack,
+                color: cs.dashPrimary,
               ),
             ),
           ],

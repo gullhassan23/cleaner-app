@@ -11,6 +11,7 @@ class ContactsRepository extends GetxService {
   final RxList<Contact> contacts = <Contact>[].obs;
   final RxBool hasPermission = false.obs;
   final RxBool isLoading = false.obs;
+  final RxBool isExporting = false.obs;
   final RxBool hasAttemptedLoad = false.obs;
 
   void _onContactsDbChanged() {
@@ -167,7 +168,13 @@ class ContactsRepository extends GetxService {
   }
 
   Future<void> exportAllContactsBackup() async {
-    final all = await fetchAllForExport();
-    await exportContactsToVcfAndShare(all);
+    if (isExporting.value) return;
+    isExporting.value = true;
+    try {
+      final all = await fetchAllForExport();
+      await exportContactsToVcfAndShare(all);
+    } finally {
+      isExporting.value = false;
+    }
   }
 }

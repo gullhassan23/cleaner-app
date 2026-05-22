@@ -201,7 +201,7 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
     String albumId,
     String currentName,
   ) async {
-    final l10n = context.l10n;
+
     final nameController = TextEditingController(text: currentName);
     final confirmed = await showDialog<bool>(
       context: context,
@@ -232,7 +232,7 @@ class PhotoWidgetAlbumView extends GetView<PhotoWidgetController> {
   }
 
   Future<void> _confirmDeleteAlbum(BuildContext context, String albumId) async {
-    final l10n = context.l10n;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) {

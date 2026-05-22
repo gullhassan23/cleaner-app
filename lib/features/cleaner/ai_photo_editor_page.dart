@@ -42,13 +42,16 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (ctx) => _AiGalleryBottomSheet(
-        sheetTitle: switch (feature) {
-          AiPhotoEditorFeature.photoEnhance => l10n.cleanerPickPhotoToEnhance,
-          AiPhotoEditorFeature.fixOldPhoto => l10n.cleanerPickOldPhotoToRestore,
-        },
-        onPick: (asset) => _cropPickedAsset(ctx, asset),
-      ),
+      builder:
+          (ctx) => _AiGalleryBottomSheet(
+            sheetTitle: switch (feature) {
+              AiPhotoEditorFeature.photoEnhance =>
+                l10n.cleanerPickPhotoToEnhance,
+              AiPhotoEditorFeature.fixOldPhoto =>
+                l10n.cleanerPickOldPhotoToRestore,
+            },
+            onPick: (asset) => _cropPickedAsset(ctx, asset),
+          ),
     );
   }
 
@@ -90,7 +93,10 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
     );
   }
 
-  Future<void> _cropPickedAsset(BuildContext sheetContext, AssetEntity asset) async {
+  Future<void> _cropPickedAsset(
+    BuildContext sheetContext,
+    AssetEntity asset,
+  ) async {
     Navigator.of(sheetContext).pop();
     final isDark = Theme.of(sheetContext).brightness == Brightness.dark;
     final gallery = Get.find<GalleryMediaService>();
@@ -114,7 +120,8 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
           toolbarColor: isDark ? const Color(0xFF1C1B1F) : Colors.white,
           toolbarWidgetColor: isDark ? Colors.white : Colors.black87,
           statusBarLight: !isDark,
-          backgroundColor: isDark ? const Color(0xFF121212) : const Color(0xFFF1F5F9),
+          backgroundColor:
+              isDark ? const Color(0xFF121212) : const Color(0xFFF1F5F9),
           activeControlsWidgetColor: _primaryBlue,
           cropGridColor: Colors.white.withValues(alpha: 0.9),
           cropFrameColor: isDark ? const Color(0xFFE0E0E0) : Colors.white,
@@ -198,13 +205,16 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
         padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
         children: [
           _FeatureCard(
-            background: isDark ? const Color(0xFF352A47) : const Color(0xFFEDE7F6),
+            background:
+                isDark ? const Color(0xFF352A47) : const Color(0xFFEDE7F6),
             title: l10n.cleanerPhotoEnhance,
-            titleColor: isDark ? const Color(0xFFE1BEE7) : const Color(0xFF4527A0),
+            titleColor:
+                isDark ? const Color(0xFFE1BEE7) : const Color(0xFF4527A0),
             subtitle: l10n.cleanerBoostQuality,
-            subtitleColor: isDark
-                ? const Color(0xFFCE93D8).withValues(alpha: 0.85)
-                : const Color(0xFF6A1B9A).withValues(alpha: 0.75),
+            subtitleColor:
+                isDark
+                    ? const Color(0xFFCE93D8).withValues(alpha: 0.85)
+                    : const Color(0xFF6A1B9A).withValues(alpha: 0.75),
             demo: _SplitDemoThumb(
               left: isDark ? const Color(0xFF4A3F5C) : const Color(0xFFD1C4E9),
               right: isDark ? const Color(0xFF6A4BA8) : const Color(0xFF7E57C2),
@@ -216,13 +226,16 @@ class _AiPhotoEditorPageState extends State<AiPhotoEditorPage> {
           ),
           const SizedBox(height: 14),
           _FeatureCard(
-            background: isDark ? const Color(0xFF3D2E26) : const Color(0xFFFFE0D4),
+            background:
+                isDark ? const Color(0xFF3D2E26) : const Color(0xFFFFE0D4),
             title: l10n.cleanerFixOldPhoto,
-            titleColor: isDark ? const Color(0xFFFFCCBC) : const Color(0xFF3E2723),
+            titleColor:
+                isDark ? const Color(0xFFFFCCBC) : const Color(0xFF3E2723),
             subtitle: l10n.cleanerRestoreOldMemories,
-            subtitleColor: isDark
-                ? const Color(0xFFFFAB91).withValues(alpha: 0.9)
-                : const Color(0xFF5D4037).withValues(alpha: 0.8),
+            subtitleColor:
+                isDark
+                    ? const Color(0xFFFFAB91).withValues(alpha: 0.9)
+                    : const Color(0xFF5D4037).withValues(alpha: 0.8),
             demo: _SplitDemoThumb(
               left: isDark ? const Color(0xFF5D5D5D) : const Color(0xFFBDBDBD),
               right: isDark ? const Color(0xFF8D6E63) : const Color(0xFFFFCC80),
@@ -295,7 +308,10 @@ class _FeatureCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, color: titleColor.withValues(alpha: 0.45)),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: titleColor.withValues(alpha: 0.45),
+              ),
             ],
           ),
         ),
@@ -335,9 +351,7 @@ class _SplitDemoThumb extends StatelessWidget {
                   filter: ImageFilter.blur(sigmaX: 1.2, sigmaY: 1.2),
                   child: const ColoredBox(color: Colors.transparent),
                 ),
-                Center(
-                  child: Icon(leftIcon, color: iconOnDemo, size: 28),
-                ),
+                Center(child: Icon(leftIcon, color: iconOnDemo, size: 28)),
               ],
             ),
           ),
@@ -357,10 +371,7 @@ class _SplitDemoThumb extends StatelessWidget {
 }
 
 class _AiGalleryBottomSheet extends StatefulWidget {
-  const _AiGalleryBottomSheet({
-    required this.sheetTitle,
-    required this.onPick,
-  });
+  const _AiGalleryBottomSheet({required this.sheetTitle, required this.onPick});
 
   final String sheetTitle;
   final Future<void> Function(AssetEntity asset) onPick;
@@ -423,23 +434,15 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 12, 8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      controller.sheetTitle,
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        color: cs.onSurface,
-                      ),
-                    ),
+              child: Expanded(
+                child: Text(
+                  controller.sheetTitle,
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: cs.onSurface,
                   ),
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.close_rounded, color: cs.onSurface),
-                  ),
-                ],
+                ),
               ),
             ),
             Expanded(
@@ -448,7 +451,9 @@ class _AiGallerySheetBody extends GetView<AiGallerySheetController> {
                 final loading = controller.loading.value;
                 final ended = controller.end.value;
                 if (list.isEmpty && loading) {
-                  return Center(child: CircularProgressIndicator(color: cs.primary));
+                  return Center(
+                    child: CircularProgressIndicator(color: cs.primary),
+                  );
                 }
                 if (list.isEmpty) {
                   return Center(
@@ -525,7 +530,9 @@ class _GalleryThumb extends StatelessWidget {
             gaplessPlayback: true,
           );
         }
-        return ColoredBox(color: Theme.of(context).colorScheme.surfaceContainerHigh);
+        return ColoredBox(
+          color: Theme.of(context).colorScheme.surfaceContainerHigh,
+        );
       },
     );
   }

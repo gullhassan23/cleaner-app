@@ -23,7 +23,7 @@ class ChargingHomeView extends GetView<ChargingController> {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: Colors.white, size: 32),
+          icon: Icon(Icons.adaptive.arrow_back, color: Colors.white, size: 30),
           onPressed: () => Get.back<void>(),
         ),
         title: Text(
@@ -48,7 +48,7 @@ class ChargingHomeView extends GetView<ChargingController> {
                 Expanded(
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: AspectRatio(
                         aspectRatio: 1,
                         child: Obx(() {
@@ -110,9 +110,7 @@ class ChargingHomeView extends GetView<ChargingController> {
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
                     child: FilledButton.tonal(
                       onPressed: () {
-                        unawaited(
-                          controller.openBatteryOptimizationSettings(),
-                        );
+                        unawaited(controller.openBatteryOptimizationSettings());
                       },
                       style: FilledButton.styleFrom(
                         backgroundColor: Colors.white.withValues(alpha: 0.2),
@@ -162,7 +160,11 @@ class _LockScreenSetupCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.lock_outline_rounded, color: Colors.white, size: 20),
+                const Icon(
+                  Icons.lock_outline_rounded,
+                  color: Colors.white,
+                  size: 20,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   l10n.chargingLockScreenSetup,
@@ -218,6 +220,7 @@ class _EmptySelectionHint extends StatelessWidget {
     final l10n = context.l10n;
     return Center(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
@@ -225,12 +228,12 @@ class _EmptySelectionHint extends StatelessWidget {
             size: 64,
             color: Colors.white.withValues(alpha: 0.5),
           ),
-          const SizedBox(height: 12),
+
           Text(
             l10n.chargingChooseAnimation,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.85),
-              fontSize: 16,
+              fontSize: 1,
               fontWeight: FontWeight.w600,
             ),
           ),

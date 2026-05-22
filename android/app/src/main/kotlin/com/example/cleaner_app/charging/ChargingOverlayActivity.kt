@@ -12,12 +12,12 @@ import io.flutter.embedding.android.FlutterActivity
 class ChargingOverlayActivity : FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        applyLockScreenFlags()
         if (intent?.getBooleanExtra(EXTRA_FINISH, false) == true) {
             finish()
             return
         }
+        super.onCreate(savedInstanceState)
+        applyLockScreenFlags()
     }
 
     override fun onNewIntent(intent: Intent) {

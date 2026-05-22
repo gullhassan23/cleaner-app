@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/charging/charging_controller.dart';
-import 'platform/charging_native_bridge.dart';
 import '../../widgets/charging/charging_animation_host.dart';
 import '../../widgets/charging/charging_backdrop.dart';
 
@@ -17,11 +16,12 @@ class ChargingDisplayView extends GetView<ChargingController> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final canPopRoute = Get.key.currentState?.canPop() ?? false;
     return PopScope(
-      canPop: true,
-      onPopInvokedWithResult: (didPop, _) async {
-        if (didPop && Platform.isAndroid) {
-          await ChargingNativeBridge.finishOverlay();
+      canPop: canPopRoute,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) {
+          unawaited(controller.closeDisplay());
         }
       },
       child: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -44,14 +44,7 @@ class ChargingDisplayView extends GetView<ChargingController> {
                     Align(
                       alignment: Alignment.topRight,
                       child: IconButton(
-                        onPressed: () async {
-                          if (Platform.isAndroid) {
-                            await ChargingNativeBridge.finishOverlay();
-                          }
-                          if (Get.key.currentState?.canPop() ?? false) {
-                            Get.back<void>();
-                          }
-                        },
+                        onPressed: () => unawaited(controller.closeDisplay()),
                         icon: const Icon(Icons.close_rounded, color: Colors.white),
                       ),
                     ),

@@ -2,7 +2,7 @@ import 'package:crypto/crypto.dart';
 
 import '../../models/cleaner/cleaner_media_cluster.dart';
 import '../../models/photo_library/photo_asset_entity.dart';
-import '../repositories/photo_library_repository.dart';
+import '../repositories/photo_library/photo_library_repository.dart';
 
 typedef DuplicateProgressCallback = void Function(int completed, int total);
 

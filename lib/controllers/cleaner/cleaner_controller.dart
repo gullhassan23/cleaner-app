@@ -16,7 +16,7 @@ import '../../models/cleaner/cleaner_scan_phase.dart';
 import '../../models/cleaner/cleaner_sheet_mode.dart';
 import '../../models/photo_library/photo_asset_entity.dart';
 import '../../models/photo_library/scan_state_entity.dart';
-import '../../services/repositories/photo_library_repository.dart';
+import '../../services/repositories/photo_library/photo_library_repository.dart';
 import '../../routes/app_routes.dart';
 import '../../utils/photo_asset_sort.dart';
 import '../../services/cleaner/duplicate_detector_service.dart';

@@ -11,7 +11,6 @@ import 'package:cleaner_app/models/cleaner/cleaner_scan_phase.dart';
 
 import 'package:cleaner_app/routes/app_routes.dart';
 import 'package:cleaner_app/utils/colors.dart';
-
 import 'package:cleaner_app/utils/permission.dart';
 
 import 'package:flutter/material.dart';
@@ -81,6 +80,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
       showDragHandle: true,
       builder: (ctx) {
         final l10n = ctx.l10n;
+        final primary = Theme.of(ctx).colorScheme.primary;
         final current = controller.dashboardSort.value;
         return SafeArea(
           child: Column(
@@ -91,7 +91,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                 title: Text(l10n.cleanerSortLargestFirst),
                 trailing:
                     current == CleanerDashboardSort.largestFirst
-                        ? const Icon(Icons.check_rounded, color: kDashBlue)
+                        ? Icon(Icons.check_rounded, color: primary)
                         : null,
                 onTap:
                     () => Navigator.pop(ctx, CleanerDashboardSort.largestFirst),
@@ -100,7 +100,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                 title: Text(l10n.cleanerSortSmallestFirst),
                 trailing:
                     current == CleanerDashboardSort.smallestFirst
-                        ? const Icon(Icons.check_rounded, color: kDashBlue)
+                        ? Icon(Icons.check_rounded, color: primary)
                         : null,
                 onTap:
                     () =>
@@ -110,7 +110,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                 title: Text(l10n.cleanerSortNewestDateFirst),
                 trailing:
                     current == CleanerDashboardSort.newestDateFirst
-                        ? const Icon(Icons.check_rounded, color: kDashBlue)
+                        ? Icon(Icons.check_rounded, color: primary)
                         : null,
                 onTap:
                     () => Navigator.pop(
@@ -122,7 +122,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
                 title: Text(l10n.cleanerSortOldestDateFirst),
                 trailing:
                     current == CleanerDashboardSort.oldestDateFirst
-                        ? const Icon(Icons.check_rounded, color: kDashBlue)
+                        ? Icon(Icons.check_rounded, color: primary)
                         : null,
                 onTap:
                     () => Navigator.pop(
@@ -173,9 +173,9 @@ class _ScanningBody extends StatelessWidget {
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
-                  color: kDashGrey,
+                  color: theme.colorScheme.onSurfaceVariant,
                   height: 1.4,
                 ),
               ),
@@ -185,17 +185,17 @@ class _ScanningBody extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: progress.clamp(0.0, 1.0),
                   minHeight: 10,
-                  backgroundColor: const Color(0xFFE9E9EE),
-                  color: kDashBlue,
+                  backgroundColor: theme.colorScheme.progressTrack,
+                  color: theme.colorScheme.primary,
                 ),
               ),
               const SizedBox(height: 10),
               Text(
                 '${(progress * 100).round()}%',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 15,
-                  color: Colors.black,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
             ],
@@ -214,29 +214,26 @@ class _ErrorBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+            Icon(
               Icons.error_outline_rounded,
               size: 48,
-              color: Color(0xFFFF3B30),
+              color: cs.error,
             ),
             const SizedBox(height: 12),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 15, color: Colors.black87),
+              style: TextStyle(fontSize: 15, color: cs.onSurface),
             ),
             const SizedBox(height: 18),
             FilledButton(
-              style: FilledButton.styleFrom(
-                backgroundColor: kDashBlue,
-                foregroundColor: Colors.white,
-              ),
               onPressed: onRetry,
               child: Text(context.l10n.commonTryAgain),
             ),

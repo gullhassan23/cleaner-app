@@ -3,11 +3,11 @@ import 'dart:math' as math;
 import 'package:cleaner_app/widgets/cleaner/cleaner_thumbnail.dart';
 import 'package:cleaner_app/widgets/video_inline_show.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
-import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class CategoryGridCard extends StatelessWidget {
-  const CategoryGridCard({super.key, 
+  const CategoryGridCard({
+    super.key,
     required this.height,
     required this.title,
     required this.sizeLabel,
@@ -16,7 +16,7 @@ class CategoryGridCard extends StatelessWidget {
     this.solidBlack = false,
     this.inlineVideo = false,
     this.subtitleAboveTitle,
-    this.topInset,
+
     this.onTap,
   });
 
@@ -28,7 +28,7 @@ class CategoryGridCard extends StatelessWidget {
   final bool solidBlack;
   final bool inlineVideo;
   final String? subtitleAboveTitle;
-  final Widget? topInset;
+
   final VoidCallback? onTap;
 
   static const double _imageInset = 8;
@@ -36,6 +36,7 @@ class CategoryGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final showGreyPlaceholder = placeholderIcon && !solidBlack;
+    final cs = Theme.of(context).colorScheme;
 
     return Material(
       color: Colors.transparent,
@@ -55,18 +56,18 @@ class CategoryGridCard extends StatelessWidget {
                     padding: const EdgeInsets.all(_imageInset),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(14),
-                      child: _buildMediaLayer(),
+                      child: _buildMediaLayer(context),
                     ),
                   ),
                 ),
                 if (showGreyPlaceholder)
                   Padding(
                     padding: const EdgeInsets.all(_imageInset),
-                    child: const Center(
+                    child: Center(
                       child: Icon(
                         Icons.image_outlined,
                         size: 42,
-                        color: kDashGrey,
+                        color: cs.onSurfaceVariant,
                       ),
                     ),
                   ),
@@ -82,8 +83,7 @@ class CategoryGridCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (topInset != null)
-                  Positioned(top: 10, left: 10, right: 10, child: topInset!),
+
                 Positioned(
                   left: 12,
                   right: 10,
@@ -146,7 +146,7 @@ class CategoryGridCard extends StatelessWidget {
     );
   }
 
-  Widget _buildMediaLayer() {
+  Widget _buildMediaLayer(BuildContext context) {
     if (solidBlack) {
       return const ColoredBox(color: Colors.black);
     }
@@ -169,12 +169,13 @@ class CategoryGridCard extends StatelessWidget {
         },
       );
     }
-    return const DecoratedBox(
+    final cs = Theme.of(context).colorScheme;
+    return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [kCardGreyTop, kCardGreyBottom],
+          colors: [cs.surfaceContainerHigh, cs.surfaceContainerHighest],
         ),
       ),
     );

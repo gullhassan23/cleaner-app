@@ -11,8 +11,9 @@ import '../cache/thumbnail_cache_service.dart';
 import '../deletion/photo_delete_service.dart';
 import '../gallery/gallery_media_service.dart';
 import '../permissions/photo_permission_service.dart';
+import '../repositories/photo_library/photo_library_repository.dart';
 
-class PhotoLibraryDataSource {
+class PhotoLibraryDataSource implements PhotoLibraryRepository {
   static const int _metadataConcurrency = 8;
 
   PhotoLibraryDataSource({
@@ -140,11 +141,8 @@ class PhotoLibraryDataSource {
     return List<PhotoAssetEntity>.unmodifiable(allMedia);
   }
 
-  Future<File?> loadOriginalFile(PhotoAssetEntity asset) {
-    return _galleryService.getOriginalFile(asset.id);
-  }
-
-  Future<File?> loadOriginalFileById(String assetId) {
+  @override
+  Future<File?> loadOriginalFile(String assetId) {
     return _galleryService.getOriginalFile(assetId);
   }
 

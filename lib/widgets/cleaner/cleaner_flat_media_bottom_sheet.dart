@@ -1,7 +1,7 @@
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_selection_summary.dart';
 import 'package:cleaner_app/models/photo_library/photo_asset_entity.dart';
-import 'package:cleaner_app/services/repositories/photo_library_repository.dart';
+import 'package:cleaner_app/services/repositories/photo_library/photo_library_repository.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

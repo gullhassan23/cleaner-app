@@ -9,8 +9,7 @@ import '../services/charging/charging_catalog_service.dart';
 import '../services/charging/charging_preferences_service.dart';
 import '../services/charging/charging_service.dart';
 import '../services/photo_library/photo_library_data_source.dart';
-import '../services/photo_library/photo_library_repository_impl.dart';
-import '../services/repositories/photo_library_repository.dart';
+import '../services/repositories/photo_library/photo_library_repository.dart';
 import '../services/cache/thumbnail_cache_service.dart';
 import '../services/deletion/photo_delete_service.dart';
 import '../services/gallery/gallery_media_service.dart';
@@ -36,18 +35,13 @@ class AppBinding extends Bindings {
     Get.put(ThumbnailCacheService(), permanent: true);
     Get.put(PhotoDeleteService(), permanent: true);
 
-    Get.put(
+    Get.put<PhotoLibraryRepository>(
       PhotoLibraryDataSource(
         permissionService: Get.find(),
         galleryService: Get.find(),
         deleteService: Get.find(),
         thumbnailCacheService: Get.find(),
       ),
-      permanent: true,
-    );
-
-    Get.put<PhotoLibraryRepository>(
-      PhotoLibraryRepositoryImpl(dataSource: Get.find()),
       permanent: true,
     );
 
