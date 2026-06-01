@@ -57,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-        leadingWidth: 88,
+
         leading: _SettingsBackButton(
           onPressed: () => Navigator.maybePop(context),
         ),
@@ -175,27 +175,14 @@ class _SettingsBackButton extends StatelessWidget {
         padding: const EdgeInsets.only(left: 4),
         minSize: 0,
         onPressed: onPressed,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Directionality.of(context) == TextDirection.rtl
-                  ? CupertinoIcons.forward
-                  : CupertinoIcons.back,
-              size: 22,
-              color: primary,
-            ),
-            const SizedBox(width: 2),
-            Text(
-              l10n.commonBack,
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w400,
-                color: primary,
-                letterSpacing: -0.4,
-              ),
-            ),
-          ],
+        child: Text(
+          l10n.commonBack,
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w400,
+            color: primary,
+            letterSpacing: -0.4,
+          ),
         ),
       ),
     );

@@ -1,4 +1,3 @@
-
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,11 +57,7 @@ class GuideFlowBackButton extends StatelessWidget {
         child: SizedBox(
           width: 40,
           height: 40,
-          child: Icon(
-            CupertinoIcons.back,
-            size: 20,
-            color: cs.onSurface,
-          ),
+          child: Icon(CupertinoIcons.back, size: 20, color: cs.onSurface),
         ),
       ),
     );

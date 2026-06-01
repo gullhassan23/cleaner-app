@@ -4,7 +4,7 @@ import 'package:cleaner_app/controllers/cleaner/cleaner_controller.dart';
 import 'package:cleaner_app/features/cleaner/DashboardAppbar.dart';
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 
-import 'package:cleaner_app/features/cleaner/result_scroll.dart';
+import 'package:cleaner_app/features/cleaner/gridsection.dart';
 
 import 'package:cleaner_app/models/cleaner/cleaner_dashboard_sort.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_scan_phase.dart';
@@ -67,7 +67,7 @@ class CleanerDashboardPage extends GetView<CleanerController> {
           return DashboardAppbar(
             onSettings: () => Get.toNamed<void>(AppRoutes.settings),
             onSort: () => _openSortSheet(context),
-            child: ResultsScrollBody(controller: controller),
+            child: Gridsection(controller: controller),
           );
         }),
       ),

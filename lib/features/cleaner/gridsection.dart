@@ -10,8 +10,8 @@ import 'package:cleaner_app/controllers/cleaner/cleaner_controller.dart';
 import 'package:cleaner_app/models/cleaner/cleaner_dashboard_kind.dart';
 import 'package:cleaner_app/utils/bytes_formatter.dart';
 
-class ResultsScrollBody extends StatelessWidget {
-  const ResultsScrollBody({super.key, required this.controller});
+class Gridsection extends StatelessWidget {
+  const Gridsection({super.key, required this.controller});
 
   final CleanerController controller;
 
@@ -42,7 +42,7 @@ class ResultsScrollBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final primary = Theme.of(context).colorScheme.primary;
+  
     return Obx(() {
       final similarBytes = controller.bytesForKind(
         CleanerDashboardKind.similarPhotos,
