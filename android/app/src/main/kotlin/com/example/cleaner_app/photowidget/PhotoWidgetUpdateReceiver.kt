@@ -1,4 +1,4 @@
-package com.example.cleaner_app.photowidget
+package com.FutureDialLabs.phonecleaner.file.junk.app.photowidget
 
 import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver
@@ -28,6 +28,6 @@ class PhotoWidgetUpdateReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val ACTION_TICK = "com.example.cleaner_app.photo_widget.TICK"
+        const val ACTION_TICK = "com.FutureDialLabs.phonecleaner.file.junk.app.photo_widget.TICK"
     }
 }

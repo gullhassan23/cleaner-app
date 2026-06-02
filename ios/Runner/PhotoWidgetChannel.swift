@@ -5,7 +5,7 @@ import WidgetKit
 /// Syncs Flutter photo widget config into the shared App Group and reloads timelines.
 final class PhotoWidgetChannel {
   static let channelName = "cleaner_app/photo_widget"
-  static let appGroupId = "group.com.example.cleaner_app"
+  static let appGroupId = "group.com.FutureDialLabs.phonecleaner.file.junk.app"
   static let widgetCacheFolder = "photo_widget/cache"
   static let manifestFileName = "widget_manifest.json"
 

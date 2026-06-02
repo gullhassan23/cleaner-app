@@ -105,6 +105,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsAboutUs => '关于我们';
 
   @override
+  String get settingsTermsAndConditions => '条款与条件';
+
+  @override
+  String get settingsPrivacyPolicy => '隐私政策';
+
+  @override
   String get settingsThemeMode => '主题模式';
 
   @override

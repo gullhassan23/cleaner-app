@@ -1,4 +1,4 @@
-package com.example.cleaner_app.photowidget
+package com.FutureDialLabs.phonecleaner.file.junk.app.photowidget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -9,8 +9,8 @@ import android.content.Intent
 import android.os.Build
 import android.view.View
 import android.widget.RemoteViews
-import com.example.cleaner_app.MainActivity
-import com.example.cleaner_app.R
+import com.FutureDialLabs.phonecleaner.file.junk.app.MainActivity
+import com.FutureDialLabs.phonecleaner.file.junk.app.R
 
 class PhotoWidgetProvider : AppWidgetProvider() {
 

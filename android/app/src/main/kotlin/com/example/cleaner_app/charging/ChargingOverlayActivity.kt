@@ -1,4 +1,4 @@
-package com.example.cleaner_app.charging
+package com.FutureDialLabs.phonecleaner.file.junk.app.charging
 
 import android.content.Intent
 import android.os.Build

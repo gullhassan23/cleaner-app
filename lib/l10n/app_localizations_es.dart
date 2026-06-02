@@ -105,6 +105,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsAboutUs => 'Sobre nosotros';
 
   @override
+  String get settingsTermsAndConditions => 'Términos y condiciones';
+
+  @override
+  String get settingsPrivacyPolicy => 'Política de privacidad';
+
+  @override
   String get settingsThemeMode => 'Modo de tema';
 
   @override

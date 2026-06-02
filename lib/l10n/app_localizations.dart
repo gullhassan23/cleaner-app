@@ -293,6 +293,18 @@ abstract class AppLocalizations {
   /// **'About Us'**
   String get settingsAboutUs;
 
+  /// No description provided for @settingsTermsAndConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms and Conditions'**
+  String get settingsTermsAndConditions;
+
+  /// No description provided for @settingsPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get settingsPrivacyPolicy;
+
   /// No description provided for @settingsThemeMode.
   ///
   /// In en, this message translates to:

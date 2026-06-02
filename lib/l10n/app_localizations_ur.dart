@@ -105,6 +105,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsAboutUs => 'ہمارے بارے میں';
 
   @override
+  String get settingsTermsAndConditions => 'شرائط و ضوابط';
+
+  @override
+  String get settingsPrivacyPolicy => 'رازداری کی پالیسی';
+
+  @override
   String get settingsThemeMode => 'تھیم موڈ';
 
   @override

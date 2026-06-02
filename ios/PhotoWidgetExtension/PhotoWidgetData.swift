@@ -17,7 +17,7 @@ struct PhotoWidgetManifest: Codable {
 }
 
 enum PhotoWidgetData {
-  static let appGroupId = "group.com.example.cleaner_app"
+  static let appGroupId = "group.com.FutureDialLabs.phonecleaner.file.junk.app"
   static let manifestName = "widget_manifest.json"
 
   static func loadManifest() -> PhotoWidgetManifest? {

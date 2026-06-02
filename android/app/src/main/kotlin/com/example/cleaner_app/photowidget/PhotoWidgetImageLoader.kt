@@ -1,4 +1,4 @@
-package com.example.cleaner_app.photowidget
+package com.FutureDialLabs.phonecleaner.file.junk.app.photowidget
 
 import android.content.Context
 import android.graphics.Bitmap

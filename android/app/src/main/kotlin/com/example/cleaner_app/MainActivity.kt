@@ -1,15 +1,15 @@
-package com.example.cleaner_app
+package com.FutureDialLabs.phonecleaner.file.junk.app
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
-import com.example.cleaner_app.charging.ChargingOverlayActivity
-import com.example.cleaner_app.charging.ChargingOverlayLauncher
-import com.example.cleaner_app.charging.ChargingPrefs
-import com.example.cleaner_app.photowidget.PhotoWidgetChannel
-import com.example.cleaner_app.photowidget.PhotoWidgetProvider
+import com.FutureDialLabs.phonecleaner.file.junk.app.charging.ChargingOverlayActivity
+import com.FutureDialLabs.phonecleaner.file.junk.app.charging.ChargingOverlayLauncher
+import com.FutureDialLabs.phonecleaner.file.junk.app.charging.ChargingPrefs
+import com.FutureDialLabs.phonecleaner.file.junk.app.photowidget.PhotoWidgetChannel
+import com.FutureDialLabs.phonecleaner.file.junk.app.photowidget.PhotoWidgetProvider
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel

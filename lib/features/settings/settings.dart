@@ -3,14 +3,14 @@ import 'package:cleaner_app/controllers/applock/app_lock_controller.dart';
 import 'package:cleaner_app/bindings/photo_widget_binding.dart';
 import 'package:cleaner_app/services/private_vault/vault_auth_service.dart';
 import 'package:cleaner_app/bindings/private_vault_binding.dart';
-
 import 'package:cleaner_app/l10n/l10n_extension.dart';
 import 'package:cleaner_app/routes/app_routes.dart';
+import 'package:cleaner_app/utils/common_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-/// iOS-style grouped Settings screen (reference layout).
+/// iOS-style grouped Settings screen (reference layout)
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -57,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-
+        leadingWidth: 80,
         leading: _SettingsBackButton(
           onPressed: () => Navigator.maybePop(context),
         ),
@@ -144,13 +144,20 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 6),
           _SettingsGroup(
             children: [
-              _SettingsNavRow(label: l10n.settingsGetHelp, onTap: () {}),
               _SettingsNavRow(label: l10n.settingsRate5Stars, onTap: () {}),
               _SettingsNavRow(
                 label: l10n.settingsShareWithFriends,
-                onTap: () {},
+                onTap: () => shareAppLink(context),
               ),
-              _SettingsNavRow(label: l10n.settingsAboutUs, onTap: () {}),
+
+              _SettingsNavRow(
+                label: l10n.settingsTermsAndConditions,
+                onTap: () => openTermsAndConditions(context),
+              ),
+              _SettingsNavRow(
+                label: l10n.settingsPrivacyPolicy,
+                onTap: () => openPrivacyPolicy(context),
+              ),
             ],
           ),
         ],
@@ -172,7 +179,7 @@ class _SettingsBackButton extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: CupertinoButton(
-        padding: const EdgeInsets.only(left: 4),
+        padding: const EdgeInsets.only(left: 10),
         minSize: 0,
         onPressed: onPressed,
         child: Text(
