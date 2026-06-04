@@ -100,6 +100,13 @@ class PhotoLibraryDataSource implements PhotoLibraryRepository {
     required int pageSize,
     bool videosOnly = false,
   }) async {
+    if (videosOnly) {
+      await _galleryService.refreshLibraryCache();
+      if (page == 0) {
+        return _fetchFirstVideoPage(pageSize: pageSize);
+      }
+    }
+
     final totalCount =
         videosOnly
             ? await _galleryService.getVideoCount()
@@ -122,6 +129,64 @@ class PhotoLibraryDataSource implements PhotoLibraryRepository {
       pageSize: pageSize,
       totalCount: totalCount,
       hasMore: (page + 1) * pageSize < totalCount,
+    );
+  }
+
+  static bool _isGalleryVideo(AssetEntity asset) {
+    if (asset.type == AssetType.video) {
+      return true;
+    }
+    final mime = asset.mimeType?.toLowerCase() ?? '';
+    if (mime.startsWith('video/')) {
+      return true;
+    }
+    return asset.duration > 0;
+  }
+
+  /// Merges video-only, mixed-media, and Recent-album queries so brand-new
+  /// camera recordings appear after refresh.
+  Future<GalleryPageEntity> _fetchFirstVideoPage({required int pageSize}) async {
+    final totalCount = await _galleryService.getVideoCount();
+    final videoAssets = await _galleryService.getPagedVideoAssets(
+      page: 0,
+      pageSize: pageSize,
+    );
+    final recentScanSize = pageSize < 80 ? 80 : pageSize;
+    final recentCommon = await _galleryService.getPagedMediaAssets(
+      page: 0,
+      pageSize: recentScanSize,
+    );
+    final recentAlbum = await _galleryService.getRecentAlbumAssets(
+      limit: recentScanSize,
+    );
+
+    final merged = <AssetEntity>[];
+    final seenIds = <String>{};
+    for (final asset in [
+      ...recentAlbum,
+      ...recentCommon,
+      ...videoAssets,
+    ]) {
+      if (!_isGalleryVideo(asset)) {
+        continue;
+      }
+      if (seenIds.add(asset.id)) {
+        merged.add(asset);
+      }
+    }
+    merged.sort(
+      (a, b) => b.createDateTime.compareTo(a.createDateTime),
+    );
+
+    final pageAssets = merged.take(pageSize).toList(growable: false);
+    final models = await _hydrateAssets(pageAssets);
+
+    return GalleryPageModel(
+      items: models,
+      page: 0,
+      pageSize: pageSize,
+      totalCount: totalCount,
+      hasMore: pageSize < totalCount || merged.length > pageSize,
     );
   }
 
@@ -178,7 +243,7 @@ class PhotoLibraryDataSource implements PhotoLibraryRepository {
             final fileSize = await _galleryService.getFileSize(asset);
             return PhotoAssetModel.fromAssetEntity(asset, fileSize: fileSize);
           } catch (_) {
-            return null;
+            return PhotoAssetModel.fromAssetEntity(asset, fileSize: 0);
           }
         }),
       );

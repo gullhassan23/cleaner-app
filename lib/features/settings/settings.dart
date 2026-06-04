@@ -57,9 +57,9 @@ class _SettingsPageState extends State<SettingsPage> {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-        leadingWidth: 80,
-        leading: _SettingsBackButton(
-          onPressed: () => Navigator.maybePop(context),
+        leading: TextButton(
+          onPressed: () => Get.back<void>(),
+          child: Text(l10n.commonBack),
         ),
         title: Text(
           l10n.settingsTitle,
@@ -126,11 +126,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Get.toNamed(AppRoutes.photoWidgetHub);
                 },
               ),
-              // _SettingsToggleRow(
-              //   label: l10n.settingsFaceId,
-              //   value: _faceId,
-              //   onChanged: (v) => setState(() => _faceId = v),
-              // ),
+            
               const _DarkModeToggleRow(),
               const _AppLockToggleRow(),
               _SettingsNavRow(
@@ -166,35 +162,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
-class _SettingsBackButton extends StatelessWidget {
-  const _SettingsBackButton({required this.onPressed});
 
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
-    final l10n = context.l10n;
-
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: CupertinoButton(
-        padding: const EdgeInsets.only(left: 10),
-        minSize: 0,
-        onPressed: onPressed,
-        child: Text(
-          l10n.commonBack,
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w400,
-            color: primary,
-            letterSpacing: -0.4,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _SectionHeader extends StatelessWidget {
   const _SectionHeader({required this.label});

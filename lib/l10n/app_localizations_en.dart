@@ -509,6 +509,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String compressActualSavings(String size) {
+    return 'Space saved: $size';
+  }
+
+  @override
   String get compressSelectedVideo => 'Selected video';
 
   @override
@@ -638,7 +643,7 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$count items',
       one: '1 item',
     );
-    return 'Saved compressed copies to gallery. Total saved: $size across $_temp0.';
+    return 'Saved new *_compressed* copies to gallery. Total saved: $size across $_temp0.';
   }
 
   @override

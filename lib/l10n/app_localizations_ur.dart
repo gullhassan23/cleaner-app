@@ -509,6 +509,11 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
+  String compressActualSavings(String size) {
+    return 'بچی ہوئی جگہ: $size';
+  }
+
+  @override
   String get compressSelectedVideo => 'منتخب ویڈیو';
 
   @override

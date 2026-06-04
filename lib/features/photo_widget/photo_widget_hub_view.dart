@@ -22,10 +22,7 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
         title: l10n.photoWidgetTitle,
         actions: [
           IconButton(
-            icon: Icon(
-              CupertinoIcons.question_circle,
-              color: scheme.primary,
-            ),
+            icon: Icon(CupertinoIcons.question_circle, color: scheme.primary),
             onPressed: () => showPhotoWidgetHelpSheet(context),
           ),
         ],
@@ -50,19 +47,17 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
                 style: TextStyle(color: scheme.onSurfaceVariant, fontSize: 12),
               ),
               value: controller.isEnabled,
-              onChanged: controller.isSyncing.value || !controller.hasWidgetContent
-                  ? null
-                  : (enabled) => controller.setEnabled(enabled),
+              onChanged:
+                  controller.isSyncing.value || !controller.hasWidgetContent
+                      ? null
+                      : (enabled) => controller.setEnabled(enabled),
             ),
             const Divider(height: 24),
             Padding(
               padding: const EdgeInsets.only(left: 4, bottom: 8),
               child: Text(
                 l10n.photoWidgetMyAlbums,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: scheme.onSurfaceVariant,
-                ),
+                style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant),
               ),
             ),
             Wrap(
@@ -74,10 +69,11 @@ class PhotoWidgetHubView extends GetView<PhotoWidgetController> {
                     albumName: album.name,
                     photoCount: album.photos.length,
                     isWidgetSource: album.isWidgetSource,
-                    onTap: () => Get.toNamed(
-                      AppRoutes.photoWidgetAlbum,
-                      arguments: album.id,
-                    ),
+                    onTap:
+                        () => Get.toNamed(
+                          AppRoutes.photoWidgetAlbum,
+                          arguments: album.id,
+                        ),
                   ),
                 _CreateAlbumTile(onTap: () => _showCreateAlbumDialog(context)),
               ],
@@ -190,9 +186,13 @@ class _AlbumTile extends StatelessWidget {
                 color: scheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: photoCount > 0
-                  ? Icon(Icons.photo_library_outlined, color: scheme.primary)
-                  : Icon(Icons.folder_outlined, color: scheme.outline),
+              child:
+                  photoCount > 0
+                      ? Icon(
+                        Icons.photo_library_outlined,
+                        color: scheme.primary,
+                      )
+                      : Icon(Icons.folder_outlined, color: scheme.outline),
             ),
             const SizedBox(height: 8),
             Text(

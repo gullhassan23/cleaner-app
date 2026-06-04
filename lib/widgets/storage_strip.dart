@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:cleaner_app/l10n/l10n_extension.dart';
+import 'package:cleaner_app/controllers/cleaner/cleaner_controller.dart';
 import 'package:cleaner_app/utils/colors.dart';
 import 'package:disk_usage/disk_usage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StorageStrip extends StatefulWidget {
   const StorageStrip({super.key});
@@ -12,7 +14,33 @@ class StorageStrip extends StatefulWidget {
 }
 
 class _StorageStripState extends State<StorageStrip> {
-  late final Future<({int? total, int? free})> _future = _loadSpace();
+  Future<({int? total, int? free})> _future = _loadSpace();
+  Worker? _storageWorker;
+
+  void _reloadNow() {
+    if (!mounted) return;
+    setState(() {
+      _future = _loadSpace();
+    });
+  }
+
+  void _scheduleReload() {
+    // The file system may update async; a tiny delay makes the number more accurate.
+    Future<void>.delayed(const Duration(milliseconds: 400), () {
+      _reloadNow();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Only used inside the cleaner dashboard, but keep this defensive.
+    if (Get.isRegistered<CleanerController>()) {
+      final c = Get.find<CleanerController>();
+      _storageWorker = ever<int>(c.storageRefreshToken, (_) => _scheduleReload());
+    }
+  }
 
   static Future<({int? total, int? free})> _loadSpace() async {
     final total = await DiskUsage.totalSpace();
@@ -100,5 +128,11 @@ class _StorageStripState extends State<StorageStrip> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _storageWorker?.dispose();
+    super.dispose();
   }
 }

@@ -88,152 +88,155 @@ class Gridsection extends StatelessWidget {
           final tallHeight = _cardHeight(columnWidth, 0.88);
           // final mediumHeight = _cardHeight(columnWidth, 0.98);
 
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            padding: EdgeInsets.fromLTRB(16, 4, 16, 12 + bottomInset + 72),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: _cardGap),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          CategoryGridCard(
-                            height: tallHeight,
-                            title: l10n.cleanerCategorySimilarPhotos,
-                            sizeLabel: _sizeLabel(similarBytes),
-                            preview: similarPreview,
-                            placeholderIcon: similarPreview == null,
-                            onTap:
-                                similarCount == 0
-                                    ? null
-                                    : controller.openSimilarSheet,
-                          ),
-                          const SizedBox(height: _cardGap),
-                          CategoryGridCard(
-                            height: tallHeight,
-                            title: l10n.cleanerCategoryDuplicatePhotos,
-                            sizeLabel: _sizeLabel(dupBytes),
-                            preview: dupPreview,
-                            placeholderIcon: dupPreview == null,
-                            onTap:
-                                dupCount == 0
-                                    ? null
-                                    : controller.openDuplicateSheet,
-                          ),
-                          const SizedBox(height: _cardGap),
-                          CategoryGridCard(
-                            height: tallHeight,
-                            title: l10n.cleanerCategorySimilarVideos,
-                            sizeLabel: '0 KB',
-                            preview: null,
-                            placeholderIcon: true,
-                            onTap: null,
-                          ),
-                          // const SizedBox(height: _cardGap),
-                          // CategoryGridCard(
-                          //   height: compactHeight,
-                          //   title: 'Similar Burst Photos',
-                          //   sizeLabel: '0 KB',
-                          //   preview: null,
-                          //   placeholderIcon: true,
-                          //   onTap: null,
-                          // ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: _columnGap),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          CategoryGridCard(
-                            height: tallHeight,
-                            title: l10n.cleanerCategoryVideos,
-                            sizeLabel: _sizeLabel(videoBytes),
-                            preview: videoPreview,
-                            solidBlack: videoPreview == null,
-                            inlineVideo: videoPreview != null,
-                            placeholderIcon: false,
-                            onTap:
-                                videoCount == 0
-                                    ? null
-                                    : controller.openVideosSheet,
-                          ),
-                          const SizedBox(height: _cardGap),
-                          CategoryGridCard(
-                            height: tallHeight,
-                            title: l10n.cleanerCategoryScreenshots,
-                            sizeLabel: _sizeLabel(shotBytes),
-                            preview: shotPreview,
-                            placeholderIcon: shotPreview == null,
-                            subtitleAboveTitle: l10n.cleanerOptimizeYourStorage,
-                         
-                            onTap:
-                                shotCount == 0
-                                    ? null
-                                    : controller.openScreenshotsSheet,
-                          ),
-                          const SizedBox(height: _cardGap),
-                          CategoryGridCard(
-                            height: tallHeight,
-                            title: l10n.cleanerCategorySimilarLivePhotos,
-                            sizeLabel: _sizeLabel(similarBytes),
-                            preview: similarPreview,
-                            placeholderIcon: similarPreview == null,
-                            onTap:
-                                similarCount == 0
-                                    ? null
-                                    : controller.openSimilarSheet,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: _cardGap),
-                Builder(
-                  builder: (ctx) {
-                    final cs = Theme.of(ctx).colorScheme;
-                    return Material(
-                      color: cs.primary,
-                      borderRadius: BorderRadius.circular(20),
-                      clipBehavior: Clip.antiAlias,
-                      child: ListTile(
-                        onTap:
-                            () => Get.toNamed<void>(
-                              AppRoutes.aiPhotoEditor,
-                              id: AppRoutes.cleanerNestedNavigatorId,
+          return RefreshIndicator(
+            onRefresh: controller.startFullScan,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
+              padding: EdgeInsets.fromLTRB(16, 4, 16, 12 + bottomInset + 72),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: _cardGap),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            CategoryGridCard(
+                              height: tallHeight,
+                              title: l10n.cleanerCategorySimilarPhotos,
+                              sizeLabel: _sizeLabel(similarBytes),
+                              preview: similarPreview,
+                              placeholderIcon: similarPreview == null,
+                              onTap:
+                                  similarCount == 0
+                                      ? null
+                                      : controller.openSimilarSheet,
                             ),
-                        leading: Icon(Icons.image, color: cs.onPrimary),
-                        title: Text(
-                          l10n.cleanerAiPhotoEditor,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: cs.onPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
+                            const SizedBox(height: _cardGap),
+                            CategoryGridCard(
+                              height: tallHeight,
+                              title: l10n.cleanerCategoryDuplicatePhotos,
+                              sizeLabel: _sizeLabel(dupBytes),
+                              preview: dupPreview,
+                              placeholderIcon: dupPreview == null,
+                              onTap:
+                                  dupCount == 0
+                                      ? null
+                                      : controller.openDuplicateSheet,
+                            ),
+                            const SizedBox(height: _cardGap),
+                            CategoryGridCard(
+                              height: tallHeight,
+                              title: l10n.cleanerCategorySimilarVideos,
+                              sizeLabel: '0 KB',
+                              preview: null,
+                              placeholderIcon: true,
+                              onTap: null,
+                            ),
+                            // const SizedBox(height: _cardGap),
+                            // CategoryGridCard(
+                            //   height: compactHeight,
+                            //   title: 'Similar Burst Photos',
+                            //   sizeLabel: '0 KB',
+                            //   preview: null,
+                            //   placeholderIcon: true,
+                            //   onTap: null,
+                            // ),
+                          ],
                         ),
-                        subtitle: Text(
-                          l10n.cleanerImprovePhotoQuality,
-                          style: TextStyle(
+                      ),
+                      const SizedBox(width: _columnGap),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            CategoryGridCard(
+                              height: tallHeight,
+                              title: l10n.cleanerCategoryVideos,
+                              sizeLabel: _sizeLabel(videoBytes),
+                              preview: videoPreview,
+                              solidBlack: videoPreview == null,
+                              inlineVideo: videoPreview != null,
+                              placeholderIcon: false,
+                              onTap:
+                                  videoCount == 0
+                                      ? null
+                                      : controller.openVideosSheet,
+                            ),
+                            const SizedBox(height: _cardGap),
+                            CategoryGridCard(
+                              height: tallHeight,
+                              title: l10n.cleanerCategoryScreenshots,
+                              sizeLabel: _sizeLabel(shotBytes),
+                              preview: shotPreview,
+                              placeholderIcon: shotPreview == null,
+                              subtitleAboveTitle: l10n.cleanerOptimizeYourStorage,
+
+                              onTap:
+                                  shotCount == 0
+                                      ? null
+                                      : controller.openScreenshotsSheet,
+                            ),
+                            const SizedBox(height: _cardGap),
+                            CategoryGridCard(
+                              height: tallHeight,
+                              title: l10n.cleanerCategorySimilarLivePhotos,
+                              sizeLabel: _sizeLabel(similarBytes),
+                              preview: similarPreview,
+                              placeholderIcon: similarPreview == null,
+                              onTap:
+                                  similarCount == 0
+                                      ? null
+                                      : controller.openSimilarSheet,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: _cardGap),
+                  Builder(
+                    builder: (ctx) {
+                      final cs = Theme.of(ctx).colorScheme;
+                      return Material(
+                        color: cs.primary,
+                        borderRadius: BorderRadius.circular(20),
+                        clipBehavior: Clip.antiAlias,
+                        child: ListTile(
+                          onTap:
+                              () => Get.toNamed<void>(
+                                AppRoutes.aiPhotoEditor,
+                                id: AppRoutes.cleanerNestedNavigatorId,
+                              ),
+                          leading: Icon(Icons.image, color: cs.onPrimary),
+                          title: Text(
+                            l10n.cleanerAiPhotoEditor,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: cs.onPrimary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          subtitle: Text(
+                            l10n.cleanerImprovePhotoQuality,
+                            style: TextStyle(
+                              color: cs.onPrimary.withValues(alpha: 0.72),
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16,
                             color: cs.onPrimary.withValues(alpha: 0.72),
                           ),
                         ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 16,
-                          color: cs.onPrimary.withValues(alpha: 0.72),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },

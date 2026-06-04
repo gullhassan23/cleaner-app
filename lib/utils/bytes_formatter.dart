@@ -5,11 +5,13 @@ abstract final class BytesFormatter {
     }
 
     const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const unitStep = 1000.0;
     var value = bytes.toDouble();
     var index = 0;
 
-    while (value >= 1024 && index < units.length - 1) {
-      value /= 1024;
+    // Use decimal units to align with system gallery size labels.
+    while (value >= unitStep && index < units.length - 1) {
+      value /= unitStep;
       index++;
     }
 

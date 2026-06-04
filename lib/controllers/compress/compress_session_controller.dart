@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:developer' as developer;
+import 'dart:math' as math;
 
 import 'package:cleaner_app/l10n/l10n_get.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 import '../../utils/bytes_formatter.dart';
 import '../../models/compress/compress_entities.dart';
@@ -38,8 +42,37 @@ class CompressSessionController extends GetxController {
   final OpenPhotoSettingsUseCase _openPhotoSettingsUseCase;
   final PresentLimitedMediaPickerUseCase _presentLimitedMediaPickerUseCase;
   final MediaCompressionService _mediaCompressionService;
+  bool _cancelRequested = false;
+  Timer? _galleryChangeDebounce;
 
   final Rx<CompressSessionState> state = CompressSessionState.initial().obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    PhotoManager.addChangeCallback(_onGalleryChanged);
+    unawaited(PhotoManager.startChangeNotify());
+  }
+
+  @override
+  void onClose() {
+    _galleryChangeDebounce?.cancel();
+    PhotoManager.removeChangeCallback(_onGalleryChanged);
+    unawaited(PhotoManager.stopChangeNotify());
+    super.onClose();
+  }
+
+  void _onGalleryChanged(MethodCall call) {
+    _galleryChangeDebounce?.cancel();
+    _galleryChangeDebounce = Timer(const Duration(milliseconds: 500), () {
+      if (!permissionState.canAccess || isCompressing) {
+        return;
+      }
+      // Saving compressed media updates the gallery. A full reload wipes the
+      // active review selection and completed results on the review screen.
+      unawaited(_mergeGalleryRefresh());
+    });
+  }
 
   PermissionStateEntity get permissionState => state.value.permissionState;
   List<PhotoAssetEntity> get mediaItems => state.value.mediaItems;
@@ -56,10 +89,8 @@ class CompressSessionController extends GetxController {
       .where((asset) => selectedAssetIds.contains(asset.id))
       .toList(growable: false);
 
-  int get selectedOriginalBytes => selectedAssets.fold<int>(
-    0,
-    (sum, asset) => sum + asset.fileSize,
-  );
+  int get selectedOriginalBytes =>
+      selectedAssets.fold<int>(0, (sum, asset) => sum + asset.fileSize);
 
   int get estimatedCompressedBytes =>
       (selectedOriginalBytes * quality.estimatedOutputRatio).round();
@@ -68,6 +99,18 @@ class CompressSessionController extends GetxController {
       selectedOriginalBytes > estimatedCompressedBytes
           ? selectedOriginalBytes - estimatedCompressedBytes
           : 0;
+
+  bool get hasActualCompressionResults =>
+      results.isNotEmpty && results.every((result) => result.isSuccess);
+
+  int get actualOriginalBytes =>
+      results.fold<int>(0, (sum, result) => sum + result.originalBytes);
+
+  int get actualCompressedBytes =>
+      results.fold<int>(0, (sum, result) => sum + result.compressedBytes);
+
+  int get actualSavedBytes =>
+      results.fold<int>(0, (sum, result) => sum + result.savedBytes);
 
   Future<void> initialize() async {
     if (permissionState.status == MediaPermissionStatus.initial) {
@@ -152,7 +195,7 @@ class CompressSessionController extends GetxController {
     if (!permissionState.canAccess) {
       return;
     }
-    if (state.value.isLoadingInitial) {
+    if (state.value.isLoadingInitial && !force) {
       return;
     }
     if (!force && mediaItems.isNotEmpty) {
@@ -264,23 +307,45 @@ class CompressSessionController extends GetxController {
     if (preset == quality) {
       return;
     }
-    _applySession((current) => current.copyWith(quality: preset));
+    _applySession(
+      (current) => current.copyWith(
+        quality: preset,
+        results: const <CompressedMediaResultEntity>[],
+        progress: const CompressionProgressEntity(
+          phase: CompressionPhase.idle,
+          processedCount: 0,
+          totalCount: 0,
+          label: '',
+        ),
+        clearSuccessMessage: true,
+        clearErrorMessage: true,
+      ),
+    );
   }
 
   void clearMessages() {
     _applySession(
-      (current) => current.copyWith(
-        clearErrorMessage: true,
-        clearSuccessMessage: true,
-      ),
+      (current) =>
+          current.copyWith(clearErrorMessage: true, clearSuccessMessage: true),
     );
   }
 
   Future<List<CompressedMediaResultEntity>> compressSelectedAssets() async {
     final assets = selectedAssets;
     if (assets.isEmpty || isCompressing) {
+      developer.log(
+        'compressSelectedAssets skipped '
+        'empty=${assets.isEmpty} isCompressing=$isCompressing',
+        name: 'CompressSession',
+      );
       return results;
     }
+    developer.log(
+      'compressSelectedAssets started assets=${assets.length} '
+      'quality=${quality.label} targetSavingsPercent=${quality.savingsPercent}%',
+      name: 'CompressSession',
+    );
+    _cancelRequested = false;
 
     final l10n = getL10n();
     _applySession(
@@ -299,110 +364,208 @@ class CompressSessionController extends GetxController {
       ),
     );
 
-    final output = <CompressedMediaResultEntity>[];
-    for (var index = 0; index < assets.length; index++) {
-      final asset = assets[index];
-      final fileLabel = asset.title ?? '${index + 1}';
+    final output = List<CompressedMediaResultEntity?>.filled(
+      assets.length,
+      null,
+    );
+    final perAssetProgress = <String, double>{};
+    final activeIndexes = <int>{};
+    var completedCount = 0;
+    var nextIndex = 0;
+    // `video_compress` is not safe to run concurrently and exposes a
+    // single-listener progress stream, so process selected videos sequentially.
+    final hasVideoAsset = assets.any((asset) => asset.isVideo);
+    final workerCount = hasVideoAsset ? 1 : math.min(assets.length, 2);
+
+    void publishProgress({String? activeLabel}) {
+      final runningProgress = activeIndexes.fold<double>(
+        0,
+        (sum, index) => sum + (perAssetProgress[assets[index].id] ?? 0),
+      );
+      final aggregate =
+          assets.isEmpty
+              ? 0.0
+              : ((completedCount + runningProgress) / assets.length);
+      final scaled = (aggregate * assets.length).clamp(
+        0.0,
+        assets.length.toDouble(),
+      );
+      final processedCount = scaled.floor();
+      final currentProgress = (scaled - processedCount).clamp(0.0, 1.0);
       _applySession(
         (current) => current.copyWith(
           progress: CompressionProgressEntity(
             phase: CompressionPhase.running,
-            processedCount: index,
-            totalCount: assets.length,
-            label: getL10n().compressCompressingItem(fileLabel),
-            currentFileLabel: fileLabel,
-            currentFileProgress: 0,
-          ),
-        ),
-      );
-
-      final result = await _mediaCompressionService.compressAsset(
-        asset,
-        quality: quality,
-        onProgress: (progress) {
-          _applySession(
-            (current) => current.copyWith(
-              progress: CompressionProgressEntity(
-                phase: CompressionPhase.running,
-                processedCount: index,
-                totalCount: assets.length,
-                label: getL10n().compressCompressingItem(fileLabel),
-                currentFileLabel: fileLabel,
-                currentFileProgress: progress,
-              ),
-            ),
-          );
-        },
-      );
-      output.add(result);
-
-      _applySession(
-        (current) => current.copyWith(
-          results: List<CompressedMediaResultEntity>.from(output),
-          progress: CompressionProgressEntity(
-            phase: CompressionPhase.running,
-            processedCount: index + 1,
+            processedCount: processedCount,
             totalCount: assets.length,
             label:
-                index + 1 == assets.length
-                    ? getL10n().compressFinalizingCompression
-                    : getL10n().compressCompressedCount(index + 1, assets.length),
-            currentFileLabel: fileLabel,
-            currentFileProgress: 1,
+                activeLabel == null
+                    ? getL10n().compressPreparingCompression
+                    : getL10n().compressCompressingItem(activeLabel),
+            currentFileLabel: activeLabel,
+            currentFileProgress: currentProgress,
           ),
         ),
       );
     }
 
-    final successCount = output.where((result) => result.isSuccess).length;
-    final savedBytes = output.fold<int>(
+    Future<void> worker() async {
+      while (!_cancelRequested) {
+        if (nextIndex >= assets.length) {
+          return;
+        }
+        final index = nextIndex;
+        nextIndex += 1;
+        final asset = assets[index];
+        final fileLabel = asset.title ?? '${index + 1}';
+        perAssetProgress[asset.id] = 0;
+        activeIndexes.add(index);
+        publishProgress(activeLabel: fileLabel);
+
+        developer.log(
+          'Compressing asset index=$index id=${asset.id} title=$fileLabel',
+          name: 'CompressSession',
+        );
+
+        final result = await _mediaCompressionService.compressAsset(
+          asset,
+          quality: quality,
+          onProgress: (progress) {
+            if (_cancelRequested) {
+              return;
+            }
+            perAssetProgress[asset.id] = progress.clamp(0.0, 1.0);
+            publishProgress(activeLabel: fileLabel);
+          },
+        );
+
+        activeIndexes.remove(index);
+        perAssetProgress.remove(asset.id);
+        if (_cancelRequested) {
+          return;
+        }
+
+        output[index] = result;
+        completedCount += 1;
+        developer.log(
+          'Asset compression finished index=$index id=${asset.id} '
+          'success=${result.isSuccess}',
+          name: 'CompressSession',
+        );
+        _applySession(
+          (current) => current.copyWith(
+            results: output.whereType<CompressedMediaResultEntity>().toList(
+              growable: false,
+            ),
+            progress: CompressionProgressEntity(
+              phase: CompressionPhase.running,
+              processedCount: completedCount,
+              totalCount: assets.length,
+              label:
+                  completedCount == assets.length
+                      ? getL10n().compressFinalizingCompression
+                      : getL10n().compressCompressedCount(
+                        completedCount,
+                        assets.length,
+                      ),
+              currentFileLabel: fileLabel,
+              currentFileProgress: 1,
+            ),
+          ),
+        );
+      }
+    }
+
+    await Future.wait(
+      List<Future<void>>.generate(workerCount, (_) => worker()),
+      eagerError: false,
+    );
+    final completedOutput = output
+        .whereType<CompressedMediaResultEntity>()
+        .toList(growable: false);
+
+    final successCount =
+        completedOutput.where((result) => result.isSuccess).length;
+    final savedBytes = completedOutput.fold<int>(
       0,
       (sum, result) => sum + result.savedBytes,
     );
-    final failedCount = output.length - successCount;
+    final failedCount = completedOutput.length - successCount;
     final phase =
-        successCount == 0
-            ? CompressionPhase.failed
-            : CompressionPhase.completed;
+        _cancelRequested
+            ? CompressionPhase.idle
+            : (successCount == 0
+                ? CompressionPhase.failed
+                : CompressionPhase.completed);
 
     if (successCount > 0) {
-      await _refreshVisibleMediaAfterCompression(preserveAssets: assets);
+      await _mergeGalleryRefresh(extraAssets: assets);
     }
 
     final doneL10n = getL10n();
     _applySession(
       (current) => current.copyWith(
         isCompressing: false,
-        results: List<CompressedMediaResultEntity>.unmodifiable(output),
+        results: List<CompressedMediaResultEntity>.unmodifiable(
+          completedOutput,
+        ),
         progress: CompressionProgressEntity(
           phase: phase,
-          processedCount: output.length,
+          processedCount: completedOutput.length,
           totalCount: assets.length,
           label:
-              successCount == output.length
-                  ? doneL10n.compressCompressionComplete
-                  : doneL10n.compressCompressedSummary(successCount, output.length),
-          currentFileProgress: 1,
+              _cancelRequested
+                  ? ''
+                  : (successCount == completedOutput.length
+                      ? doneL10n.compressCompressionComplete
+                      : doneL10n.compressCompressedSummary(
+                        successCount,
+                        completedOutput.length,
+                      )),
+          currentFileProgress: _cancelRequested ? 0 : 1,
         ),
         errorMessage:
-            successCount == 0
-                ? doneL10n.compressUnableCompressSelected
-                : (failedCount > 0 ? doneL10n.compressFailedCount(failedCount) : null),
+            _cancelRequested
+                ? null
+                : (successCount == 0
+                    ? doneL10n.compressUnableCompressSelected
+                    : (failedCount > 0
+                        ? doneL10n.compressFailedCount(failedCount)
+                        : null)),
         successMessage:
-            successCount > 0
-                ? doneL10n.compressSuccessMessage(
-                    BytesFormatter.humanize(savedBytes),
-                    successCount,
-                  )
-                : null,
+            _cancelRequested
+                ? '${doneL10n.commonCancel}.'
+                : (successCount > 0
+                    ? doneL10n.compressSuccessMessage(
+                      BytesFormatter.humanize(savedBytes),
+                      successCount,
+                    )
+                    : null),
       ),
     );
+    final wasCancelled = _cancelRequested;
+    _cancelRequested = false;
 
-    return output;
+    developer.log(
+      'compressSelectedAssets finished '
+      'successCount=$successCount total=${completedOutput.length} '
+      'cancelled=$wasCancelled',
+      name: 'CompressSession',
+    );
+
+    return completedOutput;
   }
 
-  Future<void> _refreshVisibleMediaAfterCompression({
-    required List<PhotoAssetEntity> preserveAssets,
+  Future<void> cancelCompression() async {
+    if (!isCompressing) {
+      return;
+    }
+    _cancelRequested = true;
+    await _mediaCompressionService.cancelOngoingCompression();
+  }
+
+  Future<void> _mergeGalleryRefresh({
+    List<PhotoAssetEntity> extraAssets = const <PhotoAssetEntity>[],
   }) async {
     try {
       final galleryPage = await _fetchMediaGalleryPageUseCase(
@@ -413,7 +576,11 @@ class CompressSessionController extends GetxController {
       final mergedItems = <PhotoAssetEntity>[];
       final seenIds = <String>{};
 
-      for (final asset in [...galleryPage.items, ...preserveAssets]) {
+      for (final asset in [
+        ...galleryPage.items,
+        ...extraAssets,
+        ...selectedAssets,
+      ]) {
         if (seenIds.add(asset.id)) {
           mergedItems.add(asset);
         }

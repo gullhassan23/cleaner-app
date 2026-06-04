@@ -6,7 +6,7 @@ import 'package:cleaner_app/widgets/compress/dark_pill.dart';
 import 'package:flutter/material.dart';
 
 class ResultCard extends StatelessWidget {
-  const ResultCard({required this.asset, required this.result});
+  const ResultCard({super.key, required this.asset, required this.result});
 
   final PhotoAssetEntity? asset;
   final CompressedMediaResultEntity result;

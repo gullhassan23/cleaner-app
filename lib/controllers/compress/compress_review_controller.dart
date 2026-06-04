@@ -16,7 +16,7 @@ class CompressReviewController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    if (!session.hasSelection) {
+    if (!session.hasSelection && session.results.isEmpty) {
       unawaited(_navigateToMainCompressTab());
     }
   }
@@ -44,7 +44,13 @@ class CompressReviewController extends GetxController {
     return session.compressSelectedAssets();
   }
 
-  void clearMessages() {
+  Future<void> cancelCompression() {
+    return session.cancelCompression();
+  }
+
+  Future<void> finishAndReturn() async {
+    session.clearSelection();
     session.clearMessages();
+    await _navigateToMainCompressTab();
   }
 }

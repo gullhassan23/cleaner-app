@@ -1025,6 +1025,12 @@ abstract class AppLocalizations {
   /// **'Estimated savings: {size}'**
   String compressEstimatedSavings(String size);
 
+  /// No description provided for @compressActualSavings.
+  ///
+  /// In en, this message translates to:
+  /// **'Space saved: {size}'**
+  String compressActualSavings(String size);
+
   /// No description provided for @compressSelectedVideo.
   ///
   /// In en, this message translates to:
@@ -1184,7 +1190,7 @@ abstract class AppLocalizations {
   /// No description provided for @compressSuccessMessage.
   ///
   /// In en, this message translates to:
-  /// **'Saved compressed copies to gallery. Total saved: {size} across {count, plural, one{1 item} other{{count} items}}.'**
+  /// **'Saved new *_compressed* copies to gallery. Total saved: {size} across {count, plural, one{1 item} other{{count} items}}.'**
   String compressSuccessMessage(String size, int count);
 
   /// No description provided for @compressOriginalUnavailable.

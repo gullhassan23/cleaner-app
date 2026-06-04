@@ -90,7 +90,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/.env
+    - .env
     - assets/charging/lottie/
     - assets/cleaning_guide/
     - assets/cleaning_guide/icons/

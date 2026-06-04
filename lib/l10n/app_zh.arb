@@ -230,6 +230,14 @@
       }
     }
   },
+  "compressActualSavings": "节省空间：{size}",
+  "@compressActualSavings": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
   "compressSelectedVideo": "所选视频",
   "compressSelectedImage": "所选图片",
   "compressCompressedFile": "压缩文件",

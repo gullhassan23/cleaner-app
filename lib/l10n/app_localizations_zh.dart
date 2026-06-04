@@ -509,6 +509,11 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String compressActualSavings(String size) {
+    return '节省空间：$size';
+  }
+
+  @override
   String get compressSelectedVideo => '所选视频';
 
   @override

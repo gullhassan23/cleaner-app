@@ -9,10 +9,7 @@ import 'package:get/get.dart';
 import 'cleaner_thumbnail.dart';
 
 class _FlatMediaSheetController extends GetxController {
-  _FlatMediaSheetController({
-    required this.assets,
-    required this.onDeleted,
-  });
+  _FlatMediaSheetController({required this.assets, required this.onDeleted});
 
   final List<PhotoAssetEntity> assets;
   final void Function(Set<String> ids) onDeleted;
@@ -20,7 +17,8 @@ class _FlatMediaSheetController extends GetxController {
   final PhotoLibraryRepository _repository = Get.find<PhotoLibraryRepository>();
 
   final RxMap<String, bool> selected = <String, bool>{}.obs;
-  final Rx<CleanerSelectionSummary> summaryRx = CleanerSelectionSummary.empty.obs;
+  final Rx<CleanerSelectionSummary> summaryRx =
+      CleanerSelectionSummary.empty.obs;
   final RxBool isDeleting = false.obs;
 
   @override
@@ -56,10 +54,8 @@ class _FlatMediaSheetController extends GetxController {
   bool isOn(String id) => selected[id] ?? false;
 
   Future<void> deleteSelected() async {
-    final ids = assets
-        .where((a) => selected[a.id] == true)
-        .map((a) => a.id)
-        .toSet();
+    final ids =
+        assets.where((a) => selected[a.id] == true).map((a) => a.id).toSet();
     if (ids.isEmpty) {
       return;
     }
@@ -146,6 +142,8 @@ class CleanerFlatMediaBottomSheet extends StatelessWidget {
           children: [
             Positioned.fill(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 8),
                   Center(
@@ -160,23 +158,14 @@ class CleanerFlatMediaBottomSheet extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 12, 12, 8),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: Get.back<void>,
-                          icon: const Icon(Icons.close_rounded),
-                        ),
-                      ],
+                    child: Text(
+                      title,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Expanded(
                     child: Obx(() {
                       c.summaryRx.value;
@@ -184,10 +173,10 @@ class CleanerFlatMediaBottomSheet extends StatelessWidget {
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 120),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10,
-                              childAspectRatio: 0.72,
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 15,
+                              crossAxisSpacing: 15,
+                              childAspectRatio: 0.89,
                             ),
                         itemCount: c.assets.length,
                         itemBuilder: (context, i) {
@@ -206,9 +195,7 @@ class CleanerFlatMediaBottomSheet extends StatelessWidget {
                                     color:
                                         on
                                             ? theme.colorScheme.primary
-                                            : theme
-                                                .colorScheme
-                                                .outlineVariant,
+                                            : theme.colorScheme.outlineVariant,
                                     width: on ? 2.2 : 1.2,
                                   ),
                                 ),

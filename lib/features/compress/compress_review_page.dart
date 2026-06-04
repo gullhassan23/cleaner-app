@@ -27,48 +27,56 @@ class CompressReviewPage extends GetView<CompressReviewController> {
       bottomNavigationBar: Obx(() {
         final session = controller.session.state.value;
         final canCompress = session.hasSelection && !session.isCompressing;
+        final hasCompletedResults =
+            session.results.isNotEmpty &&
+            session.progress.phase == CompressionPhase.completed;
 
         return SafeArea(
           minimum: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          child: FilledButton(
-            onPressed: canCompress ? controller.compressSelected : null,
-            style: FilledButton.styleFrom(
-              minimumSize: Size.fromHeight(56),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-            ),
-            child:
-                session.isCompressing
-                    ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        ),
-                        const SizedBox(width: 12),
-                        Flexible(
-                          child: Text(
-                            l10n.compressProgressButton(
-                              session.progress.overallPercent,
-                              '${session.progress.remainingCount}',
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    )
-                    : Text(l10n.compressButton),
-          ),
+          child:
+              session.isCompressing
+                  ? OutlinedButton.icon(
+                    onPressed: controller.cancelCompression,
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(56),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    icon: const Icon(Icons.close_rounded),
+                    label: Text(l10n.commonCancel),
+                  )
+                  : hasCompletedResults
+                  ? FilledButton(
+                    onPressed: controller.finishAndReturn,
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(56),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    child: Text(l10n.commonDone),
+                  )
+                  : FilledButton(
+                    onPressed: canCompress ? controller.compressSelected : null,
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(56),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    child: Text(l10n.compressButton),
+                  ),
         );
       }),
       body: SafeArea(
         child: Obx(() {
           final session = controller.session.state.value;
           final selectedAssets = controller.session.selectedAssets;
-          if (selectedAssets.isEmpty) {
+          final hasCompletedResults =
+              session.results.isNotEmpty &&
+              session.progress.phase == CompressionPhase.completed;
+          if (selectedAssets.isEmpty && !hasCompletedResults) {
             return ListView(
               padding: const EdgeInsets.all(24),
               children: [
@@ -84,26 +92,42 @@ class CompressReviewPage extends GetView<CompressReviewController> {
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
             children: [
-              CompressPreviewPager(
-                assets: selectedAssets,
-                repository: repository,
-              ),
-              if (selectedAssets.length > 1) ...[
-                const SizedBox(height: 10),
-                Center(
-                  child: Chip(
-                    avatar: const Icon(Icons.collections_outlined, size: 18),
-                    label: Text(
-                      l10n.compressItemsSelected(selectedAssets.length),
+              if (selectedAssets.isNotEmpty) ...[
+                CompressPreviewPager(
+                  assets: selectedAssets,
+                  repository: repository,
+                ),
+                if (selectedAssets.length > 1) ...[
+                  const SizedBox(height: 10),
+                  Center(
+                    child: Chip(
+                      avatar: const Icon(Icons.collections_outlined, size: 18),
+                      label: Text(
+                        l10n.compressItemsSelected(selectedAssets.length),
+                      ),
                     ),
                   ),
-                ),
+                ],
+                const SizedBox(height: 18),
               ],
-              const SizedBox(height: 18),
               SizeSummaryCard(
-                originalBytes: controller.session.selectedOriginalBytes,
-                estimatedBytes: controller.session.estimatedCompressedBytes,
-                savedBytes: controller.session.estimatedSavedBytes,
+                key: ValueKey(
+                  '${session.quality}_${session.results.length}_${session.progress.phase}',
+                ),
+                originalBytes:
+                    controller.session.hasActualCompressionResults
+                        ? controller.session.actualOriginalBytes
+                        : controller.session.selectedOriginalBytes,
+                estimatedBytes:
+                    controller.session.hasActualCompressionResults
+                        ? controller.session.actualCompressedBytes
+                        : controller.session.estimatedCompressedBytes,
+                savedBytes:
+                    controller.session.hasActualCompressionResults
+                        ? controller.session.actualSavedBytes
+                        : controller.session.estimatedSavedBytes,
+                showActualResults:
+                    controller.session.hasActualCompressionResults,
               ),
               const SizedBox(height: 20),
               Text(

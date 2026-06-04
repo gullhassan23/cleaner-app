@@ -51,9 +51,16 @@ class CleanerController extends GetxController {
   final RxString scanStageLabel = ''.obs;
   final Rxn<String> lastError = Rxn<String>();
 
-  final Rxn<CleanerGalleryScanResult> galleryResult = Rxn<CleanerGalleryScanResult>();
-  final RxList<CleanerMediaCluster> duplicateClusters = <CleanerMediaCluster>[].obs;
-  final RxList<CleanerMediaCluster> similarClusters = <CleanerMediaCluster>[].obs;
+  final Rxn<CleanerGalleryScanResult> galleryResult =
+      Rxn<CleanerGalleryScanResult>();
+  final RxList<CleanerMediaCluster> duplicateClusters =
+      <CleanerMediaCluster>[].obs;
+  final RxList<CleanerMediaCluster> similarClusters =
+      <CleanerMediaCluster>[].obs;
+
+  /// Increments whenever the app deletes media.
+  /// `StorageStrip` listens to this to re-fetch `DiskUsage`.
+  final RxInt storageRefreshToken = 0.obs;
 
   final Rx<CleanerDashboardSort> dashboardSort =
       CleanerDashboardSort.largestFirst.obs;
@@ -96,15 +103,9 @@ class CleanerController extends GetxController {
   int countForKind(CleanerDashboardKind kind) {
     switch (kind) {
       case CleanerDashboardKind.similarPhotos:
-        return similarClusters.fold<int>(
-          0,
-          (s, c) => s + c.memberCount,
-        );
+        return similarClusters.fold<int>(0, (s, c) => s + c.memberCount);
       case CleanerDashboardKind.duplicatePhotos:
-        return duplicateClusters.fold<int>(
-          0,
-          (s, c) => s + c.memberCount,
-        );
+        return duplicateClusters.fold<int>(0, (s, c) => s + c.memberCount);
       case CleanerDashboardKind.videos:
         return galleryResult.value?.videoAssets.length ?? 0;
       case CleanerDashboardKind.screenshots:
@@ -279,15 +280,20 @@ class CleanerController extends GetxController {
       scanStageLabel.value = getL10n().cleanerScanLoadingLibrary;
 
       CleanerGalleryScanResult? scanResult;
-      await _scanCoordinator.loadFullLibrary(
-        onProgress: (loaded, totalHint) {
-          if (totalHint != null && totalHint > 0) {
-            scanProgress.value = (loaded / totalHint) * 0.2;
-          } else {
-            scanProgress.value = (scanProgress.value + 0.01).clamp(0.0, 0.19);
-          }
-        },
-      ).then((r) => scanResult = r);
+      await _scanCoordinator
+          .loadFullLibrary(
+            onProgress: (loaded, totalHint) {
+              if (totalHint != null && totalHint > 0) {
+                scanProgress.value = (loaded / totalHint) * 0.2;
+              } else {
+                scanProgress.value = (scanProgress.value + 0.01).clamp(
+                  0.0,
+                  0.19,
+                );
+              }
+            },
+          )
+          .then((r) => scanResult = r);
 
       if (_cancelScan) {
         return;
@@ -431,6 +437,10 @@ class CleanerController extends GetxController {
       return;
     }
     _rebuildClustersAfterDelete(ids);
+
+    // Device storage accounting may take a moment to update after deletion,
+    // so the UI will refresh shortly via `storageRefreshToken`.
+    storageRefreshToken.value++;
   }
 
   void _rebuildClustersAfterDelete(Set<String> deletedIds) {
@@ -447,16 +457,18 @@ class CleanerController extends GetxController {
       );
     }
 
-    final newDupes = duplicateClusters
-        .map(rebuildCluster)
-        .whereType<CleanerMediaCluster>()
-        .toList();
+    final newDupes =
+        duplicateClusters
+            .map(rebuildCluster)
+            .whereType<CleanerMediaCluster>()
+            .toList();
     duplicateClusters.assignAll(newDupes);
 
-    final newSim = similarClusters
-        .map(rebuildCluster)
-        .whereType<CleanerMediaCluster>()
-        .toList();
+    final newSim =
+        similarClusters
+            .map(rebuildCluster)
+            .whereType<CleanerMediaCluster>()
+            .toList();
     similarClusters.assignAll(newSim);
 
     final g = galleryResult.value;

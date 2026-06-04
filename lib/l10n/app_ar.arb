@@ -230,6 +230,14 @@
       }
     }
   },
+  "compressActualSavings": "المساحة الموفرة: {size}",
+  "@compressActualSavings": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
   "compressSelectedVideo": "الفيديو المحدد",
   "compressSelectedImage": "الصورة المحددة",
   "compressCompressedFile": "الملف المضغوط",

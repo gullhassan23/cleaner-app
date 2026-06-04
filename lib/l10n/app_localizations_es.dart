@@ -509,6 +509,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String compressActualSavings(String size) {
+    return 'Espacio ahorrado: $size';
+  }
+
+  @override
   String get compressSelectedVideo => 'Video seleccionado';
 
   @override

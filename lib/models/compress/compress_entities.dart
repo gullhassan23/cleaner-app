@@ -25,18 +25,22 @@ extension CompressionQualityPresetX on CompressionQualityPreset {
     }
   }
 
+  /// Fraction of original file size expected after compression (0.8 = ~20% reduction).
   double get estimatedOutputRatio {
     switch (this) {
       case CompressionQualityPreset.low:
-        return 0.2;
+        return 0.80;
       case CompressionQualityPreset.medium:
-        return 0.5;
+        return 0.50;
       case CompressionQualityPreset.high:
-        return 0.8;
+        return 0.20;
     }
   }
 
-  int get savingsPercent => ((1 - estimatedOutputRatio) * 100).round();
+  /// Fraction of bytes expected to be saved (0.2 = 20%, 0.5 = 50%, 0.8 = 80%).
+  double get targetSavingsRatio => 1 - estimatedOutputRatio;
+
+  int get savingsPercent => (targetSavingsRatio * 100).round();
 }
 
 enum CompressionPhase { idle, running, completed, failed }

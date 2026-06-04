@@ -4,15 +4,18 @@ import 'package:cleaner_app/utils/size_metric.dart';
 import 'package:flutter/material.dart';
 
 class SizeSummaryCard extends StatelessWidget {
-  const SizeSummaryCard({super.key, 
+  const SizeSummaryCard({
+    super.key,
     required this.originalBytes,
     required this.estimatedBytes,
     required this.savedBytes,
+    this.showActualResults = false,
   });
 
   final int originalBytes;
   final int estimatedBytes;
   final int savedBytes;
+  final bool showActualResults;
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +55,13 @@ class SizeSummaryCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Text(
-                l10n.compressEstimatedSavings(
-                  BytesFormatter.humanize(savedBytes),
-                ),
+                showActualResults
+                    ? l10n.compressActualSavings(
+                      BytesFormatter.humanize(savedBytes),
+                    )
+                    : l10n.compressEstimatedSavings(
+                      BytesFormatter.humanize(savedBytes),
+                    ),
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: theme.colorScheme.primary,
                   fontWeight: FontWeight.w700,

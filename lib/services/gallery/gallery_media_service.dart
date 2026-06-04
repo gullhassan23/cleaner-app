@@ -4,7 +4,30 @@ import 'dart:typed_data';
 import 'package:photo_manager/photo_manager.dart';
 
 class GalleryMediaService {
+  /// Drops native caches so the next gallery query reflects add/remove changes.
+  Future<void> refreshLibraryCache() async {
+    await PhotoManager.clearFileCache();
+    try {
+      await PhotoManager.releaseCache();
+    } catch (_) {
+      // Unsupported on some platforms; file cache clear is still applied.
+    }
+  }
+
+  /// photo_manager's Android bridge casts duration bounds to [int] (32-bit ms).
+  /// Values above ~24.8 days are sent as Long and crash with ClassCastException.
+  static const Duration _maxVideoDurationFilter = Duration(days: 24);
+
+  /// Default [DurationConstraint] omits videos whose duration is not indexed yet
+  /// (common right after a camera recording). Allow null/zero until metadata settles.
   static final FilterOptionGroup _filterOption = FilterOptionGroup(
+    videoOption: const FilterOption(
+      durationConstraint: DurationConstraint(
+        min: Duration.zero,
+        max: _maxVideoDurationFilter,
+        allowNullable: true,
+      ),
+    ),
     orders: const <OrderOption>[
       OrderOption(type: OrderOptionType.createDate, asc: false),
     ],
@@ -57,6 +80,26 @@ class GalleryMediaService {
       pageSize: pageSize,
       type: RequestType.video,
     );
+  }
+
+  /// Reads the system "Recent" album with refreshed properties (iOS/Android).
+  Future<List<AssetEntity>> getRecentAlbumAssets({required int limit}) async {
+    if (limit <= 0) {
+      return const <AssetEntity>[];
+    }
+
+    final paths = await PhotoManager.getAssetPathList(
+      hasAll: true,
+      onlyAll: true,
+      type: RequestType.common,
+      filterOption: _filterOption,
+    );
+    if (paths.isEmpty) {
+      return const <AssetEntity>[];
+    }
+
+    final recent = await paths.first.obtainForNewProperties();
+    return recent.getAssetListRange(start: 0, end: limit);
   }
 
   Future<List<AssetEntity>> getAllMediaAssets({int pageSize = 250}) async {

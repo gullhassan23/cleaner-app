@@ -34,8 +34,7 @@ class CompressionProgressCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              progress.label.isEmpty &&
-                      progress.phase == CompressionPhase.idle
+              progress.label.isEmpty && progress.phase == CompressionPhase.idle
                   ? l10n.compressReadyToCompress
                   : progress.label,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -53,38 +52,39 @@ class CompressionProgressCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(999),
             ),
             const SizedBox(height: 10),
-            if (progress.currentFileLabel != null) ...[
-              Text(
-                l10n.compressCurrentFile(progress.currentFileLabel!),
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 6),
-              LinearProgressIndicator(
-                value:
-                    progress.phase == CompressionPhase.running ||
-                            progress.phase == CompressionPhase.completed
-                        ? progress.currentFileProgress.clamp(0.0, 1.0)
-                        : 0,
-                minHeight: 7,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                l10n.compressCurrentFileProgress(progress.currentFilePercent),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 8),
-            ],
-            Text(
-              l10n.compressProgressDone(
-                progress.processedCount,
-                progress.totalCount,
-                '${progress.remainingCount}',
-              ),
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+
+            // if (progress.currentFileLabel != null) ...[
+            //   Text(
+            //     l10n.compressCurrentFile(progress.currentFileLabel!),
+            //     style: Theme.of(context).textTheme.bodyMedium,
+            //   ),
+            //   const SizedBox(height: 6),
+            //   LinearProgressIndicator(
+            //     value:
+            //         progress.phase == CompressionPhase.running ||
+            //                 progress.phase == CompressionPhase.completed
+            //             ? progress.currentFileProgress.clamp(0.0, 1.0)
+            //             : 0,
+            //     minHeight: 7,
+            //     borderRadius: BorderRadius.circular(999),
+            //   ),
+            //   const SizedBox(height: 6),
+            //   Text(
+            //     l10n.compressCurrentFileProgress(progress.currentFilePercent),
+            //     style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            //       color: Theme.of(context).colorScheme.onSurfaceVariant,
+            //     ),
+            //   ),
+            //   const SizedBox(height: 8),
+            // ],
+            // Text(
+            //   l10n.compressProgressDone(
+            //     progress.processedCount,
+            //     progress.totalCount,
+            //     '${progress.remainingCount}',
+            //   ),
+            //   style: Theme.of(context).textTheme.bodySmall,
+            // ),
           ],
         ),
       ),

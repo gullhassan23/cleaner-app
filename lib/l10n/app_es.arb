@@ -230,6 +230,14 @@
       }
     }
   },
+  "compressActualSavings": "Espacio ahorrado: {size}",
+  "@compressActualSavings": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
   "compressSelectedVideo": "Video seleccionado",
   "compressSelectedImage": "Imagen seleccionada",
   "compressCompressedFile": "Archivo comprimido",

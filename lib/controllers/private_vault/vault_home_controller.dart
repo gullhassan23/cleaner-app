@@ -137,8 +137,10 @@ class VaultHomeController extends GetxController {
     }
 
     final ctx = Get.context!;
+    // ignore: use_build_context_synchronously
     final theme = Theme.of(ctx);
     final picked = await AssetPicker.pickAssets(
+      // ignore: use_build_context_synchronously
       ctx,
       pickerConfig: AssetPickerConfig(
         maxAssets: VaultConstants.maxImportBatch,

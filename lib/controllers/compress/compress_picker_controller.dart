@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../models/cleaner/cleaner_dashboard_sort.dart';
@@ -9,18 +10,37 @@ import '../../utils/photo_asset_sort.dart';
 import '../../routes/app_routes.dart';
 import 'compress_session_controller.dart';
 
-class CompressPickerController extends GetxController {
+class CompressPickerController extends GetxController with WidgetsBindingObserver {
   CompressPickerController(this.session);
 
   final CompressSessionController session;
 
   final Rx<CleanerDashboardSort> pickerSort =
-      CleanerDashboardSort.largestFirst.obs;
+      CleanerDashboardSort.newestDateFirst.obs;
 
   /// Visible grid order; reads [pickerSort] for [Obx] reactivity.
   List<PhotoAssetEntity> get sortedDisplayMedia {
     pickerSort.value;
     return sortedPhotoAssetsCopy(session.mediaItems, pickerSort.value);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void onClose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.onClose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(session.loadInitialMedia(force: true));
+    }
   }
 
   @override

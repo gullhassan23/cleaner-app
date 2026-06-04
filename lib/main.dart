@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    await dotenv.load(fileName: 'lib/.env');
+    await dotenv.load(fileName: '.env');
   } catch (_) {}
   Get.put(ThemePreferencesService(), permanent: true);
   Get.put(LocalePreferencesService(), permanent: true);
