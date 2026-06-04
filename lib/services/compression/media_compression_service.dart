@@ -11,12 +11,16 @@ import 'package:video_compress/video_compress.dart';
 
 import '../../models/compress/compress_entities.dart';
 import '../../models/photo_library/photo_asset_entity.dart';
+import '../../utils/bytes_formatter.dart';
 import '../photo_library/photo_library_use_cases.dart';
 
 class MediaCompressionService {
   MediaCompressionService({
     required LoadOriginalFileUseCase loadOriginalFileUseCase,
   }) : _loadOriginalFileUseCase = loadOriginalFileUseCase;
+
+  static const double _targetSizeTolerance = 0.12;
+  static const int _maxVideoEncodeAttempts = 3;
 
   final LoadOriginalFileUseCase _loadOriginalFileUseCase;
 
@@ -139,6 +143,13 @@ class MediaCompressionService {
 
       final baselineBytes = asset.fileSize > 0 ? asset.fileSize : originalBytes;
 
+      _printCompressionSummary(
+        quality: quality,
+        mediaType: 'Image',
+        originalBytes: baselineBytes,
+        compressedBytes: compressedBytes,
+      );
+
       return CompressedMediaResultEntity(
         assetId: asset.id,
         mediaType: asset.mediaType,
@@ -165,21 +176,25 @@ class MediaCompressionService {
     try {
       final sourceInfo = await VideoCompress.getMediaInfo(sourceFile.path);
       final maxDimension = _sourceMaxDimension(sourceInfo);
-      final attempt = _videoCompressionAttempt(quality, maxDimension);
+      final baselineBytes = asset.fileSize > 0 ? asset.fileSize : originalBytes;
+      final targetBytes = quality.targetBytesFor(baselineBytes);
+      final ladder = _videoProfileLadder(maxDimension);
 
       developer.log(
-        'Starting single-pass video compression '
+        'Starting percentage-target video compression '
         'assetId=${asset.id} preset=${quality.label} '
-        'targetSavingsPercent=${quality.savingsPercent}% '
-        'sourceMaxDimension=$maxDimension '
-        'videoQuality=${attempt.quality} frameRate=${attempt.frameRate} '
-        'profile=${attempt.profileLabel}',
+        'targetKeepPercent=${quality.targetKeepPercent}% '
+        'targetBytes=$targetBytes originalBytes=$baselineBytes '
+        'sourceMaxDimension=$maxDimension ladderProfiles=${ladder.length}',
         name: 'MediaCompressionService',
       );
 
       var lastReportedProgress = -1.0;
+      var activePass = 0;
       progressSubscription = VideoCompress.compressProgress$.subscribe((event) {
-        final normalized = (event / 100).clamp(0.0, 1.0);
+        final passProgress = (event / 100).clamp(0.0, 1.0);
+        final normalized =
+            ((activePass + passProgress) / _maxVideoEncodeAttempts).clamp(0.0, 1.0);
         if (lastReportedProgress >= 0.5 && normalized < 0.1) {
           developer.log(
             'Video compress progress restarted assetId=${asset.id} '
@@ -190,7 +205,7 @@ class MediaCompressionService {
         } else if (normalized == 0 || normalized >= 1 || event % 25 == 0) {
           developer.log(
             'Video compress progress assetId=${asset.id} '
-            'event=$event normalized=$normalized',
+            'pass=$activePass event=$event normalized=$normalized',
             name: 'MediaCompressionService',
           );
         }
@@ -199,19 +214,16 @@ class MediaCompressionService {
       });
       onProgress?.call(0.0);
 
-      final baselineBytes = asset.fileSize > 0 ? asset.fileSize : originalBytes;
-
-      final mediaInfo = await VideoCompress.compressVideo(
-        sourceFile.path,
-        quality: attempt.quality,
-        deleteOrigin: false,
-        includeAudio: true,
-        frameRate: attempt.frameRate,
+      final encodeResult = await _compressVideoTowardTarget(
+        sourcePath: sourceFile.path,
+        quality: quality,
+        baselineBytes: baselineBytes,
+        targetBytes: targetBytes,
+        ladder: ladder,
+        onEncodePass: (passIndex) => activePass = passIndex,
       );
 
-      final compressedPath = mediaInfo?.path;
-
-      if (compressedPath == null || compressedPath.isEmpty) {
+      if (encodeResult == null) {
         developer.log(
           'Video compression produced no output assetId=${asset.id}',
           name: 'MediaCompressionService',
@@ -226,13 +238,18 @@ class MediaCompressionService {
         );
       }
 
+      final compressedPath = encodeResult.path;
+      final attempt = encodeResult.attempt;
+
       developer.log(
-        'Video compression finished assetId=${asset.id} tempPath=$compressedPath',
+        'Video compression finished assetId=${asset.id} '
+        'tempPath=$compressedPath profile=${attempt.profileLabel} '
+        'attempts=${encodeResult.attempts} outputBytes=${encodeResult.bytes}',
         name: 'MediaCompressionService',
       );
 
       final compressedFile = File(compressedPath);
-      final tempBytes = await compressedFile.length();
+      final tempBytes = encodeResult.bytes;
       final savedAsset = await PhotoManager.editor.saveVideo(
         compressedFile,
         title: _compressedTitle(
@@ -249,15 +266,12 @@ class MediaCompressionService {
       final compressedBytes = math.min(tempBytes, savedBytes);
       onProgress?.call(1.0);
 
-      final reductionPercent = baselineBytes > 0
-          ? ((1 - compressedBytes / baselineBytes) * 100).round()
-          : 0;
-      developer.log(
-        'Video saved to gallery assetId=${asset.id} '
-        'preset=${quality.label} profile=${attempt.profileLabel} '
-        'originalBytes=$baselineBytes compressedBytes=$compressedBytes '
-        'sizeReductionPercent=$reductionPercent%',
-        name: 'MediaCompressionService',
+      _printCompressionSummary(
+        quality: quality,
+        mediaType: 'Video',
+        originalBytes: baselineBytes,
+        compressedBytes: compressedBytes,
+        profile: attempt.profileLabel,
       );
 
       return CompressedMediaResultEntity(
@@ -287,6 +301,38 @@ class MediaCompressionService {
     }
   }
 
+  void _printCompressionSummary({
+    required CompressionQualityPreset quality,
+    required String mediaType,
+    required int originalBytes,
+    required int compressedBytes,
+    String? profile,
+  }) {
+    final savedBytes =
+        originalBytes > compressedBytes ? originalBytes - compressedBytes : 0;
+    final actualCompressionPercent = originalBytes > 0
+        ? ((1 - compressedBytes / originalBytes) * 100).round()
+        : 0;
+    final profileSuffix = profile == null ? '' : ' | Encoder: $profile';
+    final keepPercent = originalBytes > 0
+        ? ((compressedBytes / originalBytes) * 100).round()
+        : 0;
+    final message =
+        '[Compress Complete] $mediaType | '
+        'User selected: ${quality.label.toUpperCase()} '
+        '(target ${quality.targetKeepPercent}% of original size) | '
+        'Original: ${BytesFormatter.humanize(originalBytes)} → '
+        'After compress: ${BytesFormatter.humanize(compressedBytes)} | '
+        'Saved: ${BytesFormatter.humanize(savedBytes)} | '
+        'Output is $keepPercent% of original '
+        '(target ${quality.targetKeepPercent}%, '
+        '$actualCompressionPercent% bytes removed)$profileSuffix';
+
+    // ignore: avoid_print
+    print(message);
+    developer.log(message, name: 'MediaCompressionService');
+  }
+
   int _sourceMaxDimension(MediaInfo info) {
     final width = info.width ?? 0;
     final height = info.height ?? 0;
@@ -296,60 +342,180 @@ class MediaCompressionService {
     return math.max(width, height);
   }
 
-  /// Picks one encoder profile up front. `video_compress` exposes a single
-  /// progress stream, so retrying with additional passes would restart the UI
-  /// from 0% and can invalidate temp files via [VideoCompress.deleteAllCache].
-  ///
-  /// Preset names reflect compression strength (Low/Medium/High), not output
-  /// quality. Higher presets use lower resolutions and frame rates.
-  _VideoCompressAttempt _videoCompressionAttempt(
-    CompressionQualityPreset preset,
-    int maxDimension,
-  ) {
-    switch (preset) {
-      case CompressionQualityPreset.low:
-        // ~20% size reduction — light downscale only.
-        if (maxDimension > 960) {
-          return const _VideoCompressAttempt(
-            VideoQuality.Res640x480Quality,
-            24,
-            'low-640x480@24',
-          );
-        }
-        return const _VideoCompressAttempt(
-          VideoQuality.LowQuality,
-          24,
-          'low-native@24',
-        );
-      case CompressionQualityPreset.medium:
-        // ~50% size reduction — stronger than [low] (640x480), weaker than [high].
-        if (maxDimension > 1920) {
-          return const _VideoCompressAttempt(
-            VideoQuality.LowQuality,
-            24,
-            'medium-360p@24-4k',
-          );
-        }
-        if (maxDimension > 960) {
-          return const _VideoCompressAttempt(
-            VideoQuality.LowQuality,
-            24,
-            'medium-360p@24',
-          );
-        }
-        return const _VideoCompressAttempt(
-          VideoQuality.LowQuality,
-          20,
-          'medium-native@20',
-        );
-      case CompressionQualityPreset.high:
-        // ~80% size reduction — lowest resolution cap and frame rate.
-        return const _VideoCompressAttempt(
-          VideoQuality.LowQuality,
-          15,
-          'high-360p@15',
-        );
+  /// Mild → aggressive encoder profiles for the current source resolution.
+  List<_VideoCompressAttempt> _videoProfileLadder(int maxDimension) {
+    final ladder = <_VideoCompressAttempt>[];
+    if (maxDimension > 1920) {
+      ladder.add(
+        const _VideoCompressAttempt(
+          VideoQuality.Res1920x1080Quality,
+          30,
+          'ladder-1080p@30',
+        ),
+      );
     }
+    if (maxDimension > 1280) {
+      ladder.add(
+        const _VideoCompressAttempt(
+          VideoQuality.Res1280x720Quality,
+          30,
+          'ladder-720p@30',
+        ),
+      );
+    }
+    if (maxDimension > 960) {
+      ladder.add(
+        const _VideoCompressAttempt(
+          VideoQuality.Res960x540Quality,
+          24,
+          'ladder-540p@24',
+        ),
+      );
+    }
+    if (maxDimension > 640) {
+      ladder.add(
+        const _VideoCompressAttempt(
+          VideoQuality.Res640x480Quality,
+          24,
+          'ladder-480p@24',
+        ),
+      );
+    }
+    ladder.addAll(const [
+      _VideoCompressAttempt(VideoQuality.MediumQuality, 30, 'ladder-medium@30'),
+      _VideoCompressAttempt(VideoQuality.MediumQuality, 24, 'ladder-medium@24'),
+      _VideoCompressAttempt(VideoQuality.LowQuality, 24, 'ladder-low@24'),
+      _VideoCompressAttempt(VideoQuality.LowQuality, 15, 'ladder-low@15'),
+    ]);
+    return ladder;
+  }
+
+  int _initialLadderIndex(
+    CompressionQualityPreset preset,
+    int ladderLength,
+  ) {
+    if (ladderLength <= 1) {
+      return 0;
+    }
+    switch (preset) {
+      case CompressionQualityPreset.high:
+        return 0;
+      case CompressionQualityPreset.medium:
+        return ((ladderLength - 1) * 0.45).round();
+      case CompressionQualityPreset.low:
+        return ladderLength - 1;
+    }
+  }
+
+  bool _isWithinTargetBand(int outputBytes, int targetBytes) {
+    if (targetBytes <= 0) {
+      return false;
+    }
+    final delta = (outputBytes - targetBytes).abs() / targetBytes;
+    return delta <= _targetSizeTolerance;
+  }
+
+  Future<_VideoEncodeResult?> _compressVideoTowardTarget({
+    required String sourcePath,
+    required CompressionQualityPreset quality,
+    required int baselineBytes,
+    required int targetBytes,
+    required List<_VideoCompressAttempt> ladder,
+    required void Function(int passIndex) onEncodePass,
+  }) async {
+    if (ladder.isEmpty) {
+      return null;
+    }
+
+    final targetRatio = quality.estimatedOutputRatio;
+    var index = _initialLadderIndex(quality, ladder.length);
+    _VideoEncodeResult? closest;
+    var attempts = 0;
+
+    while (attempts < _maxVideoEncodeAttempts) {
+      onEncodePass(attempts);
+      if (attempts > 0) {
+        await VideoCompress.deleteAllCache();
+      }
+      final attempt = ladder[index.clamp(0, ladder.length - 1)];
+      final encoded = await _runSingleVideoEncode(
+        sourcePath: sourcePath,
+        attempt: attempt,
+      );
+      attempts++;
+
+      if (encoded == null) {
+        break;
+      }
+
+      final outputRatio = encoded.bytes / baselineBytes;
+      final distance = (outputRatio - targetRatio).abs();
+      if (closest == null || distance < closest.distanceToTarget) {
+        closest = _VideoEncodeResult(
+          path: encoded.path,
+          bytes: encoded.bytes,
+          attempt: attempt,
+          attempts: attempts,
+          distanceToTarget: distance,
+        );
+      }
+
+      developer.log(
+        'Encode attempt $attempts/${_maxVideoEncodeAttempts} '
+        'profile=${attempt.profileLabel} '
+        'outputBytes=${encoded.bytes} targetBytes=$targetBytes '
+        'outputRatio=${(outputRatio * 100).toStringAsFixed(1)}% '
+        'targetRatio=${(targetRatio * 100).toStringAsFixed(1)}%',
+        name: 'MediaCompressionService',
+      );
+
+      if (_isWithinTargetBand(encoded.bytes, targetBytes)) {
+        return _VideoEncodeResult(
+          path: encoded.path,
+          bytes: encoded.bytes,
+          attempt: attempt,
+          attempts: attempts,
+          distanceToTarget: distance,
+        );
+      }
+
+      if (encoded.bytes > targetBytes && index < ladder.length - 1) {
+        index++;
+        continue;
+      }
+      if (encoded.bytes < targetBytes && index > 0) {
+        index--;
+        continue;
+      }
+      break;
+    }
+
+    return closest;
+  }
+
+  Future<({String path, int bytes})?> _runSingleVideoEncode({
+    required String sourcePath,
+    required _VideoCompressAttempt attempt,
+  }) async {
+    final mediaInfo = await VideoCompress.compressVideo(
+      sourcePath,
+      quality: attempt.quality,
+      deleteOrigin: false,
+      includeAudio: true,
+      frameRate: attempt.frameRate,
+    );
+
+    final outputPath = mediaInfo?.path;
+    if (outputPath == null || outputPath.isEmpty) {
+      return null;
+    }
+
+    final file = File(outputPath);
+    if (!await file.exists()) {
+      return null;
+    }
+
+    return (path: outputPath, bytes: await file.length());
   }
 
   String _baseName(String filePath) {
@@ -406,4 +572,20 @@ class _VideoCompressAttempt {
   final VideoQuality quality;
   final int frameRate;
   final String profileLabel;
+}
+
+class _VideoEncodeResult {
+  const _VideoEncodeResult({
+    required this.path,
+    required this.bytes,
+    required this.attempt,
+    required this.attempts,
+    required this.distanceToTarget,
+  });
+
+  final String path;
+  final int bytes;
+  final _VideoCompressAttempt attempt;
+  final int attempts;
+  final double distanceToTarget;
 }

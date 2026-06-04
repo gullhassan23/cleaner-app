@@ -342,7 +342,7 @@ class CompressSessionController extends GetxController {
     }
     developer.log(
       'compressSelectedAssets started assets=${assets.length} '
-      'quality=${quality.label} targetSavingsPercent=${quality.savingsPercent}%',
+      'quality=${quality.label} targetCompressionPercent=${quality.compressionPercent}%',
       name: 'CompressSession',
     );
     _cancelRequested = false;
@@ -447,11 +447,29 @@ class CompressSessionController extends GetxController {
 
         output[index] = result;
         completedCount += 1;
-        developer.log(
-          'Asset compression finished index=$index id=${asset.id} '
-          'success=${result.isSuccess}',
-          name: 'CompressSession',
-        );
+        if (result.isSuccess) {
+          final savedBytes = result.savedBytes;
+          final actualCompressionPercent = result.originalBytes > 0
+              ? ((savedBytes / result.originalBytes) * 100).round()
+              : 0;
+          final summary =
+              '[Compress Session] File: $fileLabel | '
+              'User selected: ${quality.label.toUpperCase()} '
+              '(target ${quality.targetKeepPercent}% of original size) | '
+              'Original: ${BytesFormatter.humanize(result.originalBytes)} → '
+              'Compressed: ${BytesFormatter.humanize(result.compressedBytes)} | '
+              'Saved: ${BytesFormatter.humanize(savedBytes)} | '
+              'Actual compression: $actualCompressionPercent%';
+          // ignore: avoid_print
+          print(summary);
+          developer.log(summary, name: 'CompressSession');
+        } else {
+          developer.log(
+            'Asset compression failed index=$index id=${asset.id} '
+            'userSelected=${quality.label} error=${result.errorMessage}',
+            name: 'CompressSession',
+          );
+        }
         _applySession(
           (current) => current.copyWith(
             results: output.whereType<CompressedMediaResultEntity>().toList(
@@ -500,6 +518,33 @@ class CompressSessionController extends GetxController {
 
     if (successCount > 0) {
       await _mergeGalleryRefresh(extraAssets: assets);
+    }
+
+    if (!_cancelRequested && successCount > 0) {
+      final totalOriginal = completedOutput.fold<int>(
+        0,
+        (sum, r) => sum + r.originalBytes,
+      );
+      final totalCompressed = completedOutput.fold<int>(
+        0,
+        (sum, r) => sum + r.compressedBytes,
+      );
+      final outputPercent = totalOriginal > 0
+          ? ((totalCompressed / totalOriginal) * 100).round()
+          : 0;
+      final targetKeepPercent =
+          (quality.estimatedOutputRatio * 100).round();
+      final batchSummary =
+          '[Compress Batch Done] User selected: ${quality.label.toUpperCase()} '
+          '(compress to ~$targetKeepPercent% of original) | '
+          'Files: $successCount | '
+          'Total original: ${BytesFormatter.humanize(totalOriginal)} → '
+          'Total after compress: ${BytesFormatter.humanize(totalCompressed)} | '
+          'Total saved: ${BytesFormatter.humanize(savedBytes)} | '
+          'Output is $outputPercent% of original (target $targetKeepPercent%)';
+      // ignore: avoid_print
+      print(batchSummary);
+      developer.log(batchSummary, name: 'CompressSession');
     }
 
     final doneL10n = getL10n();

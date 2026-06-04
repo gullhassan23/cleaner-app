@@ -25,22 +25,27 @@ extension CompressionQualityPresetX on CompressionQualityPreset {
     }
   }
 
-  /// Fraction of original file size expected after compression (0.8 = ~20% reduction).
+  /// Fraction of original file size expected after compression.
+  /// High quality keeps more (0.8), Low quality keeps less (0.2).
   double get estimatedOutputRatio {
     switch (this) {
       case CompressionQualityPreset.low:
-        return 0.80;
+        return 0.20;
       case CompressionQualityPreset.medium:
         return 0.50;
       case CompressionQualityPreset.high:
-        return 0.20;
+        return 0.80;
     }
   }
 
-  /// Fraction of bytes expected to be saved (0.2 = 20%, 0.5 = 50%, 0.8 = 80%).
-  double get targetSavingsRatio => 1 - estimatedOutputRatio;
+  /// How much smaller the file should get (20 / 50 / 80).
+  int get compressionPercent => ((1 - estimatedOutputRatio) * 100).round();
 
-  int get savingsPercent => (targetSavingsRatio * 100).round();
+  /// Target output size as a fraction of the original (0.8 = keep 80%).
+  int get targetKeepPercent => (estimatedOutputRatio * 100).round();
+
+  int targetBytesFor(int originalBytes) =>
+      (originalBytes * estimatedOutputRatio).round().clamp(1, originalBytes);
 }
 
 enum CompressionPhase { idle, running, completed, failed }
@@ -72,11 +77,14 @@ class CompressionProgressEntity {
 
   int get overallPercent => (progress * 100).round();
 
-  int get currentFilePercent => (currentFileProgress.clamp(0.0, 1.0) * 100).round();
+  int get currentFilePercent =>
+      (currentFileProgress.clamp(0.0, 1.0) * 100).round();
 
   int get remainingCount {
     final activeItemOffset =
-        phase == CompressionPhase.running && totalCount > processedCount ? 1 : 0;
+        phase == CompressionPhase.running && totalCount > processedCount
+            ? 1
+            : 0;
     final remaining = totalCount - processedCount - activeItemOffset;
     return remaining < 0 ? 0 : remaining;
   }
@@ -99,9 +107,8 @@ class CompressedMediaResultEntity {
   final String outputPath;
   final String? errorMessage;
 
-  int get savedBytes => originalBytes > compressedBytes
-      ? originalBytes - compressedBytes
-      : 0;
+  int get savedBytes =>
+      originalBytes > compressedBytes ? originalBytes - compressedBytes : 0;
 
   bool get isSuccess => errorMessage == null && outputPath.isNotEmpty;
 }

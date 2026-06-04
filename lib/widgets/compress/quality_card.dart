@@ -47,7 +47,7 @@ class QualityCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              l10n.compressQualitySavings(preset.savingsPercent),
+              l10n.compressQualitySavings(preset.compressionPercent),
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
