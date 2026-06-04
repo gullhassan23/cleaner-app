@@ -1,6 +1,6 @@
 {
-    "name": "cleaner_app",
-    "short_name": "cleaner_app",
+    "name": "Phone Cleaner– AI Junk Cleaner",
+    "short_name": "Phone Cleaner",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

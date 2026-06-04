@@ -197,9 +197,7 @@ class CompressMainScreen extends GetView<CompressPickerController> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      l10n.compressSelectedCount(
-                                        session.selectedAssetIds.length,
-                                      ),
+                                      l10n.compressSelected,
                                       style: theme.textTheme.titleSmall
                                           ?.copyWith(
                                             fontWeight: FontWeight.w600,

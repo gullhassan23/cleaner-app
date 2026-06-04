@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appTitle => 'تطبيق التنظيف';
+  String get appTitle => 'Phone Cleaner– AI Junk Cleaner';
 
   @override
   String get commonBack => 'رجوع';

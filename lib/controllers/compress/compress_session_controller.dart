@@ -281,10 +281,10 @@ class CompressSessionController extends GetxController {
   bool isSelected(String assetId) => selectedAssetIds.contains(assetId);
 
   void toggleSelection(String assetId) {
-    final nextSelection = Set<String>.from(selectedAssetIds);
-    if (!nextSelection.add(assetId)) {
-      nextSelection.remove(assetId);
-    }
+    final nextSelection =
+        selectedAssetIds.contains(assetId)
+            ? <String>{}
+            : <String>{assetId};
 
     _applySession(
       (current) => current.copyWith(

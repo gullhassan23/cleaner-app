@@ -126,7 +126,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Get.toNamed(AppRoutes.photoWidgetHub);
                 },
               ),
-            
+
               const _DarkModeToggleRow(),
               const _AppLockToggleRow(),
               _SettingsNavRow(
@@ -161,8 +161,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 }
-
-
 
 class _SectionHeader extends StatelessWidget {
   const _SectionHeader({required this.label});

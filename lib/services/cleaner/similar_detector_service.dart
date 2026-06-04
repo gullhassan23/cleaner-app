@@ -15,9 +15,12 @@ class SimilarDetectorService {
 
   final PhotoLibraryRepository _repository;
 
-  static const int _thumbSize = 160;
-  static const int _thumbQuality = 70;
-  static const int _hammingThreshold = 12;
+  static const int _thumbSize = 256;
+  static const int _thumbQuality = 80;
+  /// Max Hamming distance to link two images (56-bit dHash).
+  static const int _hammingThreshold = 8;
+  /// Largest allowed distance between any two photos in a published group.
+  static const int _maxClusterSpread = 10;
   static const int _thumbConcurrency = 6;
 
   /// [assetIdToMd5Hex] skips pairing assets with identical MD5 (handled by duplicate flow).
@@ -66,28 +69,37 @@ class SimilarDetectorService {
       await Future<void>.delayed(Duration.zero);
     }
 
-    // Aspect buckets: quantize ratio to reduce false positives
+    // Aspect buckets (orientation-invariant) to cut comparisons; ±1 bucket for borders.
     final buckets = <int, List<int>>{};
     for (var i = 0; i < total; i++) {
       final h = hashes[i];
       if (h == null) {
         continue;
       }
-      final asset = images[i];
-      final ratio = asset.height == 0 ? 1.0 : asset.width / asset.height;
-      final key = (ratio * 20).round().clamp(0, 2000);
+      final key = _aspectBucketKey(images[i]);
       buckets.putIfAbsent(key, () => <int>[]).add(i);
     }
 
     final uf = _UnionFind(total);
+    final bucketKeys = buckets.keys.toList()..sort();
 
-    for (final entry in buckets.entries) {
-      final indices = entry.value;
+    for (final key in bucketKeys) {
+      if (isCancelled?.call() ?? false) {
+        return [];
+      }
+      final indices = <int>{};
+      for (final k in [key - 1, key, key + 1]) {
+        final group = buckets[k];
+        if (group != null) {
+          indices.addAll(group);
+        }
+      }
       if (indices.length < 2) {
         continue;
       }
+      final list = indices.toList();
       _BKNode? root;
-      for (final i in indices) {
+      for (final i in list) {
         if (isCancelled?.call() ?? false) {
           return [];
         }
@@ -120,18 +132,21 @@ class SimilarDetectorService {
     final out = <CleanerMediaCluster>[];
     var clusterSeq = 0;
     for (final group in clustersByRoot.values) {
-      if (group.length < 2) {
-        continue;
+      final tightened = _tightenIndexGroup(group, hashes);
+      for (final sub in tightened) {
+        if (sub.length < 2) {
+          continue;
+        }
+        final members = sub.map((i) => images[i]).toList(growable: false);
+        final keeper = CleanerMediaCluster.pickKeeper(members);
+        out.add(
+          CleanerMediaCluster(
+            id: 'sim_${clusterSeq++}',
+            members: List<PhotoAssetEntity>.unmodifiable(members),
+            keeper: keeper,
+          ),
+        );
       }
-      final members = group.map((i) => images[i]).toList(growable: false);
-      final keeper = CleanerMediaCluster.pickKeeper(members);
-      out.add(
-        CleanerMediaCluster(
-          id: 'sim_${clusterSeq++}',
-          members: List<PhotoAssetEntity>.unmodifiable(members),
-          keeper: keeper,
-        ),
-      );
     }
 
     out.sort((a, b) => b.totalBytes.compareTo(a.totalBytes));
@@ -148,6 +163,77 @@ class SimilarDetectorService {
     return ma != null && ma == mb;
   }
 
+  /// Orientation-invariant aspect in (0, 1] for bucketing.
+  static double _normalizedAspectRatio(PhotoAssetEntity asset) {
+    final w = asset.width;
+    final h = asset.height;
+    if (w <= 0 || h <= 0) {
+      return 1;
+    }
+    return w < h ? w / h : h / w;
+  }
+
+  static int _aspectBucketKey(PhotoAssetEntity asset) {
+    final ratio = _normalizedAspectRatio(asset);
+    return (ratio * 40).round().clamp(0, 40);
+  }
+
+  /// Drops chain-linked outliers so every pair in the group is within [_maxClusterSpread].
+  static List<List<int>> _tightenIndexGroup(
+    List<int> indices,
+    List<int?> hashes,
+  ) {
+    if (indices.length < 2) {
+      return const [];
+    }
+    var current = List<int>.from(indices);
+    while (current.length >= 2) {
+      var hasOutlier = false;
+      var worstPos = 0;
+      var worstBad = -1;
+      for (var i = 0; i < current.length; i++) {
+        var bad = 0;
+        for (var j = 0; j < current.length; j++) {
+          if (i == j) {
+            continue;
+          }
+          final d = _hamming56(hashes[current[i]]!, hashes[current[j]]!);
+          if (d > _maxClusterSpread) {
+            bad++;
+          }
+        }
+        if (bad > 0) {
+          hasOutlier = true;
+        }
+        if (bad > worstBad) {
+          worstBad = bad;
+          worstPos = i;
+        }
+      }
+      if (!hasOutlier) {
+        break;
+      }
+      current.removeAt(worstPos);
+    }
+    if (current.length < 2) {
+      return const [];
+    }
+    return [current];
+  }
+
+  static img.Image _centerSquareCrop(img.Image image) {
+    final side = image.width < image.height ? image.width : image.height;
+    final left = (image.width - side) ~/ 2;
+    final top = (image.height - side) ~/ 2;
+    return img.copyCrop(
+      image,
+      x: left,
+      y: top,
+      width: side,
+      height: side,
+    );
+  }
+
   /// 56-bit dHash from 9×8 grayscale (8×7 horizontal comparisons).
   static int? _computeDHash56(Uint8List? bytes) {
     if (bytes == null) {
@@ -157,8 +243,9 @@ class SimilarDetectorService {
     if (decoded == null) {
       return null;
     }
+    final squared = _centerSquareCrop(decoded);
     final resized = img.copyResize(
-      decoded,
+      squared,
       width: 9,
       height: 8,
       interpolation: img.Interpolation.linear,
