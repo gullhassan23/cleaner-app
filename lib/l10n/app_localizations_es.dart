@@ -207,13 +207,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cleanerPickPhotoToEnhance => 'Elige una foto para mejorar';
 
   @override
-  String get cleanerPickOldPhotoToRestore => 'Elige una foto antigua para restaurar';
+  String get cleanerPickOldPhotoToRestore =>
+      'Elige una foto antigua para restaurar';
 
   @override
   String get cleanerPhotosAccessTitle => 'Acceso a fotos';
 
   @override
-  String get cleanerPhotosAccessBlocked => 'Acceso bloqueado. Actívalo en Ajustes.';
+  String get cleanerPhotosAccessBlocked =>
+      'Acceso bloqueado. Actívalo en Ajustes.';
 
   @override
   String get cleanerPhotosAccessRequest => 'Permite acceso a la biblioteca.';
@@ -328,7 +330,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get contactsNamesNumbersEmails => 'Nombres. Números. Correos.';
 
   @override
-  String get contactsIncompleteDescription => 'Cada contacto debe tener nombre, número y correo.';
+  String get contactsIncompleteDescription =>
+      'Cada contacto debe tener nombre, número y correo.';
 
   @override
   String get contactsNoName => 'Sin nombre';
@@ -381,7 +384,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get contactsExportAllShare => 'Exportar todo y compartir';
 
   @override
-  String get contactsExportSubsetHint => 'También puedes seleccionar desde la lista.';
+  String get contactsExportSubsetHint =>
+      'También puedes seleccionar desde la lista.';
 
   @override
   String contactsShareCount(int count) {
@@ -457,7 +461,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get compressNoMediaSelected => 'Sin medios seleccionados';
 
   @override
-  String get compressNoMediaSelectedBody => 'Vuelve y selecciona al menos un video.';
+  String get compressNoMediaSelectedBody =>
+      'Vuelve y selecciona al menos un video.';
 
   @override
   String get compressQuality => 'Calidad';
@@ -765,7 +770,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chargingSubtitleCharging => 'Tu dispositivo está cargando.';
 
   @override
-  String get chargingSubtitleFullyCharged => 'Puedes desenchufar cuando quieras.';
+  String get chargingSubtitleFullyCharged =>
+      'Puedes desenchufar cuando quieras.';
 
   @override
   String get chargingSubtitleDisconnected => 'Conecta para ver la animación.';
@@ -800,10 +806,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chargingStepIosNoLockScreen => 'No soportado en iPhone.';
 
   @override
-  String get chargingStepBrowsePreviewApply => 'Explorar → Vista previa → Aplicar';
+  String get chargingStepBrowsePreviewApply =>
+      'Explorar → Vista previa → Aplicar';
 
   @override
-  String get chargingStepAllowLockScreen => 'Toca permitir pantalla de bloqueo.';
+  String get chargingStepAllowLockScreen =>
+      'Toca permitir pantalla de bloqueo.';
 
   @override
   String get chargingStepLockAndPlugIn => 'Bloquea y conecta el cargador.';
@@ -978,7 +986,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get photoWidgetGridDescription => 'Cuadrícula 2×2 en inicio.';
 
   @override
-  String get photoWidgetSlideshowDescription => 'Rota con temporizador (mín. 15 s).';
+  String get photoWidgetSlideshowDescription =>
+      'Rota con temporizador (mín. 15 s).';
 
   @override
   String get photoWidgetRenameAlbum => 'Renombrar álbum';
@@ -993,10 +1002,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get photoWidgetAddWidgetTitle => 'Añadir widget';
 
   @override
-  String get photoWidgetHelpAndroid => '1. Importa en un álbum\n2. Mantén inicio → Widgets\n3. Cleaner App → Photo Widget\n4. Arrastra\n\nO fija abajo.';
+  String get photoWidgetHelpAndroid =>
+      '1. Importa en un álbum\n2. Mantén inicio → Widgets\n3. Cleaner App → Photo Widget\n4. Arrastra\n\nO fija abajo.';
 
   @override
-  String get photoWidgetHelpIos => '1. Mantén inicio\n2. Toca +\n3. Busca Cleaner App\n4. Add Widget\n\nNota: iOS actualiza por línea de tiempo.';
+  String get photoWidgetHelpIos =>
+      '1. Mantén inicio\n2. Toca +\n3. Busca Cleaner App\n4. Add Widget\n\nNota: iOS actualiza por línea de tiempo.';
 
   @override
   String get photoWidgetPinWidget => 'Fijar widget';
@@ -1127,7 +1138,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vaultRemoveAfterImport => 'Eliminar tras importar';
 
   @override
-  String get vaultRemoveAfterImportSubtitle => 'Eliminar original tras importar';
+  String get vaultRemoveAfterImportSubtitle =>
+      'Eliminar original tras importar';
 
   @override
   String get vaultUseFaceIdFingerprint => 'Face ID / huella';

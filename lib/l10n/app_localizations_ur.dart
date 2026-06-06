@@ -213,10 +213,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get cleanerPhotosAccessTitle => 'فوٹوز تک رسائی';
 
   @override
-  String get cleanerPhotosAccessBlocked => 'فوٹو رسائی بلاک ہے۔ ترتیبات میں فعال کریں۔';
+  String get cleanerPhotosAccessBlocked =>
+      'فوٹو رسائی بلاک ہے۔ ترتیبات میں فعال کریں۔';
 
   @override
-  String get cleanerPhotosAccessRequest => 'تصویر منتخب کرنے کے لیے لائبریری رسائی دیں۔';
+  String get cleanerPhotosAccessRequest =>
+      'تصویر منتخب کرنے کے لیے لائبریری رسائی دیں۔';
 
   @override
   String get cleanerCouldNotOpenImage => 'تصویر نہیں کھل سکی۔';
@@ -328,7 +330,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get contactsNamesNumbersEmails => 'نام۔ نمبر۔ ای میل۔';
 
   @override
-  String get contactsIncompleteDescription => 'ہر رابطے میں نام، نمبر اور ای میل ہونا چاہیے۔';
+  String get contactsIncompleteDescription =>
+      'ہر رابطے میں نام، نمبر اور ای میل ہونا چاہیے۔';
 
   @override
   String get contactsNoName => 'بلا نام';
@@ -381,7 +384,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get contactsExportAllShare => 'سب برآمد اور شیئر';
 
   @override
-  String get contactsExportSubsetHint => 'فہرست سے منتخب کر کے بھی شیئر کر سکتے ہیں۔';
+  String get contactsExportSubsetHint =>
+      'فہرست سے منتخب کر کے بھی شیئر کر سکتے ہیں۔';
 
   @override
   String contactsShareCount(int count) {
@@ -430,7 +434,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get compressNoVideosFound => 'کوئی ویڈیو نہیں';
 
   @override
-  String get compressNoVideosBody => 'گیلری رسائی کے بعد ویڈیوز یہاں ظاہر ہوں گی۔';
+  String get compressNoVideosBody =>
+      'گیلری رسائی کے بعد ویڈیوز یہاں ظاہر ہوں گی۔';
 
   @override
   String get compressReload => 'دوبارہ لوڈ';
@@ -457,7 +462,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get compressNoMediaSelected => 'کوئی میڈیا منتخب نہیں';
 
   @override
-  String get compressNoMediaSelectedBody => 'واپس جائیں اور کم از کم ایک ویڈیو منتخب کریں۔';
+  String get compressNoMediaSelectedBody =>
+      'واپس جائیں اور کم از کم ایک ویڈیو منتخب کریں۔';
 
   @override
   String get compressQuality => 'کوالٹی';
@@ -622,7 +628,8 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get compressUnableCompressSelected => 'منتخب میڈیا کمپریس نہیں ہو سکا۔';
+  String get compressUnableCompressSelected =>
+      'منتخب میڈیا کمپریس نہیں ہو سکا۔';
 
   @override
   String compressFailedCount(int count) {
@@ -768,7 +775,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get chargingSubtitleFullyCharged => 'جب چاہیں ان پلگ کریں۔';
 
   @override
-  String get chargingSubtitleDisconnected => 'چارجنگ اینیمیشن کے لیے پلگ ان کریں۔';
+  String get chargingSubtitleDisconnected =>
+      'چارجنگ اینیمیشن کے لیے پلگ ان کریں۔';
 
   @override
   String get chargingSubtitleUnknown => 'اس آلہ پر بیٹری دستیاب نہیں۔';
@@ -803,19 +811,23 @@ class AppLocalizationsUr extends AppLocalizations {
   String get chargingStepBrowsePreviewApply => 'براؤز → پیش نظارہ → لاگو';
 
   @override
-  String get chargingStepAllowLockScreen => 'نیچے \"چارج پر لاک اسکرین\" ٹیپ کریں۔';
+  String get chargingStepAllowLockScreen =>
+      'نیچے \"چارج پر لاک اسکرین\" ٹیپ کریں۔';
 
   @override
   String get chargingStepLockAndPlugIn => 'فون لاک کریں، چارجر لگائیں۔';
 
   @override
-  String get chargingStepOemSettings => 'Samsung/Xiaomi/Oppo: پس منظر اجازت دیں۔';
+  String get chargingStepOemSettings =>
+      'Samsung/Xiaomi/Oppo: پس منظر اجازت دیں۔';
 
   @override
-  String get chargingPlatformNoteIos => 'آئی فون پر لاک اسکرین اینیمیشن نہیں۔ چارج کے دوران ایپ کھولیں۔';
+  String get chargingPlatformNoteIos =>
+      'آئی فون پر لاک اسکرین اینیمیشن نہیں۔ چارج کے دوران ایپ کھولیں۔';
 
   @override
-  String get chargingPlatformNoteAndroid => 'اینڈرائیڈ پر چارجر لگائیں۔ ضرورت ہو تو لاک اسکرین فعال کریں۔';
+  String get chargingPlatformNoteAndroid =>
+      'اینڈرائیڈ پر چارجر لگائیں۔ ضرورت ہو تو لاک اسکرین فعال کریں۔';
 
   @override
   String get chargingAnimNeonBattery => 'نیون بیٹری';
@@ -978,7 +990,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get photoWidgetGridDescription => 'ہوم اسکرین پر 2×2 گرڈ۔';
 
   @override
-  String get photoWidgetSlideshowDescription => 'ٹائمر پر گھمتا ہے (کم از کم 15 سیکنڈ)۔';
+  String get photoWidgetSlideshowDescription =>
+      'ٹائمر پر گھمتا ہے (کم از کم 15 سیکنڈ)۔';
 
   @override
   String get photoWidgetRenameAlbum => 'البم کا نام بدلیں';
@@ -993,10 +1006,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get photoWidgetAddWidgetTitle => 'فوٹو ویجٹ شامل';
 
   @override
-  String get photoWidgetHelpAndroid => '1. البم میں فوٹوز درآمد\n2. ہوم اسکرین دبائیں → ویجٹس\n3. کلینر ایپ → فوٹو ویجٹ\n4. گھسیٹیں\n\nیا نیچے پن کریں۔';
+  String get photoWidgetHelpAndroid =>
+      '1. البم میں فوٹوز درآمد\n2. ہوم اسکرین دبائیں → ویجٹس\n3. کلینر ایپ → فوٹو ویجٹ\n4. گھسیٹیں\n\nیا نیچے پن کریں۔';
 
   @override
-  String get photoWidgetHelpIos => '1. ہوم اسکرین دبائیں\n2. + بٹن\n3. کلینر ایپ تلاش\n4. سائز اور Add Widget\n\nنوٹ: iOS ٹائم لائن پر ریفریش۔';
+  String get photoWidgetHelpIos =>
+      '1. ہوم اسکرین دبائیں\n2. + بٹن\n3. کلینر ایپ تلاش\n4. سائز اور Add Widget\n\nنوٹ: iOS ٹائم لائن پر ریفریش۔';
 
   @override
   String get photoWidgetPinWidget => 'ویجٹ پن';
@@ -1100,7 +1115,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get vaultGoBack => 'واپس';
 
   @override
-  String get vaultEmptyState => 'درآمد شروع کرنے کے لیے فوٹوز منتخب کریں۔\nمحفوظ لاک ہوں گی۔';
+  String get vaultEmptyState =>
+      'درآمد شروع کرنے کے لیے فوٹوز منتخب کریں۔\nمحفوظ لاک ہوں گی۔';
 
   @override
   String get vaultTakePhotoOrVideo => 'فوٹو یا ویڈیو لیں';
@@ -1227,7 +1243,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get permissionAllowPhotosVideos => 'فوٹوز اور ویڈیوز';
 
   @override
-  String get permissionLimitedBody => 'آپ انتظام کر سکتے ہیں یا مکمل رسائی دیں۔';
+  String get permissionLimitedBody =>
+      'آپ انتظام کر سکتے ہیں یا مکمل رسائی دیں۔';
 
   @override
   String get permissionFullBody => 'ڈپلیکیٹ اور ویڈیوز کے لیے رسائی۔';

@@ -213,10 +213,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cleanerPhotosAccessTitle => 'Photos access';
 
   @override
-  String get cleanerPhotosAccessBlocked => 'Photo access is blocked. Enable it in Settings to pick images.';
+  String get cleanerPhotosAccessBlocked =>
+      'Photo access is blocked. Enable it in Settings to pick images.';
 
   @override
-  String get cleanerPhotosAccessRequest => 'Allow photo library access to choose an image.';
+  String get cleanerPhotosAccessRequest =>
+      'Allow photo library access to choose an image.';
 
   @override
   String get cleanerCouldNotOpenImage => 'Could not open that image.';
@@ -296,7 +298,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cleanerNothingDeleted => 'Nothing deleted';
 
   @override
-  String get cleanerNothingDeletedHint => 'Try again or check photo permissions.';
+  String get cleanerNothingDeletedHint =>
+      'Try again or check photo permissions.';
 
   @override
   String cleanerSelectedSummary(int count, String size) {
@@ -310,7 +313,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsAccessNeeded => 'Contacts access needed';
 
   @override
-  String get contactsAccessBody => 'Allow access to your contacts to see counts, lists, backups, and to open the system editor.';
+  String get contactsAccessBody =>
+      'Allow access to your contacts to see counts, lists, backups, and to open the system editor.';
 
   @override
   String get contactsOpenSettings => 'Open settings';
@@ -328,7 +332,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsNamesNumbersEmails => 'Names. Numbers. Emails.';
 
   @override
-  String get contactsIncompleteDescription => 'Every contact has a name, at least one number, and at least one email.';
+  String get contactsIncompleteDescription =>
+      'Every contact has a name, at least one number, and at least one email.';
 
   @override
   String get contactsNoName => 'No name';
@@ -357,7 +362,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsNoSearchResults => 'No contacts match your search.';
 
   @override
-  String get contactsNoDuplicates => 'No duplicate groups found by phone or name.';
+  String get contactsNoDuplicates =>
+      'No duplicate groups found by phone or name.';
 
   @override
   String get contactsSameNumber => 'Same number';
@@ -372,7 +378,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsExportTitle => 'Export your contacts';
 
   @override
-  String get contactsExportBody => 'Creates a single .vcf file with your contacts so you can save it to Files, AirDrop it, or open it in another app.';
+  String get contactsExportBody =>
+      'Creates a single .vcf file with your contacts so you can save it to Files, AirDrop it, or open it in another app.';
 
   @override
   String get contactsExportPreparing => 'Preparing…';
@@ -381,7 +388,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactsExportAllShare => 'Export all & share';
 
   @override
-  String get contactsExportSubsetHint => 'You can also pick contacts from the main list, tap Select, then share a subset.';
+  String get contactsExportSubsetHint =>
+      'You can also pick contacts from the main list, tap Select, then share a subset.';
 
   @override
   String contactsShareCount(int count) {
@@ -430,7 +438,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get compressNoVideosFound => 'No videos found';
 
   @override
-  String get compressNoVideosBody => 'Videos will appear here after gallery access is granted.';
+  String get compressNoVideosBody =>
+      'Videos will appear here after gallery access is granted.';
 
   @override
   String get compressReload => 'Reload';
@@ -442,10 +451,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get compressAllowMediaAccess => 'Allow media access';
 
   @override
-  String get compressMediaBlockedBody => 'Open system settings and enable gallery access to compress videos.';
+  String get compressMediaBlockedBody =>
+      'Open system settings and enable gallery access to compress videos.';
 
   @override
-  String get compressMediaRequestBody => 'Cleaner needs access to your gallery before it can show videos for compression.';
+  String get compressMediaRequestBody =>
+      'Cleaner needs access to your gallery before it can show videos for compression.';
 
   @override
   String get compressAllowAccess => 'Allow access';
@@ -457,7 +468,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get compressNoMediaSelected => 'No media selected';
 
   @override
-  String get compressNoMediaSelectedBody => 'Go back and select at least one video.';
+  String get compressNoMediaSelectedBody =>
+      'Go back and select at least one video.';
 
   @override
   String get compressQuality => 'Quality';
@@ -483,7 +495,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get compressSelectMediaTitle => 'Select media to compress';
 
   @override
-  String get compressSelectMediaBody => 'Pick one or more images/videos, then continue to quality selection and compression.';
+  String get compressSelectMediaBody =>
+      'Pick one or more images/videos, then continue to quality selection and compression.';
 
   @override
   String get compressManageAccess => 'Manage access';
@@ -583,10 +596,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get compressUnableCheckPermission => 'Unable to check media permission state.';
+  String get compressUnableCheckPermission =>
+      'Unable to check media permission state.';
 
   @override
-  String get compressUnableRequestPermission => 'Unable to request media permission.';
+  String get compressUnableRequestPermission =>
+      'Unable to request media permission.';
 
   @override
   String get compressUnableLoadGallery => 'Unable to load gallery media.';
@@ -622,7 +637,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get compressUnableCompressSelected => 'Unable to compress the selected media.';
+  String get compressUnableCompressSelected =>
+      'Unable to compress the selected media.';
 
   @override
   String compressFailedCount(int count) {
@@ -647,7 +663,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get compressOriginalUnavailable => 'Original file is no longer available.';
+  String get compressOriginalUnavailable =>
+      'Original file is no longer available.';
 
   @override
   String compressCompressionFailed(String error) {
@@ -765,16 +782,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chargingSubtitleCharging => 'Your device is drawing power.';
 
   @override
-  String get chargingSubtitleFullyCharged => 'You can unplug whenever you are ready.';
+  String get chargingSubtitleFullyCharged =>
+      'You can unplug whenever you are ready.';
 
   @override
-  String get chargingSubtitleDisconnected => 'Plug in to see your charging animation.';
+  String get chargingSubtitleDisconnected =>
+      'Plug in to see your charging animation.';
 
   @override
-  String get chargingSubtitleUnknown => 'Battery state unavailable on this device.';
+  String get chargingSubtitleUnknown =>
+      'Battery state unavailable on this device.';
 
   @override
-  String get chargingSubtitleConnectedNotCharging => 'Power connected; battery is not actively charging.';
+  String get chargingSubtitleConnectedNotCharging =>
+      'Power connected; battery is not actively charging.';
 
   @override
   String get chargingAppliedTitle => 'Applied';
@@ -791,31 +812,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chargingMissingLottieAsset => 'Missing Lottie asset path';
 
   @override
-  String get chargingStepApplyAnimation => 'Apply an animation from Browse animations.';
+  String get chargingStepApplyAnimation =>
+      'Apply an animation from Browse animations.';
 
   @override
-  String get chargingStepOpenWhileCharging => 'Open the app while the phone is charging.';
+  String get chargingStepOpenWhileCharging =>
+      'Open the app while the phone is charging.';
 
   @override
-  String get chargingStepIosNoLockScreen => 'Lock-screen auto show is not supported on iPhone.';
+  String get chargingStepIosNoLockScreen =>
+      'Lock-screen auto show is not supported on iPhone.';
 
   @override
-  String get chargingStepBrowsePreviewApply => 'Browse animations → Preview → Apply animation.';
+  String get chargingStepBrowsePreviewApply =>
+      'Browse animations → Preview → Apply animation.';
 
   @override
-  String get chargingStepAllowLockScreen => 'Tap \"Allow lock screen on charge\" below (battery optimization).';
+  String get chargingStepAllowLockScreen =>
+      'Tap \"Allow lock screen on charge\" below (battery optimization).';
 
   @override
-  String get chargingStepLockAndPlugIn => 'Lock the phone, plug in the charger — animation should appear.';
+  String get chargingStepLockAndPlugIn =>
+      'Lock the phone, plug in the charger — animation should appear.';
 
   @override
-  String get chargingStepOemSettings => 'Samsung / Xiaomi / Oppo: Settings → Apps → Cleaner App → allow background & display on lock screen.';
+  String get chargingStepOemSettings =>
+      'Samsung / Xiaomi / Oppo: Settings → Apps → Cleaner App → allow background & display on lock screen.';
 
   @override
-  String get chargingPlatformNoteIos => 'Lock-screen animation is not supported on iPhone. Open the app while charging to view your animation.';
+  String get chargingPlatformNoteIos =>
+      'Lock-screen animation is not supported on iPhone. Open the app while charging to view your animation.';
 
   @override
-  String get chargingPlatformNoteAndroid => 'On Android, plug in your charger to see the animation. Enable lock-screen display in settings if needed.';
+  String get chargingPlatformNoteAndroid =>
+      'On Android, plug in your charger to see the animation. Enable lock-screen display in settings if needed.';
 
   @override
   String get chargingAnimNeonBattery => 'Neon Battery';
@@ -866,7 +896,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appLockEnableBiometric => 'Enable Face ID / fingerprint';
 
   @override
-  String get appLockBiometricSubtitle => 'Unlock the app without typing your PIN.';
+  String get appLockBiometricSubtitle =>
+      'Unlock the app without typing your PIN.';
 
   @override
   String get appLockContinue => 'Continue';
@@ -881,10 +912,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appLockEnterPinToTurnOff => 'Enter PIN to turn off App Lock';
 
   @override
-  String get appLockVerifyPinToDisable => 'Verify your current PIN to disable app lock.';
+  String get appLockVerifyPinToDisable =>
+      'Verify your current PIN to disable app lock.';
 
   @override
-  String get appLockTooManyAttempts => 'Too many attempts. Try again or use biometrics.';
+  String get appLockTooManyAttempts =>
+      'Too many attempts. Try again or use biometrics.';
 
   @override
   String get appLockIncorrectPin => 'Incorrect PIN. Try again.';
@@ -975,10 +1008,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get photoWidgetPreview => 'Preview';
 
   @override
-  String get photoWidgetGridDescription => 'Shows a 2×2 grid of your photos on the home screen widget.';
+  String get photoWidgetGridDescription =>
+      'Shows a 2×2 grid of your photos on the home screen widget.';
 
   @override
-  String get photoWidgetSlideshowDescription => 'Rotates through photos on a timer (minimum 15 seconds).';
+  String get photoWidgetSlideshowDescription =>
+      'Rotates through photos on a timer (minimum 15 seconds).';
 
   @override
   String get photoWidgetRenameAlbum => 'Rename album';
@@ -987,16 +1022,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get photoWidgetDeleteAlbumTitle => 'Delete album?';
 
   @override
-  String get photoWidgetDeleteAlbumBody => 'Photos in this album will be removed from the widget cache.';
+  String get photoWidgetDeleteAlbumBody =>
+      'Photos in this album will be removed from the widget cache.';
 
   @override
   String get photoWidgetAddWidgetTitle => 'Add Photo Widget';
 
   @override
-  String get photoWidgetHelpAndroid => '1. Import photos in an album (widget turns on automatically)\n2. Long-press your home screen → Widgets\n3. Find Cleaner App → Photo Widget\n4. Drag it to your home screen\n\nOr tap below to pin the widget (Android 8+).';
+  String get photoWidgetHelpAndroid =>
+      '1. Import photos in an album (widget turns on automatically)\n2. Long-press your home screen → Widgets\n3. Find Cleaner App → Photo Widget\n4. Drag it to your home screen\n\nOr tap below to pin the widget (Android 8+).';
 
   @override
-  String get photoWidgetHelpIos => '1. Long-press your home screen\n2. Tap the + button\n3. Search for Cleaner App\n4. Choose Photo Widget size and tap Add Widget\n\nNote: iOS widgets refresh on a timeline and may not update instantly.';
+  String get photoWidgetHelpIos =>
+      '1. Long-press your home screen\n2. Tap the + button\n3. Search for Cleaner App\n4. Choose Photo Widget size and tap Add Widget\n\nNote: iOS widgets refresh on a timeline and may not update instantly.';
 
   @override
   String get photoWidgetPinWidget => 'Pin widget';
@@ -1005,10 +1043,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get photoWidgetPinWidgetButton => 'Pin widget to home screen';
 
   @override
-  String get photoWidgetPinFollowPrompt => 'Follow the system prompt to add the widget.';
+  String get photoWidgetPinFollowPrompt =>
+      'Follow the system prompt to add the widget.';
 
   @override
-  String get photoWidgetPinManualSteps => 'Use the manual steps above if pin is unavailable.';
+  String get photoWidgetPinManualSteps =>
+      'Use the manual steps above if pin is unavailable.';
 
   @override
   String get photoWidgetHelp => 'Help';
@@ -1022,7 +1062,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get photoWidgetPermissionRequired => 'Permission required';
 
   @override
-  String get photoWidgetAllowPhotoAccess => 'Allow photo access to import images.';
+  String get photoWidgetAllowPhotoAccess =>
+      'Allow photo access to import images.';
 
   @override
   String get photoWidgetLimitReached => 'Limit reached';
@@ -1053,13 +1094,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get photoWidgetAddToHomeTitle => 'Add widget to home screen';
 
   @override
-  String get photoWidgetAddToHomeBody => 'Long-press home screen → Widgets → Photo Widget, or tap help (?) to pin.';
+  String get photoWidgetAddToHomeBody =>
+      'Long-press home screen → Widgets → Photo Widget, or tap help (?) to pin.';
 
   @override
   String get photoWidgetUpdated => 'Widget updated';
 
   @override
-  String get photoWidgetUpdatedBody => 'Add or refresh the Photo Widget on your home screen to see photos.';
+  String get photoWidgetUpdatedBody =>
+      'Add or refresh the Photo Widget on your home screen to see photos.';
 
   @override
   String get photoWidgetPinSnackbarTitle => 'Widget';
@@ -1100,7 +1143,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vaultGoBack => 'Go back';
 
   @override
-  String get vaultEmptyState => 'Select Photos to begin importing.\nThey will be securely locked.';
+  String get vaultEmptyState =>
+      'Select Photos to begin importing.\nThey will be securely locked.';
 
   @override
   String get vaultTakePhotoOrVideo => 'Take photo or video';
@@ -1127,7 +1171,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vaultRemoveAfterImport => 'Remove After Import';
 
   @override
-  String get vaultRemoveAfterImportSubtitle => 'Delete originals from gallery after successful import';
+  String get vaultRemoveAfterImportSubtitle =>
+      'Delete originals from gallery after successful import';
 
   @override
   String get vaultUseFaceIdFingerprint => 'Use Face ID / Fingerprint';
@@ -1148,7 +1193,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vaultConfirmPin => 'Confirm Vault PIN';
 
   @override
-  String get vaultCreatePinSubtitle => 'Choose a 4-digit PIN to protect your private photos';
+  String get vaultCreatePinSubtitle =>
+      'Choose a 4-digit PIN to protect your private photos';
 
   @override
   String get vaultConfirmPinSubtitle => 'Enter the same PIN again';
@@ -1227,10 +1273,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permissionAllowPhotosVideos => 'Allow photos & videos';
 
   @override
-  String get permissionLimitedBody => 'You can manage which items Cleaner can see, or grant full access in Settings.';
+  String get permissionLimitedBody =>
+      'You can manage which items Cleaner can see, or grant full access in Settings.';
 
   @override
-  String get permissionFullBody => 'Cleaner needs access to scan for duplicates, similar shots, videos, and screenshots.';
+  String get permissionFullBody =>
+      'Cleaner needs access to scan for duplicates, similar shots, videos, and screenshots.';
 
   @override
   String get permissionManageLibraryAccess => 'Manage library access';

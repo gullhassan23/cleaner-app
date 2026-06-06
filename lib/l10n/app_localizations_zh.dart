@@ -993,10 +993,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get photoWidgetAddWidgetTitle => '添加照片小组件';
 
   @override
-  String get photoWidgetHelpAndroid => '1. 在相册中导入照片\n2. 长按主屏幕 → 小组件\n3. 找到清理应用 → 照片小组件\n4. 拖到主屏幕\n\n或点击下方固定。';
+  String get photoWidgetHelpAndroid =>
+      '1. 在相册中导入照片\n2. 长按主屏幕 → 小组件\n3. 找到清理应用 → 照片小组件\n4. 拖到主屏幕\n\n或点击下方固定。';
 
   @override
-  String get photoWidgetHelpIos => '1. 长按主屏幕\n2. 点 +\n3. 搜索清理应用\n4. 选择大小并添加\n\n注：iOS 按时间线刷新。';
+  String get photoWidgetHelpIos =>
+      '1. 长按主屏幕\n2. 点 +\n3. 搜索清理应用\n4. 选择大小并添加\n\n注：iOS 按时间线刷新。';
 
   @override
   String get photoWidgetPinWidget => '固定小组件';

@@ -213,7 +213,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cleanerPhotosAccessTitle => 'الوصول إلى الصور';
 
   @override
-  String get cleanerPhotosAccessBlocked => 'الوصول للصور محظور. فعّله في الإعدادات.';
+  String get cleanerPhotosAccessBlocked =>
+      'الوصول للصور محظور. فعّله في الإعدادات.';
 
   @override
   String get cleanerPhotosAccessRequest => 'اسمح بالوصول لمكتبة الصور.';
@@ -328,7 +329,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactsNamesNumbersEmails => 'الأسماء. الأرقام. البريد.';
 
   @override
-  String get contactsIncompleteDescription => 'يجب أن يحتوي كل جهة على اسم ورقم وبريد.';
+  String get contactsIncompleteDescription =>
+      'يجب أن يحتوي كل جهة على اسم ورقم وبريد.';
 
   @override
   String get contactsNoName => 'بدون اسم';
@@ -457,7 +459,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get compressNoMediaSelected => 'لم يُحدد وسائط';
 
   @override
-  String get compressNoMediaSelectedBody => 'ارجع واختر فيديواً واحداً على الأقل.';
+  String get compressNoMediaSelectedBody =>
+      'ارجع واختر فيديواً واحداً على الأقل.';
 
   @override
   String get compressQuality => 'الجودة';
@@ -812,7 +815,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chargingStepOemSettings => 'Samsung/Xiaomi/Oppo: اسمح بالخلفية.';
 
   @override
-  String get chargingPlatformNoteIos => 'الرسوم على شاشة القفل غير مدعومة على iPhone.';
+  String get chargingPlatformNoteIos =>
+      'الرسوم على شاشة القفل غير مدعومة على iPhone.';
 
   @override
   String get chargingPlatformNoteAndroid => 'على Android وصّل الشاحن.';
@@ -978,7 +982,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get photoWidgetGridDescription => 'شبكة 2×2 على الشاشة.';
 
   @override
-  String get photoWidgetSlideshowDescription => 'تدوير بالمؤقت (15 ثانية على الأقل).';
+  String get photoWidgetSlideshowDescription =>
+      'تدوير بالمؤقت (15 ثانية على الأقل).';
 
   @override
   String get photoWidgetRenameAlbum => 'إعادة تسمية';
@@ -993,10 +998,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get photoWidgetAddWidgetTitle => 'إضافة أداة الصور';
 
   @override
-  String get photoWidgetHelpAndroid => '1. استورد في ألبوم\n2. اضغط مطولاً → أدوات\n3. Cleaner App → Photo Widget\n4. اسحب\n\nأو ثبّت أدناه.';
+  String get photoWidgetHelpAndroid =>
+      '1. استورد في ألبوم\n2. اضغط مطولاً → أدوات\n3. Cleaner App → Photo Widget\n4. اسحب\n\nأو ثبّت أدناه.';
 
   @override
-  String get photoWidgetHelpIos => '1. اضغط مطولاً\n2. +\n3. ابحث عن التطبيق\n4. Add Widget\n\nملاحظة: iOS يحدّث بالجدول.';
+  String get photoWidgetHelpIos =>
+      '1. اضغط مطولاً\n2. +\n3. ابحث عن التطبيق\n4. Add Widget\n\nملاحظة: iOS يحدّث بالجدول.';
 
   @override
   String get photoWidgetPinWidget => 'تثبيت الأداة';
